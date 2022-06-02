@@ -1,4 +1,5 @@
-package com.merit.meritShop.item.domain;
+package com.merit.meritShop.cart.domain;
+import com.merit.meritShop.item.domain.Item;
 import com.merit.meritShop.user.domain.User;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

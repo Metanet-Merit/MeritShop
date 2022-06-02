@@ -1,6 +1,6 @@
 package com.merit.meritShop.order.domain;
 
-import com.merit.meritShop.cart.domain.Coupon;
+import com.merit.meritShop.coupon.domain.Coupon;
 import com.merit.meritShop.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

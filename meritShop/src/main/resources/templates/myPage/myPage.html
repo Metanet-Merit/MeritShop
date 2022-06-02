@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="css/myPage.css" />
+<head>
+    <script type="application/javascript" src="/js/User/exam.js"></script>
+    <meta charset="UTF-8">
+    <title>마이 페이지</title>
+</head>
+<body>
+
+<div th:replace="~{template/fragment/myPageHeader::header}"></div>
+
+<div class="listContainer">
+    <div class="mainContentBox">
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">내 정보 조회</div>
+        </a>
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">내 정보 수정</div>
+        </a>
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">구매 내역</div>
+        </a>
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">리뷰 내역</div>
+        </a>
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">문의사항</div>
+        </a>
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">쿠폰 / 적립금</div>
+        </a>
+    </div>
+    <div class="mainContent" id="content">
+        여기에 내용이 나오면 됩니다아아ㅏㅏㅏㅏㅏㅏㅏㅏ<br>
+        어쩌구 </br>
+        저쩌구</br>
+        자바스크립트 함수에서 이 태그 안에 내용을 넣으면 되겠죠?!!<br>
+        <span th:text="${hello}">123</span>
+    </div>
+</div>
+<div th:replace="~{template/fragment/myPageFooter::footer}"></div>
+</body>
+</html>
