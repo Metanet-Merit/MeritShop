@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="sidebarFragment">
+
+    <!-- Sidebar -->
+    <ul th:fragment="sidebar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">MetaShop</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            MENU
+        </div>
+
+        <!-- Nav Item - 회원 관리 -->
+        <li class="nav-item">
+            <a class="nav-link" id="nav-user" type="button" onclick="moveUser()" >
+                <i class="fas fa-fw fa-cog"></i>
+                <span>회원 관리</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - 상품 관리 -->
+        <li class="nav-item">
+            <a class="nav-link" type="button" onclick="moveItem()">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>상품 관리</span></a>
+        </li>
+
+
+        <!-- Nav Item - 주문 관리 -->
+        <li class="nav-item">
+            <a class="nav-link" type="button" onclick="moveOrder()">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>주문 관리</span></a>
+        </li>
+
+        <!-- Nav Item - 카테고리 관리 -->
+        <li class="nav-item">
+            <a class="nav-link" type="button" onclick="moveCategory()">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>카테고리 관리</span></a>
+        </li>
+
+        <!-- Nav Item - 공지사항 -->
+        <li class="nav-item">
+            <a class="nav-link" type="button" onclick="moveNotice()" >
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>공지사항</span></a>
+        </li>
+
+        <!-- Nav Item - 문의사항 -->
+        <li class="nav-item">
+            <a class="nav-link" type="button" onclick="moveQna()">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>문의사항</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+
+
+    </ul>
+    <!-- End of Sidebar -->
+
+</th:block>
+
+</html>
