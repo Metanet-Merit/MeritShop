@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <meta charset="UTF-8">
+        <!-- CSS only
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Script-Type" content="text/javascript" />
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+        <title>melite</title>
+
+        <th:block th:replace="template/fragment/mainPageConfig::config"></th:block>
+        <style>
+            #menu{ position: relative;
+                z-index: 999;}
+
+
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div>
+                <div th:replace="template/fragment/mainPageHeader::header" id="menu"></div>
+
+                <div layout:fragment="content" id="content-section" ></div>
+            </div>
+
+            <div th:replace="template/fragment/mainPageFooter::footer" id="footer"></div>
+        </div>
+    </body>
+
+</html>

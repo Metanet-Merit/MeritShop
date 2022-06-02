@@ -1,0 +1,13 @@
+/* webfont.css : Lato */
+
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./webfont/Lato-Regular.eot);
+  src: url(./webfont/Lato-Regular.eot?#iefix) format('embedded-opentype'),
+       url(./webfont/Lato-Regular.woff2) format('woff2'),
+       url(./webfont/Lato-Regular.woff) format('woff'),
+       url(./webfont/Lato-Regular.ttf) format('truetype');
+}
