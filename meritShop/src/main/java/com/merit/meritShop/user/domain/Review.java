@@ -28,6 +28,8 @@ public class Review {
 
     @Lob
     String content;
-    String img;
+
+    String originalFileName;
+    String uuidName;
 
 }
