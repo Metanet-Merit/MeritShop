@@ -20,9 +20,7 @@ public class Item {
     private Long id;
 
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="category_id")
-    private Category category;
+    private String category;
 
     private String item_name;
     private int price;
