@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class myPageController {
 
-    @RequestMapping("/main")
+    @RequestMapping("/myPage")
     public String main(Model model){
         model.addAttribute("hello","hello");
         return "myPage/myPage";

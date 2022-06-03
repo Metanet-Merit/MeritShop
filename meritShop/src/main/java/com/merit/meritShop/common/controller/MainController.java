@@ -24,7 +24,7 @@ public class MainController {
         }
         model.addAttribute("items",pageRequest);
 */
-        return "index";
+        return "mainPage/index";
     }
 
     @GetMapping("/admin/itemList")
