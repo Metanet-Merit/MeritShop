@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${uploadPath}")
+   /* @Value("${uploadPath}")
     String uploadPath;
 
     @Override
@@ -31,6 +31,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/scripts");
 
     }
-
+*/
 
 }
