@@ -19,7 +19,7 @@ public class Coupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="coupon_id")
-    private Long coupon_id;
+    private Long couponId;
 
     @Column(name="coupon_name") //테이블 컬럼 이름과 매칭
     private String couponName;
