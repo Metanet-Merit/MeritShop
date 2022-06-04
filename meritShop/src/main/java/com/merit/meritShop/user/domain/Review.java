@@ -15,7 +15,8 @@ import javax.persistence.*;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="review_id")
+    private Long reviewId;
 
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="order_item_id")

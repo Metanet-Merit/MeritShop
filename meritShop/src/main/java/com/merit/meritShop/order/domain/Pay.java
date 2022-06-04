@@ -18,7 +18,8 @@ public class Pay {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="pay_id")
+    private Long payId;
 
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="order_id")
@@ -28,7 +29,8 @@ public class Pay {
     @JoinColumn(name="user_id")
     private User user;
 
-    private int imp_uid;//pg결제번호
+    @Column(name="imp_uid")
+    private int impUid;//pg결제번호
 
 
 }

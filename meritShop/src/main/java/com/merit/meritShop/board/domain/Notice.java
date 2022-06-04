@@ -1,21 +1,24 @@
 package com.merit.meritShop.board.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@DynamicInsert
+@NoArgsConstructor
 @Table(name="notice")
 public class Notice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="notice_id")
+    private Long noticeId;
 
     private String title;
 

@@ -15,7 +15,8 @@ public class ItemOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="item_option_id")
+    private Long itemOptionId;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="item_id")

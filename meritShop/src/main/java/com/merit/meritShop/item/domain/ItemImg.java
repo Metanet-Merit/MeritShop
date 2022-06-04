@@ -17,7 +17,8 @@ import javax.persistence.*;
 public class ItemImg {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="item_img_id")
+    private Long itemImgId;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="item_id")

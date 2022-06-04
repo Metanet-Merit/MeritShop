@@ -17,7 +17,8 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="order_item_id")
+    private Long orderItemId;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="item_id")
@@ -32,6 +33,8 @@ public class OrderItem {
     private Category category;
 
     private int count;
+
+    @Column(name="order_item_price")
     private int orderItemPrice;
     private boolean reviewed;
 

@@ -2,22 +2,25 @@ package com.merit.meritShop.order.domain;
 
 import com.merit.meritShop.coupon.domain.Coupon;
 import com.merit.meritShop.user.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@DynamicInsert
+@NoArgsConstructor
 @Table(name="orders")
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="order_id")
+    private Long orderId;
 
     @Column(name="order_date")
     private LocalDateTime orderDate;

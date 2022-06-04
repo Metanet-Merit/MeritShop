@@ -17,12 +17,14 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Column(name="item_id")
+    private Long itemId;
 
     private String category;
 
-    private String item_name;
+    @Column(name="item_name")
+    private String itemName;
+
     private int price;
     private String description;
     private boolean shipping;

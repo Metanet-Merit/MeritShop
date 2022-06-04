@@ -4,7 +4,6 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
-
 @Entity
 @Getter
 @Setter
@@ -16,8 +15,11 @@ import javax.persistence.*;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long category_id;
-    private String category_name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="category_id")
+    private Long categoryId;
+
+    @Column(name="category_name")
+    private String categoryName;
 
 }
