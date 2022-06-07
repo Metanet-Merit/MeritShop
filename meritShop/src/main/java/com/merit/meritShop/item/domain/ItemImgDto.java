@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ItemImgDto {
 
-    private long id;
+    private long itemImgId;
     private long itemId;
     private String originFileName;
     private String imgName;

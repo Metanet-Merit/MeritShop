@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ItemOptionDto {
 
-    private long optId;
+    private long itemOptionId;
     private String optionName;
     private int quantity;
 

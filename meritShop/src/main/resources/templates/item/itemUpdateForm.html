@@ -103,10 +103,10 @@
 						<td><input name="fileUpload" type="file" class="" style="width:188px;"/><input type="button" value="추가" onclick="add_imgbox()"></td>
 					</tr>
 					<tr th:each="option:${itemFormDto.options}">
-						<th>옵션 별 수량 추가</th><td><input type="hidden" name="optId" th:value="${option?.optId}" ><input type='text' name='optionName' th:value="${option?.optionName}" class='optName'><input type='text' name='quantity' th:value="${option?.quantity}" class='quantity'> <input type='button' value='삭제' onclick='opt_remove(this)'></td>
+						<th>옵션 별 수량 추가</th><td><input type="hidden" name="itemOptionId" th:value="${option?.itemOptionId}" ><input type='text' name='optionName' th:value="${option?.optionName}" class='optionName'><input type='text' name='quantity' th:value="${option?.quantity}" class='quantity'> <input type='button' value='삭제' onclick='opt_remove(this)'></td>
 					</tr>
 					<tr th:each="itemImg : ${itemImgDto}">
-						<th>사진</th><td> <input type="hidden" name="itemImgId" th:value="${itemImg.id}" > <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="80"><input type='button' value='삭제' onclick='img_remove(this)'></td>
+						<th>사진</th><td> <input type="hidden" name="itemImgId" th:value="${itemImg.itemImgId}" > <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="80"><input type='button' value='삭제' onclick='img_remove(this)'></td>
 					</tr>
 
 				</tbody>
@@ -140,7 +140,7 @@
    const box = document.getElementById("box");
     const newP = document.createElement("tr");
 
-    newP.innerHTML = "<th>옵션 별 수량 추가</th><td><input type='text' name='optionName' class='optName'><input type='text' name='quantity' class='quantity'> <input type='button' value='삭제' onclick='opt_remove(this)'></td>";
+    newP.innerHTML = "<th>옵션 별 수량 추가</th><td><input type='text' name='optionName' class='optionName'><input type='text' name='quantity' class='quantity'> <input type='button' value='삭제' onclick='opt_remove(this)'></td>";
     box.parentElement.appendChild(newP);
     
 }

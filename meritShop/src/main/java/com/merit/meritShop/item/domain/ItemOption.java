@@ -1,4 +1,5 @@
 package com.merit.meritShop.item.domain;
+import com.merit.meritShop.common.domain.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @DynamicInsert
 @NoArgsConstructor
 @Table(name="item_option")
-public class ItemOption {
+public class ItemOption extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +24,25 @@ public class ItemOption {
     private Item item;
 
     private int quantity;
-    private String name;
+    private String optName;
+    public ItemOption(ItemOptionDto dto,Item item){
+        this.item = item;
+        optName = dto.getOptionName();
+        quantity = dto.getQuantity();
+    }
+    public ItemOptionDto toItemOptionDto(){
 
+        return  new ItemOptionDto(itemOptionId,optName,quantity);
+    }
+
+    @Override
+    public String toString() {
+        return "ItemOption{" +
+                "optId=" + itemOptionId +
+                ", item=" + item +
+                ", optName='" + optName + '\'' +
+                ", quantity=" + quantity +
+                '}';
+    }
 
 }

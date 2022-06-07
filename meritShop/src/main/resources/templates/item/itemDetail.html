@@ -49,10 +49,10 @@
             </div>
 
             <div class="wd50">
-                <span th:if="${itemFormDto.status == T(com.melite.shop.Item.Domain.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
+                <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
                     판매중
                 </span>
-                <span th:if="${itemFormDto.status == T(com.melite.shop.Item.Domain.ItemSellStatus).SOLD_OUT}" class="badge btn-danger mgb-15" >
+                <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="badge btn-danger mgb-15" >
                     품절
                 </span>
                 <div id="itemName" class="h4" th:text="${itemFormDto.name}"></div>
@@ -94,11 +94,11 @@
                     <h5>결제 금액</h5>
                     <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
                 </div>
-                <div th:if="${itemFormDto.status == T(com.melite.shop.Item.Domain.ItemSellStatus).SELL}" class="text-right">
+                <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="text-right">
                     <button type="button" class="btn btn-light border border-primary btn-lg" onclick="">장바구니 담기</button>
                     <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
                 </div>
-                <div th:if="${itemFormDto.status == T(com.melite.shop.Item.Domain.ItemSellStatus).SOLD_OUT}" class="text-right">
+                <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
                     <button type="button" class="btn btn-danger btn-lg">품절</button>
                 </div>
             </div>
