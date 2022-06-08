@@ -4,6 +4,8 @@ import com.merit.meritShop.item.domain.*;
 import com.merit.meritShop.item.repository.ItemOptionRepository;
 import com.merit.meritShop.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,5 +70,9 @@ public class ItemService {
     public Item getItemByItemId(long id){
 
         return itemRepository.findById(id).orElseThrow(()->new NoSuchElementException());
+    }
+
+    public Page<Item> findAllItem(Pageable pageable){
+        return itemRepository.findAll(pageable);
     }
 }

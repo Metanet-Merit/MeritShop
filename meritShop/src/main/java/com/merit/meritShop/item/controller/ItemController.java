@@ -6,6 +6,9 @@ import com.merit.meritShop.item.repository.ItemOptionRepository;
 import com.merit.meritShop.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,12 +54,12 @@ public class ItemController {
         return "item/itemDetail";
     }
 
-    @GetMapping("/itemForm")
+    @GetMapping("/admin/itemForm")
     public String getItemForm(){
         return "item/itemForm";
     }
 
-    @PostMapping("/newItem")
+    @PostMapping("/admin/newItem")
     public String createItem(ItemFormDto dto, String[] optionName,String[] quantity , MultipartFile[] fileUpload) throws IOException {
 
         List<ItemOptionDto> list = new ArrayList<>();
@@ -79,7 +82,7 @@ public class ItemController {
         return "item/itemForm";
     }
 
-    @GetMapping("/updateItem/{id}")
+    @GetMapping("/admin/updateItem/{id}")
     public String edit(@PathVariable("id") long id, Model model){
         Item item = itemService.getItemByItemId(id);
         ItemFormDto itemFormDto = item.toItemFormDto();
@@ -102,7 +105,7 @@ public class ItemController {
         return "item/itemUpdateForm";
     }
 
-    @PostMapping("/updateItem")
+    @PostMapping("/admin/updateItem")
     public String updateItem(ItemFormDto dto, String[] itemOptionId,String[] optionName,String[] quantity , String[] itemImgId,MultipartFile[] fileUpload) throws IOException {
 
 
@@ -136,6 +139,15 @@ public class ItemController {
 
 
         return "mainPage/index";
+    }
+
+    @GetMapping("/admin/itemList")
+    String getAdminItemList(Model model){
+
+        PageRequest pageRequest =  PageRequest.of(0,8, Sort.by(Sort.Direction.DESC,"createdDate"));
+        Page<Item> itemList = itemService.findAllItem(pageRequest);
+        model.addAttribute("items",itemList);
+        return "item/adminItemList";
     }
 
 
