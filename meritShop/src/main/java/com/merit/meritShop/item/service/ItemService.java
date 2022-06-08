@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class ItemService {
     private final ItemImgService itemImgService;
 
 
+    @Transactional
     public void save(ItemFormDto dto, MultipartFile[] files) throws IOException {
         Item item = itemRepository.save(new Item().of(dto));
         List<ItemOption> itemOptionList =new ArrayList<>();
