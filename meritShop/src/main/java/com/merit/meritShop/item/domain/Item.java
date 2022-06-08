@@ -33,6 +33,8 @@ public class Item {
     private boolean shipping;
     private String imgUrl;
 
+    private double rate;
+
     @OneToMany(mappedBy = "item")
     private List<ItemOption> opt = new ArrayList<>();
 

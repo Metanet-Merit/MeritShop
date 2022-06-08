@@ -23,9 +23,6 @@ public class User {
     @Column(name="user_name")
     private String userName;
 
-    @Column(name="intra_id")
-    private String intraId;
-
     @Column(name="phone_number")
     private String phoneNumber;
 
@@ -45,6 +42,7 @@ public class User {
     @ColumnDefault("false")
     private boolean premium;
 
+    @ColumnDefault("0")
     private int point;
 
     private String addr1;
