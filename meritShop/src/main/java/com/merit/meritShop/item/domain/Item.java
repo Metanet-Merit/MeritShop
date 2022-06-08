@@ -1,5 +1,6 @@
 package com.merit.meritShop.item.domain;
 
+import com.merit.meritShop.common.domain.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -8,14 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 @DynamicInsert
 @NoArgsConstructor
 @Table(name="item")
-public class Item {
+public class Item extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
