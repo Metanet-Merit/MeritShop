@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .mypage-conts {
+            float: left;
+            width: 850px;
+            min-height: 640px;
+            padding: 0 29px 40px;
+            background: #fff;
+        }
+        a, address, blockquote, body, dd, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, img, input, label, li, ol, p, pre, select, span, strong, textarea, ul {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        user agent stylesheet
+        div {
+            display: block;
+        }
+        body, html {
+            word-spacing: -1px;
+            color: #666;
+            font-size: 14px;
+            line-height: 20px;
+            font-family: Montserrat,-apple-system,NotoSansCJKkr,AppleSDGothicNeo,Roboto,dotum,'돋움',sans-serif;
+            letter-spacing: -.04em;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+        }
+        .mypage-conts .title-area {
+            padding-top: 25px;
+        }
+
+        .title-area {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            padding: 36px 0 7px;
+            border-bottom: 1px solid #666;
+            font-size: 0;
+            line-height: 0;
+        }
+        .linezero {
+            border: 0!important;
+        }
+        .board-list-2s {
+            table-layout: fixed;
+            width: 100%;
+            border-top: 2px solid #d6d6d6;
+            border-bottom: 1px solid #e6e6e6;
+        }
+        .mgT20 {
+            margin-top: 20px!important;
+        }
+        table {
+            border-spacing: 0;
+            border: 0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        user agent stylesheet
+        table {
+            display: table;
+            border-collapse: separate;
+            box-sizing: border-box;
+            text-indent: initial;
+            border-spacing: 2px;
+            border-color: grey;
+        }
+        col {
+            display: table-column;
+        }
+        table {
+            border-spacing: 0;
+            border: 0;
+        }
+        thead {
+            display: table-header-group;
+            vertical-align: middle;
+            border-color: inherit;
+        }
+        table {
+            border-spacing: 0;
+            border: 0;
+            border-collapse: separate;
+            text-indent: initial;
+            border-spacing: 2px;
+        }
+        tr {
+            display: table-row;
+            vertical-align: inherit;
+            border-color: inherit;
+        }
+        .board-list-2s tr th {
+            padding: 11px 0 10px;
+            background: #fafafa;
+            color: #666;
+        }
+        .board-list-2s tr td, .board-list-2s tr th {
+            font-size: 14px;
+            line-height: 18px;
+        }
+        tbody {
+            display: table-row-group;
+            vertical-align: middle;
+            border-color: inherit;
+        }
+        .board-list-2s.new tr td.subject {
+            vertical-align: top;
+        }
+        .board-list-2s tr td.subject {
+            padding-left: 20px;
+            text-align: left;
+        }
+        .board-list-2s tr td {
+            padding: 30px 5px;
+            color: #333;
+            text-align: center;
+            border-top: 1px solid #e6e6e6;
+        }
+        .board-list-2s tr td, .board-list-2s tr th {
+            font-size: 14px;
+            line-height: 18px;
+        }
+        .board-list-2s tr td .area {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .board-list-2s tr td .area .thum {
+            float: left;
+            position: relative;
+            width: 85px;
+            height: 85px;
+            margin-right: 20px;
+            text-align: center;
+        }
+
+        a {
+            color: #666;
+            text-decoration: none;
+        }
+        .board-list-2s tr td .area .thum img {
+            width: auto!important;
+            max-width: 85px;
+            height: auto!important;
+            max-height: 85px;
+        }
+        .board-list-2s tr td .area .textus {
+            float: left;
+            width: 66%;
+            text-align: left;
+        }
+        .board-list-2s.new tr td .area .textus dl.data {
+            font-weight: 700;
+        }
+        .board-list-2s tr td .area .textus dl.data {
+            overflow: hidden;
+            margin-bottom: 7px;
+            text-indent: 0;
+        }
+        .board-list-2s.new tr td.subject .data {
+            padding-top: 0;
+        }
+        .board-list-2s tr td.subject .data {
+            padding: 5px 0 0;
+            text-indent: 0;
+            color: #888;
+        }
+        .board-list-2s tr td .data {
+            display: block;
+            text-indent: 10px;
+            color: #333;
+        }
+        .board-list-2s tr td .data, .board-list-2s tr td.data {
+            color: #888;
+        }
+        .board-list-2s tr td .area .textus .tit {
+            overflow: hidden;
+            height: 20px;
+            color: #777;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 700;
+        }
+        .board-list-2s tr td .area .textus a span {
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        .board-list-2s.new tr td .area .textus .txt.oneline {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .board-list-2s.new tr td .area .textus .txt_option {
+            font-size: 12px;
+            color: #888;
+            font-weight: 700;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .board-list-2s.new tr td .area .textus .txt_option em {
+            position: relative;
+            margin-right: 5px;
+            padding-right: 7px;
+            font-style: normal;
+        }
+        .board-list-2s.new tr td.subject {
+            vertical-align: top;
+        }
+
+        .board-list-2s tr td.subject {
+            padding-left: 20px;
+            text-align: left;
+        }
+        .board-list-2s tr td {
+            padding: 30px 5px;
+            color: #333;
+            text-align: center;
+            border-top: 1px solid #e6e6e6;
+        }
+        .board-list-2s tr td, .board-list-2s tr th {
+            font-size: 14px;
+            line-height: 18px;
+        }
+        .board-list-2s tr td .area {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .board-list-2s tr td .area .textus .rating {
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        .btn-review--small {
+            width: 80px;
+            line-height: 28px;
+            border: 1px solid #b2b8be;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #50585f;
+            font-size: 12px;
+            font-weight: 400;
+        }
+        button {
+            text-align: center;
+            color: #fff;
+        }
+        button, input[type=submit] {
+            border: 0;
+            padding: 0;
+            box-shadow: none;
+            cursor: pointer;
+        }
+        button, input[type=submit] {
+            font-family: Montserrat,-apple-system,NotoSansCJKkr,AppleSDGothicNeo,Roboto,sans-serif;
+            font-weight: 700;
+        }
+
+        button, input.button, input.image, input.submit, label {
+            cursor: pointer;
+        }
+        button, img, input, select, textarea {
+            border: 0;
+            vertical-align: top;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<div style="text-align: center" class="mypage-conts">
+    <div class="title-area linezero">
+        <h2 class="tit">리뷰</h2>
+    </div>
+    <table class="board-list-2s mgT20 new">
+        <caption>상품, 리뷰로 이루어진 리뷰 목록 표</caption>
+        <colgroup>
+            <col style="width:49%;">
+            <col style="width:39%;">
+            <col style="width:12%;">
+        </colgroup>
+        <thead>
+        <tr>
+            <th scope="col">상품</th>
+            <th scope="col" colspan="2">리뷰</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="subject">
+                <div class="area">
+                    <div class="area">
+                        <a class="thum" href="#" data-attr="리뷰^리뷰상품^상품클릭">
+                            <img style="width: 15px; height: 15px" src="https://image.oliveyoung.co.kr/uploads/images/goods/10/0000/0014/A00000014938397ko.jpg?l=ko" alt="[승관 Pick] 라네즈 네오 쿠션 매트 15g 5종 택1" onerror="common.errorImg(this);">
+                        </a>
+                        <div class="textus">
+                            <dl class="data review-data">
+                                <dt>구매일자</dt>
+                                <dd>구매일자 넣으세요</dd>
+                            </dl>
+                            <a class="" href="javascript:mypage.gdasList.moveGoodsDetailReview('A000000149383','리뷰_리뷰상품');" data-attr="리뷰^리뷰상품^상품클릭">
+                                <span class="tit">아이템 종류(카테고리)넣으세요</span>
+                                <span class="txt oneline">아이템 이름 넣으세요</span>
+
+                                <p class="txt_option"><em>옵션</em>옵션 이름 넣으세요</p>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="subject">
+                <div class="area">
+                    <div class="textus" style="width:90%;">
+                        <dl class="data review-data">
+                            <dt>작성일자</dt>
+                            <dd>리뷰 작성 일자 넣으세요</dd>
+                        </dl>
+                        <div class="rating">
+							<span class="txt"></span>
+                            <span class="point pt5"></span>
+                        </div>
+                     </div>
+                </div>
+            </td>
+            <td>
+                <button type="button" class="btn-review--small"  data-write-yn="Y" onclick="mypage.gdasCompleteList.appraisalModify(this);">리뷰수정</button><br>
+               <button type="button" class="btn-review--small" onclick="mypage.reviewerInfo.goReviewDetail('13513072')" data-attr="리뷰^리뷰보기^리뷰보기">리뷰보기</button><br>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pageing">
+        <strong title="현재 페이지">페이징처리</strong>
+    </div>
+
+
+    <!-- ## 리뷰 고도화 1차 ## : 삭제 -->
+
+    <form id="frmGdasList" name="frmGdasList">
+        <input type="hidden" id="goodsNo" name="goodsNo" value="">
+        <input type="hidden" id="ordNo" name="ordNo" value="">
+    </form>
+    <script type="text/javascript" src="https://www.oliveyoung.co.kr/pc-static-root/js/mypage/gdas.js?dumm=202206020002"></script>
+    <script type="text/javascript" src="https://www.oliveyoung.co.kr/pc-static-root/js/mypage/reviewerInfo.js?dumm=202206020002"></script>
+    <script>
+        $(document).ready(function(){
+            mypage.gdasCompleteList.init();
+
+            var gdasPopScrollY = sessionStorage.getItem("gdasPopScrollY");
+            if(gdasPopScrollY){ // 스크롤 위치값 존재 할 경우
+                window.scrollTo(0, gdasPopScrollY);
+                sessionStorage.removeItem("gdasPopScrollY");
+            }
+
+        });
+
+        function popLayerOpenReview(target){
+
+            var winH = $(window).height()/2;
+            var popLayer = $("#" + target);
+            $(popLayer).find('.popCont').css({'max-height': winH});
+
+            var popPos = $(popLayer).height()/2;
+            var popWid = $(popLayer).width()/2;
+            $(popLayer).css({'position': 'fixed', 'left':'50%' , 'margin-left':-(popWid) , 'top':'50%' , 'margin-top':-(popPos)}).show().parents('body').css({'overflow' : 'hidden'});
+            $('.dim').show();
+            $('.dim').bind('click', function(){
+                popLayerCloseReview(target);
+            });
+
+            $(window).resize(function(){
+                winH = $(window).height()/2;
+                $(popLayer).find('.popCont').css({'max-height': winH});
+                popPos =$(popLayer).height()/2;
+                popWid = $(popLayer).width()/2;
+                $(popLayer).css({'position': 'fixed', 'left':'50%' , 'margin-left':-(popWid) , 'top':'50%' , 'margin-top':-(popPos)})
+            });
+
+
+        };
+
+        function popLayerCloseReview(target){
+            var popLayer = $("#" + target);
+            $(popLayer).hide().parents('body').css({'overflow-y' : 'auto'});
+            $('.dim').hide();
+        };
+
+
+    </script>
+    <!-- ## 리뷰 고도화 1차 ## 블라인드 처리 알림 메세지  -->
+
+    <!-- ## 리뷰 고도화 1차  ## :  pc 공통 팝업 js 적용 필요 -->
+    <!-- ## 리뷰고도화 ## rw-form-wrap class 추가 및 팝업 사이즈 style 변경, 작성일 시 type-write class 추가 포함 -->
+    <div class="popup-contents rw-popup-blind" style="width:534px; margin-left:-267px ; display:none;" id="reviewBlind">
+        <div class="pop-conts type40">
+            <h1 class="ptit">블라인드 리뷰 운영정책</h1>
+            <button type="button" class="ButtonClose" onclick="popLayerCloseReview('reviewBlind'); return false;">팝업창 닫기</button>
+            <div class="rw-blind-txt">
+                <div class="inner">
+                    <span>아래 기준에 해당되거나, 신고 받은 리뷰는 별도의 안내없이 블라인드 처리될 수 있습니다.</span>
+                </div>
+                <div class="inner">
+                    <p>위법성 항목</p>
+                    <ul>
+                        <li>특정인의 명예를 훼손하거나 저작권을 침해한 경우</li>
+                        <li>개인정보를 포함한 경우 (연락처, 이메일, SNS, 주소 등)</li>
+                        <li>상업적 목적이 담긴 경우</li>
+                        <li>식품 등의 표시광고 법률에 따라, 제한되는 내용이 포함된 경우</li>
+                    </ul>
+                </div>
+                <div class="inner">
+                    <p>상품 무관 정보</p>
+                    <ul>
+                        <li>사용하지 않거나, 구매 상품과 다른 상품에 대한 리뷰<br>* 타제품을 객관적 근거없이 비방하거나 우수하다는 표현 포함</li>
+                        <li>배송/매장 서비스에 대한 내용으로만 이루어진 리뷰</li>
+                        <li>단순 문의사항이나 상품과 상관없는 텍스트, 사진첨부</li>
+                    </ul>
+                </div>
+                <div class="inner">
+                    <p>기타</p>
+                    <ul>
+                        <li>다른 상품 리뷰에 동일한 내용을 반복 기재한 경우</li>
+                        <li>비정상적인 구매패턴에 따른 리뷰 작성을 한 경우</li>
+                        <li>다른 사람에게 위화감을 주는 경우</li>
+                    </ul>
+                </div>
+            </div>
+
+            <button type="button" class="btn-close" onclick="popLayerCloseReview('reviewBlind'); return false;">닫기</button>
+
+        </div>
+    </div>
+
+    <!-- 공통 딤처리 -->
+    <div class="dim"></div>
+    <!-- //공통 딤처리 -->
+
+</div>
+</body>
+</html>
