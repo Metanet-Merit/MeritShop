@@ -21,16 +21,9 @@ public class MainController {
     {
         PageRequest pageRequest =  PageRequest.of(0,8, Sort.by(Sort.Direction.DESC,"createdDate"));
         Page<Item> itemList = itemRepository.findAll(pageRequest);
-        for(Item i : itemList){
-            System.out.println(i);
-        }
         model.addAttribute("items",itemList);
 
         return "mainPage/index";
     }
 
-    @GetMapping("/admin/itemList")
-    public String getAdminItemList(){
-        return "AdminItemList";
-    }
 }

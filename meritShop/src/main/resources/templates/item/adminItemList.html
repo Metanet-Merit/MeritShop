@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<th:block layout:fragment="content">
+
+
+            <!-- location -->
+            <div class="location"><a href="#">Home</a> &gt; <a href="#">Admin</a> &gt; <a href="#"><span class="txt_w">상품 관리</span></a></div>
+            <!-- location -->
+
+            <div class="title">
+                <span class="brd_rtop mgb10">
+					<span class="btn_orange"><a href="#">상품 추가</a></span>
+                </span>
+            </div>
+
+            <!-- search -->
+            <div class="search">
+                <strong>카테고리</strong>
+                <select name="" style="width:180px;">
+                    <option>Select Item</option>
+                </select>
+                <strong class="mgl50">Status</strong>
+                <select name="" style="width:180px;">
+                    <option>품   절</option>
+                    <option>판매 중</option>
+                    <option>준비 중</option>
+                </select><br />
+                <strong>상품 이름</strong>
+                <select name="" style="width:180px;">
+                    <option>상품 ID</option>
+                    <option>상품 이름</option>
+
+                </select>
+                <input name="" type="text" class="keyword" title="keyword" style="width:238px;" />
+                <span class="btn_search"><a href="#">Search</a></span>
+            </div>
+            <!-- search -->
+
+            <!-- table -->
+            <div class="title mgt20">
+                <h3>상품 리스트</h3>
+                <span class="brd_rtop">
+					Total List <span class="num">120</span>
+                </span>
+            </div>
+
+            <table class="brd">
+                <caption>상품 리스트</caption>
+                <colgroup>
+                    <col width="10%" />
+                    <col width="20%" />
+                    <col width="*" />
+                    <col width="20%" />
+                    <col width="12%" />
+                    <col width="10%" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>대표사진</th>
+                    <th>상품이름</th>
+                    <th>카테고리</th>
+                    <th>수량</th>
+                    <th>Edit</th>
+                </tr>
+                </thead>
+                <tbody th:each=" item:${items}">
+                <tr>
+                    <td th:text="${item.itemId}"></td>
+                    <td><img th:src="${item.imgUrl}" width="100" height="100" alt=""></td>
+                    <td th:text="${item.itemName}"></td>
+                    <td th:text="${item.category}"></td>
+                    <td><span class="btn_s_green"><a th:href="'/admin/updateItem/'+${item.itemId}">Edit</a></span></td>
+                </tr>
+
+                </tbody>
+            </table>
+            <!-- table -->
+
+            <!-- paging -->
+            <div class="paging">
+                <a href="#"><img src="" alt="first" /></a>
+                <a href="#"><img src="" alt="prev" /></a>
+                <span class="page_num">
+					<a href="#" class="on">1</a>
+					<a href="#">2</a>
+					<a href="#">3</a>
+					<a href="#">4</a>
+					<a href="#">5</a>
+					<a href="#">6</a>
+					<a href="#">7</a>
+					<a href="#">8</a>
+					<a href="#">9</a>
+					<a href="#">10</a>
+				</span>
+                <a href="#"><img src="" alt="next" /></a>
+                <a href="#"><img src="" alt="last" /></a>
+            </div>
+            <!-- paging -->
+</th:block>
+
+</html>
