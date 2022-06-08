@@ -138,7 +138,7 @@ public class ItemController {
         itemService.updateItem(dto,fileUpload,itemImgIdList,optIdList);
 
 
-        return "mainPage/index";
+        return "redirect:/admin";
     }
 
     @GetMapping("/admin/itemList")
