@@ -22,6 +22,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/mainPage/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -240,6 +241,7 @@
                     <h4 class="font-weight-semi-bold m-0">Order Total</h4>
                 </div>
                 <div class="card-body">
+                    <input type="hidden" id="order_id" th:value="${orders.orderId}">
                     <h5 class="font-weight-medium mb-3">주문 상품</h5>
                     <div class="d-flex justify-content-between" th:each=" orderItem :${orders.orderItemList} ">
                         <p th:text="${orderItem.item.itemName}"></p>
@@ -260,7 +262,7 @@
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
-                        <h5 class="font-weight-bold" th:text="'￦'+${orders.totalPrice}"></h5>
+                        <h5 class="font-weight-bold" id="totalPrice" th:text="'￦'+${orders.totalPrice}"></h5>
                     </div>
                 </div>
             </div>
@@ -277,13 +279,13 @@
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" name="payment" id="directcheck">
+                            <input type="radio" class="custom-control-input" name="payment" id="kakaoPay">
                             <label class="custom-control-label" for="kakaoPay" >kakaoPay</label>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
-                    <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
+                    <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" onclick="requestPay()">결제 하기</button>
                 </div>
             </div>
         </div>
@@ -370,15 +372,52 @@
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="mainPage/lib/easing/easing.min.js"></script>
-<script src="mainPage/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/mainPage/lib/easing/easing.min.js"></script>
+<script src="/mainPage/lib/owlcarousel/owl.carousel.min.js"></script>
 
 <!-- Contact Javascript File -->
-<script src="mainPage/mail/jqBootstrapValidation.min.js"></script>
-<script src="mainPage/mail/contact.js"></script>
+<script src="/mainPage/mail/jqBootstrapValidation.min.js"></script>
+<script src="/mainPage/mail/contact.js"></script>
 
 <!-- Template Javascript -->
-<script src="mainPage/js/main.js"></script>
+<script src="/mainPage/js/main.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script>
+
+    function requestPay() {
+        // IMP.request_pay(param, callback) 결제창 호출
+        console.log("0000");
+        var IMP = window.IMP; // 생략 가능
+        IMP.init("imp35544083"); // 예: imp00000000
+        //var name = document.querySelector("#itemName").textContent;
+        var total_price =document.querySelector("#totalPrice").textContent;
+        total_price= parseInt(total_price.substring(1,total_price.length));
+        var order_id =parseInt(document.querySelector("#order_id").value);
+        if(total_price<50000){
+            total_price += 3000;
+        }
+        IMP.request_pay({ // param
+            pg: "kakaopay.TC0ONETIME",
+            pay_method: "card",
+            merchant_uid: order_id,
+            name: "test",
+            amount: total_price,
+            buyer_email: "scalpi177@gmail.com",
+            buyer_name: "윤재현",
+            buyer_tel: "010-4**2-4242",
+            buyer_addr: "서울특별시 강남구 신사동",
+            buyer_postcode: "01181"
+        }, function (rsp) { // callback
+            if (rsp.success) {
+                alert("결제에 성공하였습니다. 에러 내용: " +  rsp.success);
+
+
+            } else {
+                alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+            }
+        });
+    }
+</script>
 </body>
 
 </html>

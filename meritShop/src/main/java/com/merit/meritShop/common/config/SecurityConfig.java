@@ -32,11 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter   {
 
 
         http
+
                 .authorizeRequests()
 //                .antMatchers( "/login").anonymous()
 //                .antMatchers(HttpMethod.GET,"/api/posts/**").anonymous()
 //                .antMatchers("/api/posts/**").hasAuthority("ROLE_USER")
-
                 .anyRequest().permitAll()
                 .and()
                 .cors()
