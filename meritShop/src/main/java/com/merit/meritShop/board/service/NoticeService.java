@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -26,19 +27,24 @@ public class NoticeService {
 
     //글 상세 페이지
     public Notice noticeDetail(Long NoticeId) {
-
-        return noticeRepository.findById(NoticeId).get();
+        try{
+            Optional<Notice> optionalNotice=noticeRepository.findById(NoticeId);
+            if(optionalNotice.isPresent()){
+                Notice notice=optionalNotice.get();
+                return notice;
+            }
+            else{
+                return null;
+            }
+        }catch(Exception e){
+            return null;
+        }
     }
 
-    //글 삭제
-    public void noticeDelete(Long noticeId) {
-
-        noticeRepository.deleteById(noticeId);
-    }
+    //글 수정
     public String noticeModify(Long noticeId,String noticeTitle,String noticeContent){
         try{
-
-            Notice notice=noticeRepository.findById(noticeId).get();
+            Notice notice = noticeRepository.findById(noticeId).get();
             notice.setTitle(noticeTitle);
             notice.setContent(noticeContent);
             noticeRepository.save(notice);
@@ -47,5 +53,11 @@ public class NoticeService {
         }catch(Exception e){
             return "err";
         }
+    }
+
+    //글 삭제
+    public void noticeDelete(Long noticeId) {
+
+        noticeRepository.deleteById(noticeId);
     }
 }

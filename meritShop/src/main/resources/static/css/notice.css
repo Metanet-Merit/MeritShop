@@ -1521,28 +1521,28 @@ pre {
 
 .table .thead-dark th {
   color: #fff;
-  background-color: #343a40;
-  border-color: #454d55; }
+  height: 30px;
 
+}
 .table .thead-light th {
   color: #495057;
-  background-color: #e9ecef;
-  border-color: #dee2e6; }
+  height: 30px;
+}
 
 .table-dark {
   color: #fff;
-  background-color: #343a40; }
+  background-color: #2e59d9; }
   .table-dark th,
   .table-dark td,
   .table-dark thead th {
-    border-color: #454d55; }
+    border-color: #2e59d9; }
   .table-dark.table-bordered {
     border: 0; }
   .table-dark.table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(255, 255, 255, 0.05); }
+    background-color: #2e59d9; }
   .table-dark.table-hover tbody tr:hover {
     color: #fff;
-    background-color: rgba(255, 255, 255, 0.075); }
+    background-color: #2e59d9 }
 
 @media (max-width: 575.98px) {
   .table-responsive-sm {
@@ -1596,7 +1596,7 @@ pre {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
+  color: #2e59d9;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
@@ -1638,7 +1638,7 @@ pre {
     opacity: 1; }
 
 select.form-control:focus::-ms-value {
-  color: #495057;
+  color: #2e59d9;
   background-color: #fff; }
 
 .form-control-file,
@@ -1730,7 +1730,7 @@ textarea.form-control {
   margin-top: 0.3rem;
   margin-left: -1.25rem; }
   .form-check-input:disabled ~ .form-check-label {
-    color: #6c757d; }
+    color: #2e59d9; }
 
 .form-check-label {
   margin-bottom: 0; }
@@ -8128,10 +8128,11 @@ a.text-dark:hover, a.text-dark:focus {
     .table-dark thead th,
     .table-dark tbody + tbody {
       border-color: #dee2e6; }
-  .table .thead-dark th {
-    color: inherit;
-    border-color: #dee2e6; } }
-
+  .tabz.thead-dark {
+    background-color: #2e59d9;
+    height: 15px;
+  }
+}
 body {
   font-family: "Poppins", Arial, sans-serif;
   font-size: 16px;
@@ -8219,7 +8220,9 @@ h1, h2, h3, h4, h5,
     min-width: 60px;
     min-height: 32px;
     border: none;
-    color: #fff;
-    background-color: #4f545c;
+    color: #2e59d9;
+    background-color: #fff;
+    border: 2px solid;
+    border-color: #2e59d9;
     transition: background-color .17s ease,color .17s ease;
   }

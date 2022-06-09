@@ -51,6 +51,9 @@ public class NoticeController {
     public String noticeDetail(Model model, @RequestParam Long noticeId) {
         //log.info(noticeId.toString());
         Notice notice=noticeService.noticeDetail(noticeId);
+        if(notice==null){
+            return "redirect:list";
+        }
         //log.info(notice.toString());
         model.addAttribute("notice",notice);
         return "notice/noticeDetail";

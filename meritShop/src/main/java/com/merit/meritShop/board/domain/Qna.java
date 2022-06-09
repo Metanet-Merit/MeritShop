@@ -1,5 +1,6 @@
 package com.merit.meritShop.board.domain;
 
+import com.merit.meritShop.item.domain.Item;
 import com.merit.meritShop.user.domain.User;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -39,4 +40,8 @@ public class Qna {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="item_id")
+    private Item item;
 }
