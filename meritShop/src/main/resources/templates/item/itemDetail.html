@@ -82,10 +82,10 @@
                 <hr class="my-4">
                 <div id="options">
                     option<br>
-                    <select name="" style="width:180px;">
+                    <select id="optionId" name="option" style="width:180px;">
                         <option>Select option</option>
                         <option th:each="option:${itemFormDto.options}"
-                                    th:value="${option?.optionName}"
+                                    th:value="${option?.itemOptionId}"
                                     th:utext="${option?.optionName}"></option>
                     </select>
                 </div>
@@ -127,7 +127,9 @@
         var url = "/order";
         var paramData = {
             itemId : $("#itemId").val(),
+            optionId : $("#optionId").val(),
             count : $("#count").val()
+
         };
         console.log(paramData)
         var param = JSON.stringify(paramData);
@@ -141,7 +143,8 @@
             cache   : false,
             success  : function(result, status){
 
-                location.href='/pay';
+                console.log(result);
+                location.href='/pay/'+result;
             },
             error : function(jqXHR, status, error){
 
