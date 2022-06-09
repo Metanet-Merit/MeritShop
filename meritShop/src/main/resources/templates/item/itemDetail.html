@@ -82,10 +82,10 @@
                 <hr class="my-4">
                 <div id="options">
                     option<br>
-                    <select name="" style="width:180px;">
+                    <select id="optionId" name="option" style="width:180px;">
                         <option>Select option</option>
                         <option th:each="option:${itemFormDto.options}"
-                                    th:value="${option?.optionName}"
+                                    th:value="${option?.itemOptionId}"
                                     th:utext="${option?.optionName}"></option>
                     </select>
                 </div>
@@ -127,7 +127,9 @@
         var url = "/order";
         var paramData = {
             itemId : $("#itemId").val(),
+            optionId : $("#optionId").val(),
             count : $("#count").val()
+
         };
         console.log(paramData)
         var param = JSON.stringify(paramData);
@@ -141,7 +143,8 @@
             cache   : false,
             success  : function(result, status){
 
-                location.href='/pay';
+                console.log(result);
+                location.href='/pay/'+result;
             },
             error : function(jqXHR, status, error){
 
@@ -161,7 +164,7 @@
         // IMP.request_pay(param, callback) 결제창 호출
         console.log("0000");
         var IMP = window.IMP; // 생략 가능
-        IMP.init("imp35544083"); // 예: imp00000000
+        IMP.init("imp355440836"); // 예: imp00000000
         var name = document.querySelector("#itemName").textContent;
         var price = parseInt(document.querySelector("#itemPrice").textContent);
         var count = parseInt(document.querySelector("#count").value);
