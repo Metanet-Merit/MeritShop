@@ -4,9 +4,12 @@ import com.merit.meritShop.item.domain.*;
 import com.merit.meritShop.item.repository.ItemOptionRepository;
 import com.merit.meritShop.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,7 @@ public class ItemService {
     private final ItemImgService itemImgService;
 
 
+    @Transactional
     public void save(ItemFormDto dto, MultipartFile[] files) throws IOException {
         Item item = itemRepository.save(new Item().of(dto));
         List<ItemOption> itemOptionList =new ArrayList<>();
@@ -66,5 +70,9 @@ public class ItemService {
     public Item getItemByItemId(long id){
 
         return itemRepository.findById(id).orElseThrow(()->new NoSuchElementException());
+    }
+
+    public Page<Item> findAllItem(Pageable pageable){
+        return itemRepository.findAll(pageable);
     }
 }

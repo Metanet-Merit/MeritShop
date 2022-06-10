@@ -7,6 +7,8 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,7 +38,19 @@ public class Orders {
     @JoinColumn(name="user_id")
     private User user;
 
+    @OneToMany(mappedBy = "orders")
+    private List<OrderItem> orderItemList ;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="coupon_id")
     private Coupon coupon;
+
+
+    public void updateTotalPrice(){
+        int total =0;
+        for(OrderItem item:orderItemList){
+            total+= item.getOrderItemPrice();
+        }
+        this.totalPrice =total;
+    }
 }

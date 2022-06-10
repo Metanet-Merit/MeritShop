@@ -28,9 +28,6 @@ public class OrderItem {
     @JoinColumn(name="order_id")
     private Orders orders;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="category_id")
-    private Category category;
 
     private int count;
 
