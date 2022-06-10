@@ -5,15 +5,17 @@ import lombok.Data;
 
 @Data
 public class OrderItemDto {
+    private Long orderId;
     private Long itemId;
-    private Long optionId;
+    private Long itemOptionId;
     private int count;
 
     @Override
     public String toString() {
         return "OrderItemDto{" +
-                "itemId=" + itemId +
-                ", optionId=" + optionId +
+                "orderId=" + orderId +
+                ", itemId=" + itemId +
+                ", optionId=" + itemOptionId +
                 ", count=" + count +
                 '}';
     }

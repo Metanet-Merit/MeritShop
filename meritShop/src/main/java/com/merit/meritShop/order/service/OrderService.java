@@ -23,6 +23,9 @@ public class OrderService {
     private final ItemRepository itemRepository;
     private final ItemOptionRepository itemOptionRepository;
 
+    public long getOrderId(){
+        return orderRepository.countAllBy()+1;
+    }
     public Orders findById(Long id){
         return orderRepository.findById(id).get();
     }
@@ -31,7 +34,7 @@ public class OrderService {
         List<OrderItem> list = new ArrayList<>();
 
         Item item = itemRepository.findById(dto.getItemId()).get();
-        ItemOption option = itemOptionRepository.findById(dto.getOptionId()).get();
+        ItemOption option = itemOptionRepository.findById(dto.getItemOptionId()).get();
         int remain =option.getQuantity()-dto.getCount();
         if(remain<0){
             throw new RuntimeException("재고부족");

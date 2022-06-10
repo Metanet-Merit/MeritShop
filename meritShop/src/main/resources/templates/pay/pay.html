@@ -179,23 +179,23 @@
 
                     <div class="col-md-6 form-group">
                         <label>주문자 이름</label>
-                        <input class="form-control" type="text" placeholder="고길동">
+                        <input id="buyer_name"class="form-control" type="text" placeholder="고길동">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>E-mail</label>
-                        <input class="form-control" type="text" placeholder="example@email.com">
+                        <input id="buyer_email"class="form-control" type="text" placeholder="example@email.com">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>휴대전화 번호</label>
-                        <input class="form-control" type="text" placeholder="010 1234 5678">
+                        <input id="buyer_tel"class="form-control" type="text" placeholder="010 1234 5678">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>주   소</label>
-                        <input class="form-control" type="text" placeholder="시/군/구">
+                        <input id="buyer_arr1" class="form-control" type="text" placeholder="시/군/구">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>상세 주소</label>
-                        <input class="form-control" type="text" placeholder="메타아파트 x동 x호">
+                        <input id="buyer_arr2"class="form-control" type="text" placeholder="메타아파트 x동 x호">
                     </div>
 
 
@@ -212,7 +212,7 @@
                 <div class="row">
 
                     <div class="col-md-6 form-group">
-                        <label>수취인 이름</label>
+                        <label>수령인 이름</label>
                         <input class="form-control" type="text" placeholder="홍길동">
                     </div>
                     <div class="col-md-6 form-group">
@@ -241,18 +241,20 @@
                     <h4 class="font-weight-semi-bold m-0">Order Total</h4>
                 </div>
                 <div class="card-body">
-                    <input type="hidden" id="order_id" th:value="${orders.orderId}">
+                    <input type="hidden" id="order_id" th:value="${orderId}">
                     <h5 class="font-weight-medium mb-3">주문 상품</h5>
-                    <div class="d-flex justify-content-between" th:each=" orderItem :${orders.orderItemList} ">
-                        <p th:text="${orderItem.item.itemName}"></p>
-                        <p th:text="${orderItem.count}"></p>
-                        <p th:text="${orderItem.orderItemPrice}"></p>
+                    <div class="d-flex justify-content-between" th:each=" orderItem :${payList} ">
+                        <input type="hidden" class="itemId" th:value="${orderItem.itemId}">
+                        <input type="hidden" class="itemOptionId" th:value="${orderItem.itemOptionId}">
+                        <p class="itemName" th:text="${orderItem.itemName}"></p>
+                        <p class="itemCount" th:value="${orderItem.count}" th:text="'X '+${orderItem.count}"></p>
+                        <p th:text="'￦'+${orderItem.price}"></p>
                     </div>
 
                     <hr class="mt-0">
                     <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium">Subtotal</h6>
-                        <h6 class="font-weight-medium" th:text="'￦'+ ${orders.totalPrice}"></h6>
+                        <h6 class="font-weight-medium" th:text="'￦'+ ${totalPrice}"></h6>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Shipping</h6>
@@ -262,7 +264,7 @@
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
-                        <h5 class="font-weight-bold" id="totalPrice" th:text="'￦'+${orders.totalPrice}"></h5>
+                        <h5 class="font-weight-bold" id="totalPrice" th:text="'￦'+${totalPrice}"></h5>
                     </div>
                 </div>
             </div>
@@ -389,28 +391,62 @@
         console.log("0000");
         var IMP = window.IMP; // 생략 가능
         IMP.init("imp35544083"); // 예: imp00000000
-        //var name = document.querySelector("#itemName").textContent;
+        var name = document.querySelector(".itemName").textContent;
         var total_price =document.querySelector("#totalPrice").textContent;
         total_price= parseInt(total_price.substring(1,total_price.length));
-        var order_id =parseInt(document.querySelector("#order_id").value);
+        //var order_id =parseInt(document.querySelector("#order_id").value);
+        var buyer_name = document.querySelector("#buyer_name").value;
+        var buyer_email = document.querySelector("#buyer_email").value;
+        var buyer_tel = document.querySelector("#buyer_tel").value;
+        var buyer_arr1 = document.querySelector("#buyer_arr1").value;
+        var buyer_arr2 = document.querySelector("#buyer_arr2").value;
+
+        var itemId = document.querySelector(".itemId").value;
+        var itemOptionId = document.querySelector(".itemOptionId").value;
+        var count = document.querySelector(".itemCount").textContent;
+        count = parseInt(count.substring(2,count.length));
+        console.log(itemId);
+        console.log(itemOptionId);
+        console.log(count);
+        //buyer_postcode: "01181"
         if(total_price<50000){
             total_price += 3000;
         }
         IMP.request_pay({ // param
             pg: "kakaopay.TC0ONETIME",
             pay_method: "card",
-            merchant_uid: order_id,
-            name: "test",
+            merchant_uid: "42062",
+            name: name,
             amount: total_price,
-            buyer_email: "scalpi177@gmail.com",
-            buyer_name: "윤재현",
-            buyer_tel: "010-4**2-4242",
-            buyer_addr: "서울특별시 강남구 신사동",
-            buyer_postcode: "01181"
+            buyer_email: buyer_email,
+            buyer_name: buyer_name,
+            buyer_tel: buyer_tel,
+            buyer_addr: buyer_arr1+buyer_arr2
+
         }, function (rsp) { // callback
             if (rsp.success) {
                 alert("결제에 성공하였습니다. 에러 내용: " +  rsp.success);
 
+                var paramData = {
+                    itemId: parseInt(itemId),
+                    orderId: parseInt(rsp.merchant_uid),
+                    itemOptionId: parseInt(itemOptionId),
+                    count: count
+
+                };
+                console.log(paramData)
+                var param = JSON.stringify(paramData);
+
+                jQuery.ajax({
+                    url: "http://localhost:8080/order", // 예: https://www.myservice.com/payments/complete
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    dataType : "json",
+                    data: param
+                }).done(function (data) {
+                    // 가맹점 서버 결제 API 성공시 로직
+                    alert("good");
+                })
 
             } else {
                 alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
