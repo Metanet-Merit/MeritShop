@@ -2,7 +2,7 @@ package com.merit.meritShop.user.controller;
 
 import com.merit.meritShop.common.controller.AbstractController;
 import com.merit.meritShop.common.domain.Result;
-import com.merit.meritShop.user.domain.ReviewFormDTO;
+import com.merit.meritShop.user.dto.ReviewFormDTO;
 import com.merit.meritShop.user.service.ReviewService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
@@ -29,7 +29,6 @@ public class reviewController extends AbstractController {
     @PostMapping("review")
     @ResponseBody
     public JSONObject addReview(@RequestBody ReviewFormDTO reviewFormDTO){
-
         Result result=reviewService.addReview(reviewFormDTO);
         return return2JSON(result);
     }

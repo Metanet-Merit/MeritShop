@@ -2,11 +2,12 @@ package com.merit.meritShop.user.service;
 
 import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.common.domain.ResultCode;
+import com.merit.meritShop.item.domain.Item;
 import com.merit.meritShop.item.repository.ItemRepository;
-import com.merit.meritShop.order.Repository.OrderItemRepository;
+import com.merit.meritShop.order.repository.OrderItemRepository;
 import com.merit.meritShop.order.domain.OrderItem;
 import com.merit.meritShop.user.domain.Review;
-import com.merit.meritShop.user.domain.ReviewFormDTO;
+import com.merit.meritShop.user.dto.ReviewFormDTO;
 import com.merit.meritShop.user.domain.User;
 import com.merit.meritShop.user.repository.ReviewRepository;
 import com.merit.meritShop.user.repository.UserRepository;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -40,11 +42,18 @@ public class ReviewService {
             List<ReviewFormDTO> reviewFormDTOList = new ArrayList<>();
 
             for (Review review : reviewList) {
-                String itemName = review.getOrderItem().getItem().getItemName();
-                ReviewFormDTO reviewFormDTO = new ReviewFormDTO();
+                OrderItem orderItem = review.getOrderItem();
+                Item item=orderItem.getItem();
 
-                reviewFormDTO.setContent(review.getContent());
-                reviewFormDTO.setOrderItemName(itemName);
+                ReviewFormDTO reviewFormDTO = ReviewFormDTO.builder()
+                                .content(review.getContent())
+                                .rate(review.getRate())
+                                .reviewDate(review.getCreatedDate())
+                                .orderDate(orderItem.getOrders().getOrderDate())
+                                .orderItemName(item.getItemName())
+                                .category(item.getCategory())
+                                        .build();
+
                 reviewFormDTOList.add(reviewFormDTO);
 
             }
