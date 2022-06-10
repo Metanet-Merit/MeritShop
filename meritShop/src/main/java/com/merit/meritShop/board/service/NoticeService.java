@@ -1,37 +1,63 @@
 package com.merit.meritShop.board.service;
 
-
 import com.merit.meritShop.board.domain.Notice;
-import com.merit.meritShop.board.domain.NoticeRepository;
-import com.merit.meritShop.board.dto.NoticeDto;
+import com.merit.meritShop.board.repository.NoticeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class NoticeService {
+
     private NoticeRepository noticeRepository;
 
-    @Transactional
-    public List<NoticeDto> getNoticelist() {
-        List<Notice> notices = noticeRepository.findAll();
-        List<NoticeDto> noticeDtoList = new ArrayList<>();
+    //글 목록
+    public List<Notice> noticeList() {
+        return noticeRepository.findAll();
+    }
 
-        for ( Notice notice : notices) {
-            NoticeDto noticeDto = NoticeDto.builder()
-                    .noticeId(notice.getNoticeId())
-                    .title(notice.getTitle())
-                    .content(notice.getContent())
-                    .reg_date(notice.getRegisterDate())
-                    .build();
+    //글 작성
+    public void write(Notice notice)  {
 
-            noticeDtoList.add(noticeDto);
+        noticeRepository.save(notice);
+    }
+
+    //글 상세 페이지
+    public Notice noticeDetail(Long NoticeId) {
+        try{
+            Optional<Notice> optionalNotice=noticeRepository.findById(NoticeId);
+            if(optionalNotice.isPresent()){
+                Notice notice=optionalNotice.get();
+                return notice;
+            }
+            else{
+                return null;
+            }
+        }catch(Exception e){
+            return null;
         }
+    }
 
-        return noticeDtoList;
+    //글 수정
+    public String noticeModify(Long noticeId,String noticeTitle,String noticeContent){
+        try{
+            Notice notice = noticeRepository.findById(noticeId).get();
+            notice.setTitle(noticeTitle);
+            notice.setContent(noticeContent);
+            noticeRepository.save(notice);
+            return "Success";
+
+        }catch(Exception e){
+            return "err";
+        }
+    }
+
+    //글 삭제
+    public void noticeDelete(Long noticeId) {
+
+        noticeRepository.deleteById(noticeId);
     }
 }
