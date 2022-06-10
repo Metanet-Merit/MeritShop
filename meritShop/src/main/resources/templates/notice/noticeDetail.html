@@ -1,202 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        * {
-
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        #Container {
-            overflow: hidden;
-            width: 100%;
-            min-width: 1020px;
-        }
-        #Contents {
-            width: 1020px;
-            height: 100%;
-            margin: 0 auto;
-        }
-        .sub_title_area.customer {
-            height: 100px;
-            background: #faeee1 url(https://www.oliveyoung.co.kr/pc-static-root/image/top/bg_customer_top.png) no-repeat 50% 0;
-        }.board-view-1s {
-             table-layout: fixed;
-             width: 100%;
-             border-top: 2px solid #888;
-             border-bottom: 2px solid #888;
-         }
-        .mgT40 {
-            margin-top: 40px!important;
-        }
-        table {
-            border-spacing: 0;
-            border: 0;
-        }
-        tbody {
-            display: table-row-group;
-            vertical-align: middle;
-            border-color: inherit;
-        }
-        tr {
-            display: table-row;
-            vertical-align: inherit;
-            border-color: inherit;
-        }
-        td {
-            display: table-cell;
-            vertical-align: inherit;
-        }
-        .board-view-1s>tbody>tr>td {
-            padding: 30px 20px;
-            color: #333;
-            font-size: 16px;
-            line-height: 26px;
-        }
-        .board-view-1s>tbody>tr>td .tit {
-            display: inline-block;
-            color: #333;
-            font-size: 22px;
-            line-height: 28px;
-        }
-        .board-view-1s>tbody>tr>td.data {
-            color: #888;
-            font-size: 14px;
-            text-align: right;
-            line-height: 18px;
-        }
-        .board-view-1s>tbody>tr>td.textus {
-            background: url(https://www.oliveyoung.co.kr/pc-static-root/image/comm/bar_dott7x1.gif) repeat-x 0 0;
-            word-break: break-all;
-        }
-        .board-view-1s>tbody>tr>td {
-            padding: 30px 20px;
-            color: #333;
-            font-size: 16px;
-            line-height: 26px;
-        }
-        .prev-next {
-            width: 100%;
-        }
-        ol, ul {
-            list-style: none;
-        }
-        .prev-next li {
-            overflow: hidden;
-            padding: 20px 0 20px 20px;
-            border-bottom: 1px solid #e6e6e6;
-            font-size: 0;
-            line-height: 0;
-        }
-        .area1sButton {
-            padding: 10px 0 0;
-            text-align: center;
-        }
-        .pdT30 {
-            padding-top: 30px!important;
-        }
-        label {
-            padding: 12px 12px 12px 0;
-            display: inline-block;
-        }
-        .container {
-            border-radius: 5px;
-            background-color: #f2f2f2;
-            padding: 20px;
-            width: 800px;
-            margin-left: 350px;
-        }
-
-        .col-25 {
-            float: left;
-            width: 25%;
-            margin-top: 6px;
-            text-align: center;
-        }
-
-        .col-75 {
-            float: left;
-            width: auto;
-            margin-top: 20px;
-            text-decoration: underline;
-            text-decoration-color: #4e555b;
-            text-decoration-thickness: 1px;
-        }
-
-        /* Clear floats after the columns */
-        .row:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-        </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/noticeDetail.css" type="text/css">
 </head>
-<body>
-<!--<div class="container">
-    <form>
-        <div class="row">
-            <div class="col-25">
-                <label for="title">제목</label>
-            </div>
-            <div class="col-75">
-                <div id="title" name="title" th:text="${notice.title}">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="content">내용</label>
-            </div>
-            <div class="col-75">
-                <div id="content" name="content" th:text="${notice.content}">
-                </div>
-            </div>
-        </div>
-        <br>
+<th:block layout:fragment="content">
+    <!-- Begin Page Content -->
+    <div id="Container">
 
-    </form>
-</div>-->
-<div id="Container">
-
-    <div id="Contents">
-        <div class="sub_title_area customer">
-            <h1>고객센터 <span>무엇을 도와드릴까요?</span></h1>
-        </div>
-        <table class="board-view-1s mgT40">
-            <colgroup>
-                <col style="width:80%;">
-                <col style="width:20%;">
-            </colgroup>
-            <tbody>
-            <tr>
-                <td>
-                    <span class="tit" id="title" name="title" th:text="${notice.title}"></span>
-                </td>
-                <td class="data">작성일 넣자</td>
-            </tr>
-            <tr>
-                <td class="textus" colspan="2">
-                    <div class="contEditor" id="content" name="content" th:text="${notice.content}">
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <!--<ul class="prev-next">
-            <li onclick="javascript:counsel.NoticeDetail.goDetail(this);">
-                <button type="button">다음글</button>
-                <strong class="FG03">이벤트 </strong><a href="javascript:void(0);" data-ntc-seq="34481"></a>
-            </li>
-            <li onclick="javascript:counsel.NoticeDetail.goDetail(this);">
-                <button type="button">이전글</button>
-                <strong class="FG01">일반 </strong><a href="javascript:void(0);" data-ntc-seq="34419">올리브영 연신내점 리뉴얼로 인한 영업 중단 안내</a>
-             </li>
-        </ul>
-        <div class="area1sButton pdT30">
-            <a href="javascript:counsel.NoticeDetail.goList();" class="btnGreen">목록보기</a>
-        </div>-->
-    </div>
-</div>
+        <div id="Contents">
+            <div class="sub_title_area customer">
+                <h1 style="margin-left: 100px; padding: 25px">공지사항</h1>
+            </div>
+            <table class="board-view-1s mgT40">
+                <colgroup>
+                    <col style="width:80%;">
+                    <col style="width:20%;">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td>
+                        <span class="tit" id="title" name="title" th:text="${notice.title}"></span>
+                    </td>
+                    <td class="data">작성일 넣자</td>
+                </tr>
+                <tr>
+                    <td class="textus" colspan="2">
+                        <div class="contEditor" id="content" name="content" th:text="${notice.content}">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="display: flex; flex-direction: row">
+                <div>
+                    <button class="list-btn" th:onclick="|location.href='@{/notice/list}'|">목록</button>
+                </div>
+                <div style="margin-left: 807px">
+                    <a th:href="@{/notice/modify/{noticeId}(noticeId=${notice.noticeId})}">
+                        <button class="mfy-btn">수정</button>
+                    </a>
+                    <a th:href="@{/notice/delete(noticeId=${notice.noticeId})}">
+                    <button class="del-btn">삭제</button>
+                    </a>
+                </div>
+                    <!--
+</a>-->
+            </div>
+</th:block>
+</html>
