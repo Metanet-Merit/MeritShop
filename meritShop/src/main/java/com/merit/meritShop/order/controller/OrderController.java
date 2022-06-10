@@ -34,4 +34,15 @@ public class OrderController {
 
         return "pay/pay";
     }
+
+    @GetMapping("/pay")
+    public String getPayForm(OrderItemDto dto, Model model){
+
+
+        System.out.println(dto);
+       // model.addAttribute("orders",orders);
+
+
+        return "pay/pay";
+    }
 }

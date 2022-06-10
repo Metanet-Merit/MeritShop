@@ -46,6 +46,6 @@ public class LoginController {
         response.addCookie(jwtToken);
         response.addCookie(userId);
         response.addCookie(intra);
-        response.sendRedirect("http://localhost:8080/main");
+        response.sendRedirect("http://localhost:8083/main");
     }
 }

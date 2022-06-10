@@ -47,6 +47,7 @@
             <div class="repImgDiv">
                 <img th:src="${itemImgDto[0].imgUrl}" class = "img-fluid rounded repImg" >
             </div>
+            <form action="/pay" id="frm">
 
             <div class="wd50">
                 <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
@@ -96,12 +97,13 @@
                 </div>
                 <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="text-right">
                     <button type="button" class="btn btn-light border border-primary btn-lg" onclick="">장바구니 담기</button>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
+                    <button type="button" class="btn btn-primary btn-lg"  id="order_btn">주문하기</button>
                 </div>
                 <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
                     <button type="button" class="btn btn-danger btn-lg">품절</button>
                 </div>
             </div>
+            </form>
         </div>
 
         <div class="jumbotron jumbotron-fluid mgt-30">
@@ -120,10 +122,32 @@
 </div>
 </div>
 <script>
-    function order(){
-        //  var token = $("meta[name='_csrf']").attr("content");
-        //   var header = $("meta[name='_csrf_header']").attr("content");
+    window.onload = function() {
+        document.getElementById('order_btn').onclick = function() {
+            document.getElementById('frm').submit();
+            return false;
+        };
+    };
 
+    const getCookieValue = (key) => {
+        let cookieKey = key + "=";
+        let result = "";
+        const cookieArr = document.cookie.split(";");
+
+        for(let i = 0; i < cookieArr.length; i++) {
+            if(cookieArr[i][0] === " ") {
+                cookieArr[i] = cookieArr[i].substring(1);
+            }
+
+            if(cookieArr[i].indexOf(cookieKey) === 0) {
+                result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
+                return result;
+            }
+        }
+        return result;
+    }
+    function order(){
+        var token = getCookieValue("Authorization");
         var url = "/order";
         var paramData = {
             itemId : $("#itemId").val(),
@@ -141,6 +165,9 @@
             data     : param,
             dataType : "json",
             cache   : false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", token);
+            },
             success  : function(result, status){
 
                 console.log(result);
