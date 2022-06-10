@@ -22,6 +22,7 @@ public class LoginService {
     public JwtResponseDto login (UserSignInDto userSignInDto) {
         User user = userRepository.findByEmail(userSignInDto.getEmail());
         UserToken usertoken = new UserToken(user);
+
         String token = jwtTokenProvider.generateToken(usertoken);
         JwtResponseDto jwtResponseDto = new JwtResponseDto(token, user.getUserId(), user.getEmail(), user.getUserName());
         return jwtResponseDto;

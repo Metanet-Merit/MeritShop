@@ -15,12 +15,10 @@ public class UserToken {
 
     private String email;
 
-    private String password;
 
     public UserToken(User entity) {
         this.id = entity.getUserId();
         this.email = entity.getEmail();
-        this.password = entity.getPassword();
     }
 
 }

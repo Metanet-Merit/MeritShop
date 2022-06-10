@@ -2,19 +2,24 @@ package com.merit.meritShop.user.controller;
 
 import com.merit.meritShop.common.config.JwtUtil;
 import com.merit.meritShop.common.dto.JwtResponseDto;
+import com.merit.meritShop.user.dto.ApiLoginRequestDto;
 import com.merit.meritShop.user.dto.UserSignInDto;
 import com.merit.meritShop.user.service.LoginService;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 @RequiredArgsConstructor
 @RequestMapping(value = "/user")
@@ -48,4 +53,6 @@ public class LoginController {
         response.addCookie(intra);
         response.sendRedirect("http://localhost:8083/main");
     }
+
+
 }
