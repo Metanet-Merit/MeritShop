@@ -12,4 +12,6 @@ public class UserSignInDto {
     private String email;
 
     private String password;
+
+    private String loginType;
 }

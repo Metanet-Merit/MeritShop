@@ -1,9 +1,11 @@
 package com.merit.meritShop.user.controller;
 
 
+import com.merit.meritShop.common.dto.JwtResponseDto;
+import com.merit.meritShop.user.dto.UserSignInDto;
+import com.merit.meritShop.user.service.LoginService;
 import com.merit.meritShop.user.service.SignUpService;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +25,9 @@ import java.security.SecureRandom;
 @RequiredArgsConstructor
 @RequestMapping(value = "/naver")
 @Controller
-public class NaverLoginController extends ApiLogin{
+public class NaverLoginController extends LoginCommon {
     private final SignUpService signUpService;
+    private final LoginService loginService;
 
     @Value("${spring.security.oauth2.client.registration.naver.client-id}")
     private String uid;
@@ -54,7 +56,7 @@ public class NaverLoginController extends ApiLogin{
     }
 
     @GetMapping("/login")
-    public ModelAndView callback(@RequestParam(name = "code") String code, @RequestParam(name = "state") String state, HttpServletRequest request, HttpServletResponse response) {
+    public void callback(@RequestParam(name = "code") String code, @RequestParam(name = "state") String state, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String query = "client_id=" + uid + "&"
                 + "client_secret=" + secret + "&"
                 + "code=" + code + "&"
@@ -65,19 +67,12 @@ public class NaverLoginController extends ApiLogin{
 
         ResponseEntity<String> responseEntity = getEntityByToken(token, authUrl);
         //System.out.println(responseEntity);
-        JSONObject jsonObject = new JSONObject(responseEntity.getBody());
-        JSONObject json = jsonObject.getJSONObject("response");
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("id", json.getString("id"));
-        mav.addObject("gender", json.getString("gender"));
-        mav.addObject("email", json.getString("email"));
-        mav.addObject("mobile", json.getString("mobile"));
-        mav.addObject("name", json.getString("name"));
-        mav.addObject("birthday", json.getString("birthday"));
-        mav.setViewName("naver");
+        //처음 들어온 경우 디비에 추가
+        UserSignInDto userSignInDto = signUpService.registerNaver(responseEntity);
+        //아니면 바로 로그인 설정
+        JwtResponseDto jwt = loginService.login(userSignInDto);
+        setCookieAndRedirectMain(jwt, request, response);
 
-        signUpService.registerNaver(responseEntity);
-        return mav;
     }
     public String generateState()
     {

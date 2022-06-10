@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class LoginService {
@@ -20,11 +22,15 @@ public class LoginService {
     JwtUtil jwtTokenProvider;
 
     public JwtResponseDto login (UserSignInDto userSignInDto) {
-        User user = userRepository.findByEmail(userSignInDto.getEmail());
-        UserToken usertoken = new UserToken(user);
+        Optional<User> user = userRepository.findByEmailAndLoginType(userSignInDto.getEmail(), userSignInDto.getLoginType());
+        if (user == null)
+            System.out.println("회원 없음"); //이후에 예외처리해야함
+        UserToken usertoken = new UserToken(user.get());
 
         String token = jwtTokenProvider.generateToken(usertoken);
-        JwtResponseDto jwtResponseDto = new JwtResponseDto(token, user.getUserId(), user.getEmail(), user.getUserName());
+        JwtResponseDto jwtResponseDto = new JwtResponseDto(token, user.get().getUserId(), user.get().getEmail(), user.get().getUserName());
         return jwtResponseDto;
     }
+
+
 }

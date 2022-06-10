@@ -1,19 +1,19 @@
 package com.merit.meritShop.user.controller;
 
+import com.merit.meritShop.common.dto.JwtResponseDto;
 import com.merit.meritShop.user.dto.ApiLoginRequestDto;
-import com.merit.meritShop.user.dto.UserSignUpDto;
+import com.merit.meritShop.user.dto.UserSignInDto;
 import com.merit.meritShop.user.service.LoginService;
 import com.merit.meritShop.user.service.SignUpService;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,8 +23,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping(value = "/google")
-public class GoogleLoginController extends ApiLogin {
+public class GoogleLoginController extends LoginCommon {
     private final SignUpService signUpService;
+    private final LoginService loginService;
 
     @Value("${google.auth.url}")
     private String googleAuthUrl;
@@ -63,8 +64,8 @@ public class GoogleLoginController extends ApiLogin {
     }
 
     @GetMapping(value = "/login")
-    public ModelAndView redirectGoogleLogin(
-            @RequestParam(value = "code") String authCode) {
+    public void redirectGoogleLogin(@RequestParam(value = "code") String authCode
+            , HttpServletRequest request, HttpServletResponse response) throws IOException {
         ApiLoginRequestDto requestParams = ApiLoginRequestDto.builder()
                 .clientId(googleClientId)
                 .clientSecret(googleSecret)
@@ -79,11 +80,9 @@ public class GoogleLoginController extends ApiLogin {
         String GOOGLE_USERINFO_REQUEST_URL="https://www.googleapis.com/oauth2/v2/userinfo";
 
         ResponseEntity<String> responseEntity = getEntityByToken(token, GOOGLE_USERINFO_REQUEST_URL);
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("google");
-        mav.addObject("response", responseEntity.toString());
-        signUpService.registerGoogle(responseEntity);
-        return mav;
+        UserSignInDto userSignInDto = signUpService.registerGoogle(responseEntity);
+        JwtResponseDto jwt = loginService.login(userSignInDto);
+        setCookieAndRedirectMain(jwt, request, response);
     }
 
 

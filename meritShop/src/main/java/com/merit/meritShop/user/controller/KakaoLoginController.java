@@ -1,5 +1,8 @@
 package com.merit.meritShop.user.controller;
 
+import com.merit.meritShop.common.dto.JwtResponseDto;
+import com.merit.meritShop.user.dto.UserSignInDto;
+import com.merit.meritShop.user.service.LoginService;
 import com.merit.meritShop.user.service.SignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,16 +11,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RequiredArgsConstructor
 @Controller
 @RequestMapping(value = "/kakao")
-public class KakaoLoginController extends ApiLogin {
+public class KakaoLoginController extends LoginCommon {
     private final SignUpService signUpService;
+    private final LoginService loginService;
     @Value("${kakao.redirect.uri}")
     private String kakaoRedirectUrl;
 
@@ -43,8 +47,8 @@ public class KakaoLoginController extends ApiLogin {
     }
 
     @GetMapping(value = "/login")
-    public ModelAndView redirectGoogleLogin(
-            @RequestParam(value = "code") String authCode) {
+    public void redirectGoogleLogin(@RequestParam(value = "code") String authCode
+            , HttpServletRequest request, HttpServletResponse response) throws IOException {
         String query = "client_id=" + kakaoClientId + "&"
                 + "redirect_uri=" + kakaoRedirectUrl + "&"
                 + "code=" + authCode;
@@ -53,10 +57,8 @@ public class KakaoLoginController extends ApiLogin {
         //System.out.println(token);
         ResponseEntity<String> responseEntity = getEntityByToken(token, kakapRequestUrl);
        // System.out.println(responseEntity);
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("kakao");
-        mav.addObject("response", responseEntity.toString());
-        signUpService.registerKakao(responseEntity);
-        return mav;
+        UserSignInDto userSignInDto = signUpService.registerKakao(responseEntity);
+        JwtResponseDto jwt = loginService.login(userSignInDto);
+        setCookieAndRedirectMain(jwt, request, response);
     }
 }

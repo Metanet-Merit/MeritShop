@@ -19,6 +19,8 @@ public class SignUpController {
 
         @PostMapping("/signup")
         public String register(UserSignUpDto userSignUpDto){
+                if (signUpService.isExist(userSignUpDto.getEmail(), "local"))
+                        System.out.println("중복회원");
                 signUpService.save(userSignUpDto);
                 return "login/login";
         }
