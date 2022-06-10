@@ -56,10 +56,10 @@ public class QnaService {
    }
    //문의사항 수정_user
     public String qnaModify(QnaDTO qnaDTO) {
-       try{
+       try {
            Optional<Qna> optionalQna=qnaRepository.findById(qnaDTO.getQnaId());
 
-           if(optionalQna.isPresent()){
+           if(optionalQna.isPresent()) {
                Qna qna=optionalQna.get();
 
                qna.setContent(qnaDTO.getContent());
@@ -67,16 +67,15 @@ public class QnaService {
                qnaRepository.save(qna);
 
                return "success";
-           }
-           else{
+           } else{
                return "qna_not_exist";
            }
-       }catch(Exception e){
+       } catch(Exception e){
            return "dbErr";
        }
 
     }
-
+    //삭제
     public String qnaDelete(Long qnaId){
        try{
             Optional<Qna> optionalQna=qnaRepository.findById(qnaId);
@@ -84,12 +83,12 @@ public class QnaService {
                 Qna qna=optionalQna.get();
                 qnaRepository.delete(qna);
                 return "success";
-            }else {
+            } else {
                 return "qna_not_exist_err";
             }
        } catch (Exception e) {
             return "dbErr";
-        }
-   }
+       }
+    }
 
 }

@@ -14,7 +14,7 @@ public class QnaController {
     @Autowired
     QnaService qnaService;
 
-    //내 문의사항 목록
+    //유저 문의사항 목록
     @GetMapping("/qnas")
     public String getQnas(Qna qna,Model model){
         List<Qna> qnaList=qnaService.qnaList();
@@ -31,45 +31,43 @@ public class QnaController {
             Long id=qna.getItem().getItemId();
             return "redirect: /item/{id}";
         }
-        else{
+        else {
             return "qna/qnaList";
 
         }
     }
-
-
-
     //관리자 문의사항 답변
     @PostMapping("/reply")
     public String reply(QnaDTO qnaDTO,Model model){
-        String result=qnaService.reply(qnaDTO);
-        if (result=="success"){
-            Long qnaId=qnaDTO.getQnaId();
+        String result = qnaService.reply(qnaDTO);
+        if (result == "success") {
+            Long qnaId = qnaDTO.getQnaId();
+
             return "redirect:qna/detail?qnaId=qnaId";
-        }else{
+        } else {
             model.addAttribute("err","err");
             return "qna/qnaList";
         }
     }
 
     @GetMapping("/qnaDelete")
-    public String qnaDelete(@RequestParam Long qnaId){
-        String result=qnaService.qnaDelete(qnaId);
-        if(result=="success"){
+    public String qnaDelete(@RequestParam Long qnaId) {
+        String result = qnaService.qnaDelete(qnaId);
+        if(result == "success"){
             return "qna/qnaList";
         }
-        else{
+        else {
             return "qna/qnaList";
         }
     }
 
     @GetMapping("/qnaModify")
-    public String modifyQna(QnaDTO qnaDTO){
-        String result=qnaService.qnaModify(qnaDTO);
-        if(result=="success"){
+    public String modifyQna(QnaDTO qnaDTO) {
+        String result = qnaService.qnaModify(qnaDTO);
+        if(result == "success"){
             return"qna/qnaList";
         }
-        else{
+        else {
             return"qna/qnaList";
         }
     }
