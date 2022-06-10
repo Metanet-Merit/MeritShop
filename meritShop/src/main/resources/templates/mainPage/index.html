@@ -318,7 +318,7 @@
         </div>
 
         <div class="row px-xl-5 pb-3" >
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1" th:each=" item:${items}">
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1" th:each=" item:${items}" th:onclick=" 'location.href='+'\''+@{'/item/'+${item.itemId}}+'\''" >
                 <div class="card product-item border-0 mb-4">
                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                         <!--/*@thymesVar id="itemUrl" type=""*/-->

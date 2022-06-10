@@ -98,7 +98,6 @@ public class ItemController {
         itemFormDto.setOptions(itemOptionDtoList);
 
 
-
         model.addAttribute("itemFormDto",itemFormDto);
         model.addAttribute("itemImgDto",itemImgDto);
 
@@ -110,6 +109,16 @@ public class ItemController {
 
 
         List<ItemOptionDto> list = new ArrayList<>();
+
+        for(int i=0; i<itemOptionId.length; i++){
+            optionName[i] =optionName[i].replace("<","&lt;");
+            optionName[i] =optionName[i].replace(">","&gt;");
+            optionName[i] =optionName[i].replace("&","%amp;");
+            optionName[i] =optionName[i].replace("'","&#x27;");
+            optionName[i] =optionName[i].replace("/","&#x2F;");
+
+            itemOptionRepository.updateOptionNameQuantity(optionName[i],Long.parseLong(itemOptionId[i]),Integer.parseInt(quantity[i]));
+        }
 
         for(int i=itemOptionId.length; i<optionName.length;i++){
             optionName[i] =optionName[i].replace("<","&lt;");
@@ -138,7 +147,7 @@ public class ItemController {
         itemService.updateItem(dto,fileUpload,itemImgIdList,optIdList);
 
 
-        return "mainPage/index";
+        return "redirect:/admin";
     }
 
     @GetMapping("/admin/itemList")
