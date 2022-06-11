@@ -11,6 +11,7 @@ public enum ResultCode {
     //유저 관련 오류 200번대
     USER_NOT_EXISTS(200,"존재하지 않는 유저입니다"),
 
+    ORDER_NOT_EXISTS(300,"존재하지 않는 주문입니다."),
 
     //기타 에러
     DB_ERROR(9998, "DB 오류입니다."),
