@@ -20,7 +20,6 @@ import java.util.List;
 @Table(name="orders")
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="order_id")
     private Long orderId;
 
@@ -38,7 +37,7 @@ public class Orders {
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToMany(mappedBy = "orders")
+    @OneToMany(mappedBy = "orders",cascade = CascadeType.ALL)
     private List<OrderItem> orderItemList ;
 
     @OneToOne(fetch = FetchType.LAZY)

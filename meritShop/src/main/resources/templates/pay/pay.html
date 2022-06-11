@@ -268,6 +268,14 @@
                     </div>
                 </div>
             </div>
+            <div id="couponbox">
+                사용 가능한  쿠폰 보기<br>
+                <select name="" style="width:180px;">
+                    <option>Select coupon</option>
+                </select>
+            </div>
+            <hr class="my-4">
+
             <div class="card border-secondary mb-5">
                 <div class="card-header bg-secondary border-0">
                     <h4 class="font-weight-semi-bold m-0">Payment</h4>
@@ -391,8 +399,7 @@
         console.log("0000");
         var IMP = window.IMP; // 생략 가능
         IMP.init("imp35544083"); // 예: imp00000000
-        var name = document.querySelector(".itemName").textContent;
-        var total_price =document.querySelector("#totalPrice").textContent;
+         var total_price =document.querySelector("#totalPrice").textContent;
         total_price= parseInt(total_price.substring(1,total_price.length));
         //var order_id =parseInt(document.querySelector("#order_id").value);
         var buyer_name = document.querySelector("#buyer_name").value;
@@ -401,13 +408,12 @@
         var buyer_arr1 = document.querySelector("#buyer_arr1").value;
         var buyer_arr2 = document.querySelector("#buyer_arr2").value;
 
-        var itemId = document.querySelector(".itemId").value;
-        var itemOptionId = document.querySelector(".itemOptionId").value;
-        var count = document.querySelector(".itemCount").textContent;
-        count = parseInt(count.substring(2,count.length));
-        console.log(itemId);
-        console.log(itemOptionId);
-        console.log(count);
+        var name = document.querySelectorAll(".itemName");
+        var itemId = document.querySelectorAll(".itemId");
+        var itemOptionId = document.querySelectorAll(".itemOptionId");
+        var count = document.querySelectorAll(".itemCount");
+
+       // count = parseInt(count.substring(2,count.length));
         //buyer_postcode: "01181"
         if(total_price<50000){
             total_price += 3000;
@@ -415,8 +421,8 @@
         IMP.request_pay({ // param
             pg: "kakaopay.TC0ONETIME",
             pay_method: "card",
-            merchant_uid: "42062",
-            name: name,
+            merchant_uid: "430630",
+            name: name[0].textContent+"등 "+name.length+" 종",
             amount: total_price,
             buyer_email: buyer_email,
             buyer_name: buyer_name,
@@ -426,26 +432,36 @@
         }, function (rsp) { // callback
             if (rsp.success) {
                 alert("결제에 성공하였습니다. 에러 내용: " +  rsp.success);
+                var paramData = [];
 
-                var paramData = {
-                    itemId: parseInt(itemId),
-                    orderId: parseInt(rsp.merchant_uid),
-                    itemOptionId: parseInt(itemOptionId),
-                    count: count
+                for(let i=0; i<name.length; i++) {
+                    var Data = {
+                        itemId: parseInt(itemId[i].value),
+                        itemOptionId: parseInt(itemOptionId[i].value),
+                        count: parseInt(count[i].textContent.substring(2,count[i].textContent.length))
 
+                    };
+                    paramData.push(Data);
+                }
+                var payFormDto ={
+                    orderItemDtoList: paramData,
+                    orderId: rsp.merchant_uid
                 };
-                console.log(paramData)
-                var param = JSON.stringify(paramData);
+
+                console.log(payFormDto)
+                 payFormDto = JSON.stringify(payFormDto);
+                console.log(payFormDto)
 
                 jQuery.ajax({
                     url: "http://localhost:8080/order", // 예: https://www.myservice.com/payments/complete
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     dataType : "json",
-                    data: param
+                    data: payFormDto
                 }).done(function (data) {
                     // 가맹점 서버 결제 API 성공시 로직
                     alert("good");
+                    location.href="/main";
                 })
 
             } else {

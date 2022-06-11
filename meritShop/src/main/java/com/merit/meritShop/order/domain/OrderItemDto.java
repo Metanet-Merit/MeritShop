@@ -3,9 +3,10 @@ package com.merit.meritShop.order.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class OrderItemDto {
-    private Long orderId;
+public class OrderItemDto implements Serializable {
     private Long itemId;
     private Long itemOptionId;
     private int count;
@@ -13,8 +14,7 @@ public class OrderItemDto {
     @Override
     public String toString() {
         return "OrderItemDto{" +
-                "orderId=" + orderId +
-                ", itemId=" + itemId +
+                " itemId=" + itemId +
                 ", optionId=" + itemOptionId +
                 ", count=" + count +
                 '}';
