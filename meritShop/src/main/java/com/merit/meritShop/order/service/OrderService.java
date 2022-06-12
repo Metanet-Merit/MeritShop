@@ -7,8 +7,8 @@ import com.merit.meritShop.item.repository.ItemRepository;
 import com.merit.meritShop.order.domain.OrderItem;
 import com.merit.meritShop.order.domain.OrderItemDto;
 import com.merit.meritShop.order.domain.Orders;
-import com.merit.meritShop.order.repository2.OrderItemRepository;
-import com.merit.meritShop.order.repository2.OrderRepository;
+import com.merit.meritShop.order.repository.OrderItemRepository;
+import com.merit.meritShop.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

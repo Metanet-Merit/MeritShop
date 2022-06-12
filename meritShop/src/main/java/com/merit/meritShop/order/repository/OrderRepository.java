@@ -1,4 +1,4 @@
-package com.merit.meritShop.order.repository2;
+package com.merit.meritShop.order.repository;
 
 import com.merit.meritShop.order.domain.Orders;
 import com.merit.meritShop.user.domain.User;
