@@ -4,7 +4,7 @@ import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.common.domain.ResultCode;
 import com.merit.meritShop.item.domain.Item;
 import com.merit.meritShop.item.repository.ItemRepository;
-import com.merit.meritShop.order.repository.OrderItemRepository;
+import com.merit.meritShop.order.repository2.OrderItemRepository;
 import com.merit.meritShop.order.domain.OrderItem;
 import com.merit.meritShop.user.domain.Review;
 import com.merit.meritShop.user.dto.ReviewFormDTO;
@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
