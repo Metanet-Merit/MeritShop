@@ -2,7 +2,6 @@ package com.merit.meritShop.order.repository;
 
 import com.merit.meritShop.order.domain.OrderItem;
 import com.merit.meritShop.order.domain.Orders;
-import com.merit.meritShop.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
