@@ -1,6 +1,8 @@
 package com.merit.meritShop.common.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Result<T> {
 
     private final T resultObject;
@@ -12,18 +14,34 @@ public class Result<T> {
         this.resultCode = errorCode;
     }
 
+    @JsonIgnore
     public T getResultObject() {
         return resultObject;
     }
 
+    @JsonIgnore
     public ResultCode getResultCode() {
         return resultCode;
     }
 
+    public int getRtnCd() {
+        return resultCode.getCode();
+    }
+
+    public String getRtnMsg() {
+        return resultCode.getMessage();
+    }
+
+    public T getRtnObj() {
+        return resultObject;
+    }
+
+    @JsonIgnore
     public boolean isSuccess() {
         return ResultCode.Success.equals(this.resultCode);
     }
 
+    @JsonIgnore
     public boolean isNotSuccess() {
         return !isSuccess();
     }
