@@ -3,180 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        .prd_detail_cont {
-            padding: 40px 0 0;
-        }
-        .tabConts {
-            display: none;
-        }
-        a, address, blockquote, body, dd, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, img, input, label, li, ol, p, pre, select, span, strong, textarea, ul {
-            margin: 0;
-            padding: 0;
-            border: 0;
-        }
-        .tabConts.show {
-            display: block;
-        }
-        .prd_qna_tit .btnInquiry {
-            position: absolute;
-            top: 5px;
-            right: 0;
-            height: 34px;
-            padding: 0 20px 0 40px;
-            font-size: 16px;
-            background: #9bce26 url(https://www.oliveyoung.co.kr/pc-static-root/image/comm/ico_inquiry.png) no-repeat 15px 50%;
-            line-height: 34px;
-            border-radius: 5px;
-        }
-        .prd_qna_list {
-            margin: 18px 0 0;
-            border-top: 1px solid #e5e5e5;
-        }
-        ol, ul {
-            list-style: none;
-        }
-        .prd_qna_list>li {
-            border-bottom: 1px solid #e5e5e5;
-        }
-        li {
-            display: list-item;
-            text-align: -webkit-match-parent;
-        }
-        .prd_qna_list .qna_tit_box {
-            display: table-row;
-        }
-        .prd_qna_list .qna_tit_box .qna_question {
-            display: table-cell;
-            width: 765px;
-            vertical-align: middle;
-        }
-        .prd_qna_list .qna_tit_box .qna_flag {
-            display: inline-block;
-            width: 70px;
-            height: 22px;
-            line-height: 20px;
-            font-size: 12px;
-            color: #fff;
-            text-align: center;
-            background: #aaa;
-            border-radius: 11px;
-            vertical-align: middle;
-        }
-        .prd_qna_list .qna_tit_box .qna_question>a {
-            display: inline-block;
-            max-width: 620px;
-            margin-left: 7px;
-            font-size: 16px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            vertical-align: middle;
-        }
-        a {
-            color: #666;
-            text-decoration: none;
-        }
-        .prd_qna_list .qna_tit_box .tx_userid {
-            display: table-cell;
-            width: 170px;
-            height: 80px;
-            text-align: center;
-            vertical-align: middle;
-            color: #aaa;
-        }
-        .prd_qna_list .qna_tit_box .tx_userid>span {
-            display: block;
-        }
-        .prd_qna_list .qna_tit_box .tx_date {
-            display: table-cell;
-            width: 85px;
-            height: 80px;
-            text-align: center;
-            vertical-align: middle;
-            color: #aaa;
-        }
-        .prd_qna_list .qna_tit_box .qna_flag.complete {
-            background: #9bce26;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/item.css" type="text/css">
+
 </head>
 <body>
-<div class="tabConts prd_detail_cont show" id="qnaContentsArea">
-    <div class="prd_qna_tit">
-        <button class="btnInquiry goods_qna_inquiry" onclick="goods.detail.qna.moveGoodsQnaRegPage('');">상품문의</button>
+<div class="tabList">
+<ul class="prd_detail_tab" id="tabList">
+    <li class="on" id="productInfo">
+        <a href="#tab1" class="goods" data-tap="tab-1">상품설명
+        </a>
+    </li>
+    <li id="reviewInfo">
+        <a href="#tab2" class="goods" data-tap="tab-2">리뷰
+            <span>(843)</span>
+        </a>
+    </li>
+    <li id="qnaInfo">
+        <a href="#tab3" class="goods" data-tap="tab-3">Q&amp;A
+            <span>(19)</span>
+        </a>
+    </li>
+</ul>
+    <div class="prd_detail_cont" id="tabContent">
+        <div>상품설명 상세</div>
+        <div style="display: none">리뷰 상세</div>
+        <div style="display: none">
+        <div class="prd_qna_tit">
+            <button class="btnInquiry goods_qna_inquiry" onclick="#">상품문의</button>
+        </div>
+        <ul class="prd_qna_list" id="prd_qna_list">
+            //보이는 화면
+            <li>
+                <div class="qna_tit_box">
+                    <p class="qna_question">
+                        <span class="qna_flag">답변여부 넣기</span>
+                        <a href="javascript:;" class="completeBind">qna title</a>
+                    </p>
+                    <p class="tx_userid">
+                        <span>user_name</span>
+
+                    </p><p class="tx_date">registerDate</p>
+                </div>
+                //title 클릭했을 때 보이는 내용들
+                <div class="qna_answer_box">
+                    <div class="tx_question">
+                        <span class="ico_qna question">Q</span>
+                        qna content
+                    </div>
+                </div>
+            </li>
+            //답변완료 보이는 화면
+            <li class="show">
+                <div class="qna_tit_box">
+                    <p class="qna_question">
+                        <span class="qna_flag">답변여부 넣기</span>
+                        <a href="javascript:;" class="completeBind">qna title</a>
+                    </p>
+                    <p class="tx_userid">
+                        <span>user_name</span>
+
+                    </p><p class="tx_date">registerDate</p>
+                </div>
+                //title 클릭했을 때 보이는 내용들
+                <div class="qna_answer_box">
+                    <div class="tx_question">
+                        <span class="ico_qna question">Q</span>
+                        qna content
+                    </div>
+                    <div class="tx_answer">
+                        <span class="ico_qna answer">reply</span>
+                        qna reply
+                    </div>
+                </div>
+            </li>
+        </ul>
+        </div>
     </div>
-    <ul class="prd_qna_list" id="prd_qna_list">
-        //보이는 화면
-        <li>
-            <div class="qna_tit_box">
-                <p class="qna_question">
-                    <span class="qna_flag">답변여부 넣기</span>
-                    <a href="javascript:;" class="completeBind">qna title</a>
-                </p>
-                <p class="tx_userid">
-                    <span>user_name</span>
-
-                </p><p class="tx_date">registerDate</p>
-            </div>
-            //title 클릭했을 때 보이는 내용들
-            <div class="qna_answer_box">
-                <div class="tx_question">
-                    <span class="ico_qna question">Q</span>
-                    qna content
-                </div>
-            </div>
-        </li>
-        //답변완료 보이는 화면
-        <li class="show">
-            <div class="qna_tit_box">
-                <p class="qna_question">
-                    <span class="qna_flag">답변여부 넣기</span>
-                    <a href="javascript:;" class="completeBind">qna title</a>
-                </p>
-                <p class="tx_userid">
-                    <span>user_name</span>
-
-                </p><p class="tx_date">registerDate</p>
-            </div>
-            //title 클릭했을 때 보이는 내용들
-            <div class="qna_answer_box">
-                <div class="tx_question">
-                    <span class="ico_qna question">Q</span>
-                    qna content
-                </div>
-                <div class="tx_answer">
-                    <span class="ico_qna answer">reply</span>
-                    qna reply
-                </div>
-            </div>
-        </li>
-    </ul>
+</div>
     <div class="pageing">
         <strong title="현재 페이지">1</strong>
 
         <a href="javascript:void(0);" data-page-no="2">전체페이지 수</a>
     </div>
+<script>
+    const tabMenu = document.querySelectorAll('#tabList>li');
 
-    <script type="text/javascript">
-        var _ajax = common.Ajax;
-        var _ajaxUrl = 'https://www.oliveyoung.co.kr/store/';
-        var _qnaGoodsNo = "";
+    const tabContent = document.querySelectorAll('#tabContent>div');
 
-        var retUrl ="";
-        /*
-        var _pageIdx = 1; */
-
-        $(document).ready(function(){
-            goods.detail.qna.init();
+    tabMenu.forEach(function (item, idx) {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            showContent(idx);
+            for(var i=0; i<3; i++) {
+                tabMenu[i].classList.remove("on");
+            }
+            tabMenu[idx].classList.add("on");
         });
 
-    </script>
-</div>
+    });
+    function showContent(num) {
+        tabContent.forEach(function (item) {
+            item.style.display = 'none';
+
+        });
+        tabContent[num].style = 'block';
+
+    };
+
+
+</script>
 </body>
 </html>

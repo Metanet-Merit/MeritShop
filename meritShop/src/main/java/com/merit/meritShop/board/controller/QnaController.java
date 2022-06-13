@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @Controller
 public class QnaController {
     @Autowired
@@ -29,21 +28,21 @@ public class QnaController {
     //문의사항 목록_admin
     @GetMapping("/admin/qnas")
     public String getQnas(Model model) {
-        log.info("Aaaaaa");
         List<Qna> qnaList = qnaService.qnaList();
 
         model.addAttribute("list",qnaList);
-        return "qna/adminQnaList";
+        return "qna/itemQnaList";
 
     }
 
     //문의사항 등록_user
-    @PostMapping("/qna")
+    @PostMapping("/user/qnaWrite")
     public String write(Qna qna, Model model) {
         String result = qnaService.writeQnA(qna);
         if(result == "success") {
             Long id=qna.getItem().getItemId();
-            return "redirect: /item/{id}";
+            //return "redirect: /item/{id}";
+            return "qna/myQnaWrite";
         }
         else {
             return "qna/qnaList";
@@ -51,7 +50,7 @@ public class QnaController {
         }
     }
     //문의사항 답변_admin
-    @PostMapping("/reply")
+    @PostMapping("/admin/reply")
     public String reply(QnaDTO qnaDTO,Model model){
         String result = qnaService.reply(qnaDTO);
         if (result == "success") {
