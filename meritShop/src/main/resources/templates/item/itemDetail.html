@@ -54,6 +54,9 @@
                     <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
                     판매중
                 </span>
+                    <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).LACK}" class="badge badge-danger mgb-15">
+                    품절 임박
+                </span>
                 <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="badge btn-danger mgb-15" >
                     품절
                 </span>
@@ -79,7 +82,7 @@
                     option<br>
                     <select id="itmeOptionId" name="orderItemDtoList[0].itemOptionId" style="width:180px;">
                         <option>Select option</option>
-                        <option th:each="option:${itemFormDto.options}"
+                        <option th:each="option:${itemFormDto.options}" th:if="${option?.quantity>0}"
                                     th:value="${option?.itemOptionId}"
                                     th:utext="${option?.optionName}"></option>
                     </select>

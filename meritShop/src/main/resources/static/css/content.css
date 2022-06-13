@@ -85,7 +85,7 @@ h5{float:left; height:18px; font-size:12px; margin-top:5px; margin-left:5px; pad
 .sorting-icon{display:inline-block !important; vertical-align:middle; margin-left:5px; background:url("/images/mone/bg_sorting_down.png") no-repeat; width:8px; height:6px;}
 
 /* paging */
-.paging {clear:both; display:block; text-align:right; margin-top:10px; padding-right:3px;}
+.paging {clear:both; display:block; text-align: center; margin-top:10px; padding-right:3px;}
 .paging a{display:inline-block; width:28px; margin:0; vertical-align:middle;}
 .paging .page_num {display:inline-block; height:26px; border-bottom:solid 1px #d7d7d7; border-top:solid 1px #d7d7d7; border-left:solid 1px #d7d7d7; padding:0 5px 0 4px; vertical-align:middle; margin-right:-3px;}
 .paging .page_num a {display:inline-block; width:14px; font-size:12px; padding:6px 6px 0 2px; font-weight:bold; color:#6a6c6e;}
@@ -105,11 +105,11 @@ h5{float:left; height:18px; font-size:12px; margin-top:5px; margin-left:5px; pad
 .sub_tab ul{display:inline-block; margin-bottom:5px;}
 .sub_tab ul li{display:block; float:left; height:17px; margin-right:7px;}
 .sub_tab ul li a{display:block; color:#9a9c9e; padding-right:7px;}
-.sub_tab ul li a.tabActive, .sub_tab ul li a:hover{color:#ff6a20; text-decoration:underline;}
+.sub_tab ul li a.tabActive, .sub_tab ul li a:hover{color:#4e73df; text-decoration:underline;}
 
 /* btn */
-.btn_search a{display:inline-block; width:80px; color:#fff; font-size:12px; font-family:verdana; cursor:pointer; padding:3px 0 4px 0; margin-top:-1px; background:#ff974b; text-align:center; vertical-align:middle;}
-.btn_search a:hover{background:#ff6a20;}
+.btn_search a{display:inline-block; width:80px; color:#fff; font-size:12px; font-family:verdana; cursor:pointer; padding:3px 0 4px 0; margin-top:-1px; background:#4e73df; text-align:center; vertical-align:middle;}
+.btn_search a:hover{background:#4e73df;}
 .btn_reset a{width:80px; height:22px; color:#fff; font-size:12px; font-family:verdana; cursor:pointer; background:#a3a7af; vertical-align:middle; border:solid 1px #a3a7af;}
 .btn_reset a:hover{background:#8f939f;}
 .btn_disable a{width:80px; height:22px; color:#c7c7c7; font-size:12px; font-family:verdana; cursor:pointer; background:#91959f; vertical-align:middle; border:solid 1px #91959f;}
@@ -117,8 +117,8 @@ h5{float:left; height:18px; font-size:12px; margin-top:5px; margin-left:5px; pad
 .btn_gray a:hover{background:#d9dfe4;}
 .btn_gray2 a{display:inline-block; height:18px; color:#fff; font-size:12px; font-family:verdana; cursor:pointer; padding:3px 15px 1px 15px; border:solid 1px #91959f; background:#91959f; vertical-align:middle;}
 .btn_gray2 a:hover{background:#757a86;}
-.btn_orange a{display:inline-block; height:18px; color:#fff; font-size:12px; font-family:verdana; cursor:pointer; padding:3px 15px 1px 15px; background:#ff6a20; vertical-align:middle; border:solid 1px #ff6a20;}
-.btn_orange a:hover{background:#e54c00;}
+.btn_orange a{display:inline-block; height:18px; color:#fff; font-size:12px; font-family:verdana; cursor:pointer; padding:3px 15px 1px 15px; background:#4e73df; vertical-align:middle; border:solid 1px #4e73df;}
+.btn_orange a:hover{background:#4e73df;}
 .btn_yellow a{min-width:80px; height:24px; color:#fff; font-size:12px; cursor:pointer; padding:4px 20px; background:#ffaf30; vertical-align:middle; border:solid 1px #ffaf30;}
 .btn_yellow a:hover{background:#e79b22; border:solid 1px #e79b22;}
 
