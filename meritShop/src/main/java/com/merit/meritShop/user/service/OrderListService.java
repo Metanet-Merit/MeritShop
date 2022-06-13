@@ -106,7 +106,9 @@ public class OrderListService {
                         OrderItemsDTO orderItemsDTO = OrderItemsDTO.builder()
                                 .count(orderItem.getCount())
                                 .orderItemName(orderItem.getItem().getItemName())
-                                .reviewed(orderItem.isReviewed()).build();
+                                .reviewed(orderItem.isReviewed())
+                                .orderDate(orderItem.getOrders().getOrderDate())
+                                .build();
 
                         orderItemsDTOS.add(orderItemsDTO);
                     }

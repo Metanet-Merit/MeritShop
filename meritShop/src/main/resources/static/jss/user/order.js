@@ -114,10 +114,11 @@ $order= {
                 const orderItemName = orderItem['orderItemName'];
                 const count=orderItem['count'];
                 const reviewed=orderItem['reviewed'];
+                const orderDate=orderItem['orderDate'];
 
                 const button='<input type="hidden" value='+reviewed+'><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="$order.changeModalContent(this)">리뷰쓰러가기</button><br></td></tr>'
 
-                content +=  middle+'<dd>'+count+'</dd>'+html_categoryNitem+'<span class="tit">'+'</span>' +
+                content +=  middle+orderDate+'<dd>수량:'+count+'</dd>'+html_categoryNitem+'<span class="tit">'+'</span>' +
                     '   <span class="txt oneline">'+orderItemName+'</span>' +
                     '<dd>'+'</dd>'+btn+button;
 
