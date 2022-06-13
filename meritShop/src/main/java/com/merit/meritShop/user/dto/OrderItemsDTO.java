@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class OrderItemsDTO {
     LocalDateTime orderDate;
     String orderItemName;
+    String uuidName;
     Integer count;
     boolean reviewed;
 
