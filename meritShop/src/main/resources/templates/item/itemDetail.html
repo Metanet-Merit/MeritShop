@@ -43,14 +43,15 @@
     <div id="container" style="margin-left:0%;margin-right:10%">
         <div class="location"><a href="#">Home</a> &gt; <a href="#">대분류</a> &gt;<a href="#">소분류</a> &gt; <a href="#"><span class="txt_w">상품 관리</span></a></div>
         <div class="contents">
-            <input type="hidden" id="itemId" th:value="${itemFormDto.itemId}">
             <div class="repImgDiv">
                 <img th:src="${itemImgDto[0].imgUrl}" class = "img-fluid rounded repImg" >
             </div>
-            <form action="/pay" id="frm">
 
             <div class="wd50">
-                <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
+                <form action="/pay" id="frm">
+                    <input type="hidden" id="itemId" name="orderItemDtoList[0].itemId" th:value="${itemFormDto.itemId}">
+
+                    <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
                     판매중
                 </span>
                 <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="badge btn-danger mgb-15" >
@@ -68,22 +69,15 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">수량</span>
                         </div>
-                        <input type="number" name="count" id="count" class="form-control" value="1" min="1">
+                        <input type="number" name="orderItemDtoList[0].count" id="count" class="form-control" value="1" min="1">
                     </div>
                 </div>
                 <hr class="my-4">
                 <div id="rate" class="rating" data-size="lg"  > 평점: 5.0 </div>
                 <hr class="my-4">
-                <div id="couponbox">
-                    사용 가능한  쿠폰 보기<br>
-                    <select name="" style="width:180px;">
-                        <option>Select coupon</option>
-                    </select>
-                </div>
-                <hr class="my-4">
                 <div id="options">
                     option<br>
-                    <select id="optionId" name="option" style="width:180px;">
+                    <select id="itmeOptionId" name="orderItemDtoList[0].itemOptionId" style="width:180px;">
                         <option>Select option</option>
                         <option th:each="option:${itemFormDto.options}"
                                     th:value="${option?.itemOptionId}"
@@ -102,10 +96,11 @@
                 <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
                     <button type="button" class="btn btn-danger btn-lg">품절</button>
                 </div>
-            </div>
-            </form>
-        </div>
 
+                </form>
+            </div>
+
+        </div>
         <div class="jumbotron jumbotron-fluid mgt-30">
             <div class="Description">
                 <h4 class="display-5">상품 상세 설명</h4>
@@ -151,7 +146,7 @@
         var url = "/order";
         var paramData = {
             itemId : $("#itemId").val(),
-            optionId : $("#optionId").val(),
+            itemOptionId : $("#itemOptionId").val(),
             count : $("#count").val()
 
         };
@@ -177,7 +172,7 @@
 
                 if(jqXHR.status == '401'){
                     alert('로그인 후 이용해주세요');
-                    location.href='/User/login';
+                    location.href='/user/login';
                 } else{
                     //alert(jqXHR.responseText);
                     console.log("현재는 이것만 뜬다네 ㅎㅎ");

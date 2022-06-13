@@ -1,16 +1,13 @@
 package com.merit.meritShop.order.repository;
 
+import com.merit.meritShop.order.domain.OrderItem;
 import com.merit.meritShop.order.domain.Orders;
-import com.merit.meritShop.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Orders, Long> {
-
-    Long countAllBy();
-
-    List<Orders> findOrderByUser(User user);
+public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
+    List<OrderItem> findOrderItemByOrders(Orders order);
 }
