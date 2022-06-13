@@ -5,6 +5,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -52,4 +53,25 @@ public class User {
     private String zipcode;
 
     private String loginType;
+
+    public void patch(Map<String, Object> patchMap) {
+        for(Map.Entry<String,Object> entry : patchMap.entrySet()){
+            findKeyAndPatch(entry.getKey(), entry.getValue());
+        }
+    }
+
+    public void findKeyAndPatch(String key, Object value) {
+        switch (key) {
+            case "role":
+                this.role = value.toString();
+                if (!value.toString().equals("ROLE_PREMIUM"))
+                    this.remainDay = null;
+                break;
+            case "point":
+                this.point = Integer.parseInt(value.toString());
+                break;
+            default:
+                throw new IllegalArgumentException("해당 column이 없습니다.");
+        }
+    }
 }

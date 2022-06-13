@@ -22,4 +22,10 @@ public class UserAdminViewDto {
     private int point;
 
     private String expireDate;
+
+    private String address1;
+
+    private String address2;
+
+    private String phone;
 }
