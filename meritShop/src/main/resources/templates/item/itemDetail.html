@@ -93,7 +93,7 @@
                     <h5>결제 금액</h5>
                     <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
                 </div>
-                <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="text-right">
+                <div th:if="${itemFormDto.status != T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
                     <button type="button" class="btn btn-light border border-primary btn-lg" onclick="">장바구니 담기</button>
                     <button type="button" class="btn btn-primary btn-lg"  id="order_btn">주문하기</button>
                 </div>
