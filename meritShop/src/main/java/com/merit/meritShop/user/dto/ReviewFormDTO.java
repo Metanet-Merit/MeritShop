@@ -14,6 +14,7 @@ public class ReviewFormDTO {
     private Long userId;
     private Long orderItemId;
     private String orderItemName;
+    private String userName;
     private String content;
     private double rate;
     private String uuidName;

@@ -10,4 +10,6 @@ import lombok.*;
 public class OrderItemsDTO {
     String orderItemName;
     Integer count;
+    boolean reviewed;
+
 }
