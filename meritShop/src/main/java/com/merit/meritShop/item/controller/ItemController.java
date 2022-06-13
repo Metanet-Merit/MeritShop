@@ -156,6 +156,8 @@ public class ItemController {
         PageRequest pageRequest =  PageRequest.of(0,8, Sort.by(Sort.Direction.DESC,"createdDate"));
         Page<Item> itemList = itemService.findAllItem(pageRequest);
         model.addAttribute("items",itemList);
+        model.addAttribute("maxPage",10);
+        model.addAttribute("totalCount",itemList.getTotalElements());
         return "item/adminItemList";
     }
 

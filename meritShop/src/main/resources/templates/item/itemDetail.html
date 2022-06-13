@@ -37,6 +37,7 @@
             padding-bottom: 13px;
         }
     </style>
+    <link rel="stylesheet" href="/css/item.css" type="text/css">
 <div id="wrap" class="container-fluid ">
 
 
@@ -53,6 +54,9 @@
 
                     <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
                     판매중
+                </span>
+                    <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).LACK}" class="badge badge-danger mgb-15">
+                    품절 임박
                 </span>
                 <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="badge btn-danger mgb-15" >
                     품절
@@ -79,7 +83,7 @@
                     option<br>
                     <select id="itmeOptionId" name="orderItemDtoList[0].itemOptionId" style="width:180px;">
                         <option>Select option</option>
-                        <option th:each="option:${itemFormDto.options}"
+                        <option th:each="option:${itemFormDto.options}" th:if="${option?.quantity>0}"
                                     th:value="${option?.itemOptionId}"
                                     th:utext="${option?.optionName}"></option>
                     </select>
@@ -101,19 +105,91 @@
             </div>
 
         </div>
-        <div class="jumbotron jumbotron-fluid mgt-30">
-            <div class="Description">
-                <h4 class="display-5">상품 상세 설명</h4>
-                <p class="lead" th:text="${itemFormDto.description}"></p>
-              </div>
+        <div class="tabList">
+            <ul class="prd_detail_tab" id="tabList">
+                <li class="on" id="productInfo">
+                    <a href="#tab1" class="goods" data-tap="tab-1">상품설명
+                    </a>
+                </li>
+                <li id="reviewInfo">
+                    <a href="#tab2" class="goods" data-tap="tab-2">리뷰
+                        <span>(843)</span>
+                    </a>
+                </li>
+                <li id="qnaInfo">
+                    <a href="#tab3" class="goods" data-tap="tab-3">Q&amp;A
+                        <span>(19)</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="prd_detail_cont" id="tabContent">
+                <div>
+                    <div class="jumbotron jumbotron-fluid mgt-30">
+                        <div class="Description">
+                            <h4 class="display-5">상품 상세 설명</h4>
+                            <p class="lead" th:text="${itemFormDto.description}"></p>
+                        </div>
 
+                    </div>
+                    <div th:each="itemImg : ${itemImgDto}" class="text-center">
+                        <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="800">
+
+                    </div>
+                </div>
+                <div style="display: none">리뷰 상세</div>
+                <div style="display: none">
+                    <div class="prd_qna_tit">
+                        <button class="btnInquiry goods_qna_inquiry" onclick="#">상품문의</button>
+                    </div>
+                    <ul class="prd_qna_list" id="prd_qna_list">
+                        //보이는 화면
+                        <li>
+                            <div class="qna_tit_box">
+                                <p class="qna_question">
+                                    <span class="qna_flag">답변여부 넣기</span>
+                                    <a href="javascript:;" class="completeBind">qna title</a>
+                                </p>
+                                <p class="tx_userid">
+                                    <span>user_name</span>
+
+                                </p><p class="tx_date">registerDate</p>
+                            </div>
+                            //title 클릭했을 때 보이는 내용들
+                            <div class="qna_answer_box">
+                                <div class="tx_question">
+                                    <span class="ico_qna question">Q</span>
+                                    qna content
+                                </div>
+                            </div>
+                        </li>
+                        //답변완료 보이는 화면
+                        <li class="show">
+                            <div class="qna_tit_box">
+                                <p class="qna_question">
+                                    <span class="qna_flag">답변여부 넣기</span>
+                                    <a href="javascript:;" class="completeBind">qna title</a>
+                                </p>
+                                <p class="tx_userid">
+                                    <span>user_name</span>
+
+                                </p><p class="tx_date">registerDate</p>
+                            </div>
+                            //title 클릭했을 때 보이는 내용들
+                            <div class="qna_answer_box">
+                                <div class="tx_question">
+                                    <span class="ico_qna question">Q</span>
+                                    qna content
+                                </div>
+                                <div class="tx_answer">
+                                    <span class="ico_qna answer">reply</span>
+                                    qna reply
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div th:each="itemImg : ${itemImgDto}" class="text-center">
-            <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="800">
-
-        </div>
-
-    
 </div>
 </div>
 <script>
@@ -182,7 +258,33 @@
         });
     }
 
+</script>
+<script>
+    const tabMenu = document.querySelectorAll('#tabList>li');
+
+    const tabContent = document.querySelectorAll('#tabContent>div');
+
+    tabMenu.forEach(function (item, idx) {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            showContent(idx);
+            for(var i=0; i<3; i++) {
+                tabMenu[i].classList.remove("on");
+            }
+            tabMenu[idx].classList.add("on");
+        });
+
+    });
+    function showContent(num) {
+        tabContent.forEach(function (item) {
+            item.style.display = 'none';
+
+        });
+        tabContent[num].style = 'block';
+
+    };
 
 
 </script>
+
 </div>

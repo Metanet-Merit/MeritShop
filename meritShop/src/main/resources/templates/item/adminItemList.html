@@ -60,7 +60,7 @@
             <div class="title mgt20">
                 <h3>상품 리스트</h3>
                 <span class="brd_rtop">
-					Total List <span class="num">120</span>
+					Total List <span class="num" th:text="${totalCount}"></span>
                 </span>
             </div>
 
@@ -94,27 +94,30 @@
                 </tbody>
             </table>
             <!-- table -->
+            <br>
 
-            <!-- paging -->
-            <div class="paging">
-                <a href="#"><img src="" alt="first" /></a>
-                <a href="#"><img src="" alt="prev" /></a>
-                <span class="page_num">
-					<a href="#" class="on">1</a>
-					<a href="#">2</a>
-					<a href="#">3</a>
-					<a href="#">4</a>
-					<a href="#">5</a>
-					<a href="#">6</a>
-					<a href="#">7</a>
-					<a href="#">8</a>
-					<a href="#">9</a>
-					<a href="#">10</a>
-				</span>
-                <a href="#"><img src="" alt="next" /></a>
-                <a href="#"><img src="" alt="last" /></a>
+
+            <div th:with="start=${(items.number/maxPage)*maxPage + 1}, end=(${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})" >
+                <ul class="pagination justify-content-center">
+
+                    <li class="page-item" th:classappend="${items.first}?'disabled'">
+                        <a th:onclick="'javascript:page(' + ${items.number - 1} + ')'" aria-label='Previous' class="page-link">
+                            <span aria-hidden='true'>Prev</span>
+                        </a>
+                    </li>
+
+                    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${items.number eq page-1}?'active':''">
+                        <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+                    </li>
+
+                    <li class="page-item" th:classappend="${items.last}?'disabled'">
+                        <a th:onclick="'javascript:page(' + ${items.number + 1} + ')'" aria-label='Next' class="page-link">
+                            <span aria-hidden='true'>Next</span>
+                        </a>
+                    </li>
+
+                </ul>
             </div>
-            <!-- paging -->
         </div>
     </div>
 </th:block>

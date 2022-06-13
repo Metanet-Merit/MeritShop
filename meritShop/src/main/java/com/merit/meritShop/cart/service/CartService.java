@@ -22,11 +22,13 @@ public class CartService {
     public List<Cart> cartList(Long userId) {
         User user=userRepository.findById(userId).get();
         List<Cart> cartList=cartRepository.findByUser(user);
+
         return cartList;
     }
 
     //장바구니 등록
     public void add(Cart cart) {
         cartRepository.save(cart);
+
     }
 }

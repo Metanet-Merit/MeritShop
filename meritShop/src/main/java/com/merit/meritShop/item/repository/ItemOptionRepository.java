@@ -25,4 +25,6 @@ public interface ItemOptionRepository extends JpaRepository<ItemOption,Long> {
     @Query(value="update ItemOption op set op.quantity = :count where op.itemOptionId = :OptionId")
     void updateOptionQuantity(@Param("OptionId") Long OptionId,@Param("count") int count);
 
+
+
 }
