@@ -2,16 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/adminLayout}">
+
 <th:block layout:fragment="content">
 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Script-Type" content="text/javascript" />
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+        <link rel="stylesheet" type="text/css" href="/css/default.css" />
+        <link rel="stylesheet" type="text/css" href="/css/guide.css" />
+        <link rel="stylesheet" type="text/css" href="/css/content.css" />
+        <script type="text/javascript" src="/scripts/jquery-ui/jquery.min.js"></script>
+        <script type="text/javascript" src="/scripts/common/common-ui.js"></script>
+        <style type="text/css">
+        </style>
+    </head>
 
-            <!-- location -->
-            <div class="location"><a href="#">Home</a> &gt; <a href="#">Admin</a> &gt; <a href="#"><span class="txt_w">상품 관리</span></a></div>
+    <div id="wrap">
+
+        <!-- container -->
+        <div id="container">
+
+    <!-- location -->
+            <div class="location"><a href="/admin/main">Admin</a>&gt; <a href="/admin/itemList"><span class="txt_w">상품 관리</span></a></div>
             <!-- location -->
 
             <div class="title">
                 <span class="brd_rtop mgb10">
-					<span class="btn_orange"><a href="#">상품 추가</a></span>
+					<span class="btn_orange"><a href="/admin/itemForm">상품 추가</a></span>
                 </span>
             </div>
 
@@ -53,7 +71,6 @@
                     <col width="20%" />
                     <col width="*" />
                     <col width="20%" />
-                    <col width="12%" />
                     <col width="10%" />
                 </colgroup>
                 <thead>
@@ -62,7 +79,6 @@
                     <th>대표사진</th>
                     <th>상품이름</th>
                     <th>카테고리</th>
-                    <th>수량</th>
                     <th>Edit</th>
                 </tr>
                 </thead>
@@ -99,6 +115,8 @@
                 <a href="#"><img src="" alt="last" /></a>
             </div>
             <!-- paging -->
+        </div>
+    </div>
 </th:block>
 
 </html>
