@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<head>
+    <!-- CSS only -->
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/board.css" type="text/css">
+    <meta charset="UTF-8">
+    <title>회원 관리 페이지</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+
+    <!-- Begin Page Content -->
+
+    <div id="commonField">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">회원 관리</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th style="background-color: #2e59d9">회원명</th>
+                                <th style="background-color: #2e59d9">계정</th>
+                                <th style="background-color: #2e59d9">로그인 유형</th>
+                                <th style="background-color: #2e59d9">회원 유형</th>
+                                <th style="background-color: #2e59d9">적립금</th>
+                                <th style="background-color: #2e59d9">구독 만료일</th>
+                                <th style="background-color: #2e59d9"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="alert" role="alert" th:each="user : ${userList}">
+                                <th scope="row" th:text="${user.userName}"></th>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.loginType}"></td>
+                                <td th:text="${user.role}"></td>
+                                <td th:text="${user.point}"></td>
+                                <td th:text="${user.expireDate}"></td>
+                                <td><button class="sub-btn"><a th:href="@{/admin/user/detail(userId=${user.userId})}">조회</a></button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</th:block>
+
+</body>
+</html>

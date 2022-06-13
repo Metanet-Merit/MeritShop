@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항 상세페이지</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
+</head>
+<th:block layout:fragment="content">
+    <!-- Begin Page Content -->
+    <div id="Container">
+
+        <div id="Contents">
+            <div class="sub_title_area customer">
+                <h1 style="margin-left: 100px; padding: 25px">공지사항</h1>
+            </div>
+            <table class="board-view-1s mgT40">
+                <colgroup>
+                    <col style="width:80%;">
+                    <col style="width:20%;">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td>
+                        <span class="tit" id="title" name="title" th:text="${notice.title}"></span>
+                    </td>
+                    <td class="data" th:text="${#temporals.format(notice.registerDate,'yyyy-MM-dd')}"></td>
+                </tr>
+                <tr>
+                    <td class="textus" colspan="2">
+                        <div class="contEditor" id="content" name="content" th:text="${notice.content}">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="display: flex; flex-direction: row">
+                <div>
+                    <button class="list-btn" th:onclick="|location.href='@{/notice/list}'|">목록</button>
+                </div>
+                <div style="margin-left: 807px">
+                    <a th:href="@{/notice/modify/{noticeId}(noticeId=${notice.noticeId})}">
+                        <button class="mfy-btn">수정</button>
+                    </a>
+                    <a th:href="@{/notice/delete(noticeId=${notice.noticeId})}">
+                        <button class="del-btn">삭제</button>
+                    </a>
+                </div>
+                <!--
+</a>-->
+            </div>
+</th:block>
+</html>
