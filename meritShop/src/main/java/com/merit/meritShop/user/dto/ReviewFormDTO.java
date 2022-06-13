@@ -17,7 +17,7 @@ public class ReviewFormDTO {
     private String userName;
     private String content;
     private double rate;
-    private String uuidName;
+    private String url;
     private String category;
     LocalDateTime reviewDate;
     LocalDateTime orderDate;

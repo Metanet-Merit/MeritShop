@@ -3,6 +3,7 @@ package com.merit.meritShop.user.service;
 import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.common.domain.ResultCode;
 import com.merit.meritShop.item.domain.Item;
+import com.merit.meritShop.item.repository.ItemRepository;
 import com.merit.meritShop.scrap.domain.Scrap;
 import com.merit.meritShop.user.domain.User;
 import com.merit.meritShop.user.dto.ScrapDTO;
@@ -20,6 +21,9 @@ public class ScrapService {
     UserRepository userRepository;
     @Autowired
     ScrapRepository scrapRepository;
+    @Autowired
+    ItemRepository itemRepository;
+
     public Result<Map<String, Object>> getScraps(Long userId) {
 
         try {
@@ -35,7 +39,7 @@ public class ScrapService {
                 ScrapDTO scrapDTO = ScrapDTO.builder()
                         .itemName(item.getItemName())
                         .itemId(item.getItemId())
-                        .uuidName(item.getImgUrl())
+                        .url(item.getImgUrl())
                         .build();
 
                 scrapDTOList.add(scrapDTO);
@@ -48,4 +52,27 @@ public class ScrapService {
         }
 
     }
+
+    public Result<Scrap> addScrap(ScrapDTO scrapDTO){
+        return addScrap(scrapDTO.getUserId(),scrapDTO.getItemId());
+    }
+    public Result<Scrap> addScrap(Long userId,Long itemId) {
+
+        try {
+            User user=userRepository.findById(userId).get();
+            Item item=itemRepository.findById(itemId).get();
+
+            Scrap scrap=Scrap.builder()
+                    .user(user)
+                    .item(item)
+                    .build();
+
+            scrapRepository.save(scrap);
+            return ResultCode.Success.result();
+        } catch (Exception e) {
+            return ResultCode.DB_ERROR.result();
+        }
+
+    }
+
 }

@@ -29,8 +29,10 @@ public class reviewController {
     public Result addReview(@RequestBody ReviewFormDTO reviewFormDTO) {
         return reviewService.addReview(reviewFormDTO);
     }
+
     @GetMapping("/itemReviews")
     public Result getItemReviews(@RequestParam Long itemId){
         return reviewService.getItemReviews(itemId);
     }
+
 }

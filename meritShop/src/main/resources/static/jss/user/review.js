@@ -1,16 +1,22 @@
 $review= {
-
+    //userId:document.getElementById("userId").value,
+    //itemId:document.getElementById("itemId").value,
     getReviews:function(){
         url = '/myPage/reviews';
         param = {userId:2}
-
+       // param={userId:userId}
         $ajax.get(url, param, $review.getReviewsCallBack, $review.getReviewsErrCallback);
     },
     getItemReviews:function(){
         url = '/myPage/itemReviews';
         param = {itemId:1}
-
+        //param={itemId:itemId}
         $ajax.get(url, param, $review.getItemReviewsCallBack, $review.getItemReviewsErrCallback);
+    },
+    getItemReviewsErrCallback:function (response){
+        console.log(response);//에러화면 띄우기
+        alert("잠시 후 다시 시도해 주세요");
+        return;
     },
     getItemReviewsCallBack:function (response){
 

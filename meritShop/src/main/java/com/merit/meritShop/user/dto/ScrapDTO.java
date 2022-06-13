@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 public class ScrapDTO {
     String itemName;
+    Long userId;
     Long itemId;
-    String uuidName;
+    String url;
 }

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class OrderItemsDTO {
     LocalDateTime orderDate;
     String orderItemName;
-    String uuidName;
+    String url;
     Integer count;
     boolean reviewed;
 
