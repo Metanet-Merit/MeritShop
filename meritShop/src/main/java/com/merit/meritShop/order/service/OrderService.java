@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +72,7 @@ public class OrderService {
         }
         orders.setOrderItemList(list);
         orders.updateTotalPrice();
+        orders.setOrderDate(LocalDateTime.now());
         orders =orderRepository.save(orders);
 
 
