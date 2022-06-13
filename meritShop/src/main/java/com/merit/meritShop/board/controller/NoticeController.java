@@ -19,20 +19,22 @@ public class NoticeController {
     private NoticeService noticeService;
 
     /*목록*/
-    @GetMapping("notice/list")
+    @GetMapping("admin/notice/list")
     public String notieList(Model model) {
         List<Notice> noticeList = noticeService.noticeList();
 
         model.addAttribute("list", noticeService.noticeList());
+        //user가 보는 noticeList,  return "main/notice";
         return "notice/noticeList";
     }
+
     /*글 작성*/
-    @GetMapping("notice/write")
+    @GetMapping("admin/notice/write")
     public String noticeWrite() {
 
         return "notice/noticeWrite";
     }
-    @PostMapping("notice/writepro")
+    @PostMapping("admin/notice/writepro")
     public String writePro(Notice notice) {
 
         noticeService.write(notice);
@@ -40,7 +42,7 @@ public class NoticeController {
         return "redirect:list";
     }
     /*글 상세페이지*/
-    @GetMapping("notice/detail")
+    @GetMapping("admin/notice/detail")
     public String noticeDetail(Model model, @RequestParam Long noticeId) {
         //log.info(noticeId.toString());
         Notice notice=noticeService.noticeDetail(noticeId);
@@ -52,7 +54,7 @@ public class NoticeController {
         return "notice/noticeDetail";
     }
     /*글 수정*/
-    @GetMapping("notice/modify/{noticeId}")
+    @GetMapping("admin/notice/modify/{noticeId}")
     public String noticeModify(@PathVariable("noticeId") Long noticeId,
                                Model model) {
 
@@ -60,7 +62,7 @@ public class NoticeController {
 
         return "notice/noticeModify";
     }
-    @PostMapping("notice/update/{noticeId}")
+    @PostMapping("admin/notice/update/{noticeId}")
     public String noticeUpdate(@PathVariable("noticeId") Long noticeId,
                                Notice notice) {
 
@@ -75,7 +77,7 @@ public class NoticeController {
     }
 
     /*글 삭제*/
-    @GetMapping("notice/delete")
+    @GetMapping("admin/notice/delete")
     public String noticeDelete(Long noticeId) {
         noticeService.noticeDelete(noticeId);
 
