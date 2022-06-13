@@ -1,14 +1,12 @@
 package com.merit.meritShop.board.service;
 
-import com.merit.meritShop.board.domain.Notice;
 import com.merit.meritShop.board.domain.Qna;
-import com.merit.meritShop.board.domain.QnaDTO;
+import com.merit.meritShop.board.dto.QnaDTO;
 import com.merit.meritShop.board.repository.QnaRepository;
 import com.merit.meritShop.user.domain.User;
 import com.merit.meritShop.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;

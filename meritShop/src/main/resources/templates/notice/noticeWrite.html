@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -26,7 +27,7 @@
                 </tr>
                 </tbody>
             </table>
-            <button class="list-btn" th:onclick="|location.href='@{/notice/list}'|">목록</button>
+            <button class="list-btn" th:onclick="|location.href='@{/notice/list}'|" style="margin-top: 0px">목록</button>
             <input type="submit" class="btn btn-primary pull-right" style="background-color: white; border: 2px solid; border-color: #2e59d9; color: #2e59d9;" value="글쓰기">
         </form>
     </div>

@@ -39,7 +39,10 @@
                                 <td>
                                     <a th:text="${notice.title}" th:href="@{/notice/detail(noticeId=${notice.noticeId})}"></a>
                                 </td>
-                                <td th:text="${#temporals.format(notice.modifyDate,'yyyy-MM-dd')}"></td>
+                                <td th:if = "${notice.modifyDate == null}" th:text="${#temporals.format(notice.registerDate,'yyyy-MM-dd')}"></th:if>
+                                </td>
+                                <td th:unless = "${notice.modifyDate == null}" th:text="${#temporals.format(notice.modifyDate,'yyyy-MM-dd')}"></th:if>
+                                </td>
                                 <td>조회수</td>
                             </tr>
                             </tbody>

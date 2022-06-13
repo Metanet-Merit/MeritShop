@@ -1,7 +1,7 @@
 package com.merit.meritShop.board.controller;
 
 import com.merit.meritShop.board.domain.Qna;
-import com.merit.meritShop.board.domain.QnaDTO;
+import com.merit.meritShop.board.dto.QnaDTO;
 import com.merit.meritShop.board.service.QnaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
