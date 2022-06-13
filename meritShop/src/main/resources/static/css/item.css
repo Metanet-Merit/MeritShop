@@ -7,10 +7,10 @@
 }
 .prd_detail_tab>li {
     float: left;
-    width: 25%;
+    width: 33.3%;
 }
 .prd_detail_tab>li.on>a {
-    border: 2px solid #9bce26;
+    border: 2px solid #D19C97;
     height: 51px;
     border-bottom: 0;
     color: #333;
@@ -48,14 +48,18 @@ a, address, blockquote, body, dd, div, dl, dt, em, fieldset, form, h1, h2, h3, h
 }
 .prd_qna_tit .btnInquiry {
     position: absolute;
-    top: 5px;
-    right: 0;
+    top: 780px;
+    right: 110px;
     height: 34px;
     padding: 0 20px 0 40px;
     font-size: 16px;
-    background: #9bce26 url(https://www.oliveyoung.co.kr/pc-static-root/image/comm/ico_inquiry.png) no-repeat 15px 50%;
+    background: #D19C97 15px 50%;
     line-height: 34px;
     border-radius: 5px;
+    border-color: #D19C97;
+    /* text-align: center; */
+    margin-left: 10px;
+    /* margin-right: auto; */
 }
 .prd_qna_list {
     margin: 18px 0 0;
@@ -125,5 +129,5 @@ a {
     color: #aaa;
 }
 .prd_qna_list .qna_tit_box .qna_flag.complete {
-    background: #9bce26;
+    background: #D19C97;
 }
