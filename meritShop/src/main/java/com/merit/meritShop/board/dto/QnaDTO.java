@@ -1,4 +1,4 @@
-package com.merit.meritShop.board.domain;
+package com.merit.meritShop.board.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -39,3 +39,4 @@ out/
 
 ##
 .xml
+/src/main/resources/static/application.yml

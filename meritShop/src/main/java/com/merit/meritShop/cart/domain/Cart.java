@@ -4,6 +4,8 @@ import com.merit.meritShop.user.domain.User;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Entity
@@ -29,5 +31,17 @@ public class Cart {
     private Item item;
 
     private int count;//수량
+
+     /*@ElementCollection
+    @CollectionTable(
+            name = "cart_line"
+    )
+    @MapKeyColumn(name = "map_key")
+    private Map<Long, Cart> cart = new HashMap<>();
+
+    public  Cart(Long userId) {
+        this.user.getUserId() = userId;
+    }*/
+
 
 }

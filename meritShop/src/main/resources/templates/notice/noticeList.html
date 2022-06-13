@@ -4,9 +4,9 @@
       layout:decorate="~{layout/adminLayout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>공지사항 목록</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/css/notice.css" type="text/css">
+    <link rel="stylesheet" href="/css/board.css" type="text/css">
 </head>
 <th:block layout:fragment="content">
     <!-- Begin Page Content -->
@@ -39,7 +39,10 @@
                                 <td>
                                     <a th:text="${notice.title}" th:href="@{/notice/detail(noticeId=${notice.noticeId})}"></a>
                                 </td>
-                                <td>작성일</td>
+                                <td th:if = "${notice.modifyDate == null}" th:text="${#temporals.format(notice.registerDate,'yyyy-MM-dd')}"></th:if>
+                                </td>
+                                <td th:unless = "${notice.modifyDate == null}" th:text="${#temporals.format(notice.modifyDate,'yyyy-MM-dd')}"></th:if>
+                                </td>
                                 <td>조회수</td>
                             </tr>
                             </tbody>

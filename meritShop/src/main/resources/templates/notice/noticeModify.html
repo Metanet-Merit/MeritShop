@@ -5,15 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Title</title>
+    <title>공지사항 수정</title>
 </head>
 <th:block layout:fragment="content" style="width: 65%">
     <!-- Begin Page Content -->
-    <div class="container">
-        <h2>문의사항 수정</h2>
+    <div class="container" style="width: 65%">
+        <h2>공지사항 수정</h2>
         <form th:action="@{/notice/update/{noticeId}(noticeId = ${notice.noticeId})}" method="post">
             <table class="table table-hover">
                 <tbody>
@@ -25,7 +26,8 @@
                 </tr>
                 </tbody>
             </table>
-            <input type="submit" class="btn btn-primary pull-right" style="background-color: #4e555b; border-color: #4e555b" value="수정하기">
+            <button class="list-btn" th:onclick="|location.href='@{/notice/list}'|" style="margin-top: 0px">목록</button>
+            <input type="submit" class="btn btn-primary pull-right" style="background-color: white; border: 2px solid; border-color: #2e59d9; color: #2e59d9;" value="수정하기">
         </form>
     </div>
 </th:block>

@@ -2,16 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/adminLayout}">
+
 <th:block layout:fragment="content">
 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Script-Type" content="text/javascript" />
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+        <link rel="stylesheet" type="text/css" href="/css/default.css" />
+        <link rel="stylesheet" type="text/css" href="/css/guide.css" />
+        <link rel="stylesheet" type="text/css" href="/css/content.css" />
+        <script type="text/javascript" src="/scripts/jquery-ui/jquery.min.js"></script>
+        <script type="text/javascript" src="/scripts/common/common-ui.js"></script>
+        <style type="text/css">
+        </style>
+    </head>
 
-            <!-- location -->
-            <div class="location"><a href="#">Home</a> &gt; <a href="#">Admin</a> &gt; <a href="#"><span class="txt_w">상품 관리</span></a></div>
+    <div id="wrap">
+
+        <!-- container -->
+        <div id="container">
+
+    <!-- location -->
+            <div class="location"><a href="/admin/main">Admin</a>&gt; <a href="/admin/itemList"><span class="txt_w">상품 관리</span></a></div>
             <!-- location -->
 
             <div class="title">
                 <span class="brd_rtop mgb10">
-					<span class="btn_orange"><a href="#">상품 추가</a></span>
+					<span class="btn_orange"><a href="/admin/itemForm">상품 추가</a></span>
                 </span>
             </div>
 
@@ -42,7 +60,7 @@
             <div class="title mgt20">
                 <h3>상품 리스트</h3>
                 <span class="brd_rtop">
-					Total List <span class="num">120</span>
+					Total List <span class="num" th:text="${totalCount}"></span>
                 </span>
             </div>
 
@@ -53,7 +71,6 @@
                     <col width="20%" />
                     <col width="*" />
                     <col width="20%" />
-                    <col width="12%" />
                     <col width="10%" />
                 </colgroup>
                 <thead>
@@ -62,7 +79,6 @@
                     <th>대표사진</th>
                     <th>상품이름</th>
                     <th>카테고리</th>
-                    <th>수량</th>
                     <th>Edit</th>
                 </tr>
                 </thead>
@@ -78,27 +94,32 @@
                 </tbody>
             </table>
             <!-- table -->
+            <br>
 
-            <!-- paging -->
-            <div class="paging">
-                <a href="#"><img src="" alt="first" /></a>
-                <a href="#"><img src="" alt="prev" /></a>
-                <span class="page_num">
-					<a href="#" class="on">1</a>
-					<a href="#">2</a>
-					<a href="#">3</a>
-					<a href="#">4</a>
-					<a href="#">5</a>
-					<a href="#">6</a>
-					<a href="#">7</a>
-					<a href="#">8</a>
-					<a href="#">9</a>
-					<a href="#">10</a>
-				</span>
-                <a href="#"><img src="" alt="next" /></a>
-                <a href="#"><img src="" alt="last" /></a>
+
+            <div th:with="start=${(items.number/maxPage)*maxPage + 1}, end=(${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})" >
+                <ul class="pagination justify-content-center">
+
+                    <li class="page-item" th:classappend="${items.first}?'disabled'">
+                        <a th:onclick="'javascript:page(' + ${items.number - 1} + ')'" aria-label='Previous' class="page-link">
+                            <span aria-hidden='true'>Prev</span>
+                        </a>
+                    </li>
+
+                    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${items.number eq page-1}?'active':''">
+                        <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+                    </li>
+
+                    <li class="page-item" th:classappend="${items.last}?'disabled'">
+                        <a th:onclick="'javascript:page(' + ${items.number + 1} + ')'" aria-label='Next' class="page-link">
+                            <span aria-hidden='true'>Next</span>
+                        </a>
+                    </li>
+
+                </ul>
             </div>
-            <!-- paging -->
+        </div>
+    </div>
 </th:block>
 
 </html>

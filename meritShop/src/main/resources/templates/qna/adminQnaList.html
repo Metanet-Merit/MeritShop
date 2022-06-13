@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자_문의사항목록</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/board.css" type="text/css">
+</head>
+<th:block layout:fragment="content">
+    <!-- Begin Page Content -->
+
+    <div id="commonField">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">문의사항</h2>
+                </div>
+            </div>
+            <div class="row">
+                <!--<div style="display: inline-block; margin: 0 5px;  padding-left: 995px; ">
+                    <button class="sub-btn"><a th:href="@{/notice/write}">공지사항 등록</a></button>
+                </div>-->
+                <div class="col-md-12">
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th style="background-color: #2e59d9">번호</th>
+                                <th style="background-color: #2e59d9">제목</th>
+                                <th style="background-color: #2e59d9">작성자</th>
+                                <th style="background-color: #2e59d9">작성일</th>
+                                <th style="background-color: #2e59d9">답변여부</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="alert" role="alert" th:each="qna : ${list}">
+                                <th scope="row"th:text="${qna.qnaId}"></th>
+                                <td>
+                                    <a th:text="${qna.title}" th:href="@{/qna/detail(qnaId=${qna.qnaId})}"></a>
+                                </td>
+                                <td scope="row"th:text="${user.user_name}">작성자</td>
+                                <td th:text="${#temporals.format(notice.modifyDate,'yyyy-MM-dd')}"></td>
+                                <td scope="row"th:text="${qna.replied}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+</th:block>
+</html>
