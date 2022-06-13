@@ -4,9 +4,9 @@
       layout:decorate="~{layout/adminLayout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>공지사항 상세페이지</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/css/noticeDetail.css" type="text/css">
+    <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
 </head>
 <th:block layout:fragment="content">
     <!-- Begin Page Content -->
@@ -26,7 +26,7 @@
                     <td>
                         <span class="tit" id="title" name="title" th:text="${notice.title}"></span>
                     </td>
-                    <td class="data">작성일 넣자</td>
+                    <td class="data" th:text="${#temporals.format(notice.registerDate,'yyyy-MM-dd')}"></td>
                 </tr>
                 <tr>
                     <td class="textus" colspan="2">

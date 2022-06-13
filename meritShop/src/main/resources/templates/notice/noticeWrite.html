@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Title</title>
+    <title>공지사항</title>
 
 </head>
 <th:block layout:fragment="content">
     <!-- Begin Page Content -->
     <div class="container" style="width: 65%">
-        <h2>문의사항 등록</h2>
+        <h2>공지사항 등록</h2>
         <form action="writepro" method="post">
             <table class="table table-hover">
                 <tbody>
@@ -26,6 +26,7 @@
                 </tr>
                 </tbody>
             </table>
+            <button class="list-btn" th:onclick="|location.href='@{/notice/list}'|">목록</button>
             <input type="submit" class="btn btn-primary pull-right" style="background-color: white; border: 2px solid; border-color: #2e59d9; color: #2e59d9;" value="글쓰기">
         </form>
     </div>
