@@ -3,6 +3,8 @@ package com.merit.meritShop.user.controller;
 import com.merit.meritShop.user.dto.UserViewDto;
 import com.merit.meritShop.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -20,7 +22,7 @@ public class adminUserController {
     private final UserService userService;
 
     @GetMapping("/user/list")
-    public String userList(Model model){
+    public String userList(Model model, @PageableDefault Pageable pageable){
         List<UserViewDto> userList = userService.getAllUserInfo();
         model.addAttribute("userList", userList);
         return "admin/user/userList";
