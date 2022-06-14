@@ -41,18 +41,8 @@
             </table>
             <div style="display: flex; flex-direction: row">
                 <div>
-                    <button class="list-btn" th:onclick="|location.href='@{/admin/notice/list}'|">목록</button>
+                    <button class="list-btn" th:onclick="|location.href='@{/main/notice}'|">목록</button>
                 </div>
-                <div style="margin-left: 807px">
-                    <a th:href="@{/admin/notice/modify/{noticeId}(noticeId=${notice.noticeId})}">
-                        <button class="mfy-btn">수정</button>
-                    </a>
-                    <a th:href="@{/admin/notice/delete(noticeId=${notice.noticeId})}">
-                    <button class="del-btn">삭제</button>
-                    </a>
-                </div>
-                    <!--
-</a>-->
             </div>
 </th:block>
 </html>
