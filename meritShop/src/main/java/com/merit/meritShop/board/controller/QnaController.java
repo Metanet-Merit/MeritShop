@@ -1,10 +1,15 @@
 package com.merit.meritShop.board.controller;
 
+import com.merit.meritShop.board.domain.Notice;
 import com.merit.meritShop.board.domain.Qna;
 import com.merit.meritShop.board.dto.QnaDTO;
+import com.merit.meritShop.board.repository.QnaRepository;
 import com.merit.meritShop.board.service.QnaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +20,8 @@ import java.util.List;
 public class QnaController {
     @Autowired
     QnaService qnaService;
+    @Autowired
+    QnaRepository qnaRepository;
 
     //문의사항 목록_user
     @GetMapping("/user/qnas")
@@ -26,13 +33,18 @@ public class QnaController {
     }
 
     //문의사항 목록_admin
-    @GetMapping("/admin/qnas")
-    public String getQnas(Model model) {
-        List<Qna> qnaList = qnaService.qnaList();
+    @RequestMapping("/admin/qnas")
+    public String getQnas(Model model, @PageableDefault(size = 5) Pageable pageable) {
+        Page<Qna> listPage = qnaRepository.findAll(pageable);
 
-        model.addAttribute("list",qnaList);
+        int startPage= Math.max(1,listPage.getPageable().getPageNumber()-4);
+        int endPage=Math.min(listPage.getTotalPages(),listPage.getPageable().getPageNumber()+4);
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("listPage", listPage);
+
         return "qna/itemQnaList";
-
     }
 
     //문의사항 등록_user

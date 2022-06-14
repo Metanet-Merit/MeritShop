@@ -8,6 +8,7 @@ import com.merit.meritShop.item.repository.ItemRepository;
 import com.merit.meritShop.user.domain.User;
 import com.merit.meritShop.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,7 +35,7 @@ public class QnaService {
     //문의사항 목록_admin
     public List<Qna> qnaList() {
 
-        return qnaRepository.findAll();
+        return qnaRepository.findAll(Sort.by(Sort.Direction.DESC,"qnaId"));
    }
 
    //문의사항 등록_user
