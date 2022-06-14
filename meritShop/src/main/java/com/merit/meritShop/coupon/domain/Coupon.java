@@ -1,5 +1,6 @@
 package com.merit.meritShop.coupon.domain;
 
+import com.merit.meritShop.common.domain.BaseEntity;
 import com.merit.meritShop.user.domain.User;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @DynamicInsert
 @NoArgsConstructor
 @Table(name="coupon")
-public class Coupon {
+public class Coupon extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="coupon_id")
@@ -24,8 +25,8 @@ public class Coupon {
     @Column(name="coupon_name") //테이블 컬럼 이름과 매칭
     private String couponName;
 
-    @Column(name="serial_code")
-    private String serialCode;
+
+
 
     @Column(name="discount_price")
     private int discountPrice;
@@ -35,19 +36,26 @@ public class Coupon {
 
     private String description;
 
-    @Column(name="start_date")
-    private LocalDateTime startDate;
 
-    @Column(name="end_date")
-    private LocalDateTime endDate;
 
-    @Column(name="pub_date")
-    private LocalDateTime publishDate;
+    private int startNum; // 쿠폰 생성일 + startNum = startDate
+    private int endNum; // 쿠폰 만료료일 + ndNum = endDate
 
     @Column(name="min_bound")
     private int minBound;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    public Coupon update(CouponFormDto dto){
+        if(dto.getCouponId()!=null){
+            this.couponId = dto.getCouponId();
+        }
+        this.couponName = dto.getCouponName();
+        this.discountPrice =dto.getDiscountPrice();
+        this.discountRate = dto.getDiscountRate();
+        this.description = dto.getDescription();
+        this.startNum = dto.getStartNum();
+        this.endNum = dto.getEndNum();
+        this.minBound = dto.getMinBound();
+
+        return this;
+    }
 }
