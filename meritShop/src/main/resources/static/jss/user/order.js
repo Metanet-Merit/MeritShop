@@ -1,12 +1,25 @@
 $order= {
     //html에서 유저아이디 가져오기 or 쿠키에서 가져오기 or 컨트롤러에서 가져오기
-    getReviews:function(){
+    getOrders:function(){
+        userId=$Cookie.getCookie();
         url = '/myPage/orderItems';
-        param = {userId:1}
+        param = {userId:userId}
 
-        $ajax.get(url, param, $order.getOrderListCallBack, $review.getOrderListErrCallback);
+        $ajax.get(url, param, $order.getOrderListCallBack, $order.getOrderListErrCallback);
     },
 
+    changeModalContent:function(e){
+
+        if(e.previousSibling.value=="true"){
+            alert("이미 리뷰를 작성했네요!");
+        }
+        else{
+
+            $(".modal-body").text("리뷰쓰기 페이지로 이동하기");
+        }
+
+
+    },
 
     getOrderListCallBack: function (response) {
 
@@ -72,7 +85,7 @@ $order= {
             '                </div>\n' +
             '            </td>\n' +
             '            <td>\n' +
-            '                <button type="button" class="btn-review--small"  data-write-yn="Y" onclick="mypage.gdasCompleteList.appraisalModify(this);">리뷰수정</button><br>\n' ;
+            '                <!--<button type="button" class="btn-review--small"  data-write-yn="Y" onclick="mypage.gdasCompleteList.appraisalModify(this);">리뷰수정</button><br>\n-->' ;
 
         const suffix=
 
@@ -93,19 +106,22 @@ $order= {
 
             var content = '';
             var rtnObj = result['rtnObj'];
-            var reviews = rtnObj['reviews'];
+            var orderItems = rtnObj['orderItems'];
 
-            reviews.forEach(function (review) {
-                const orderItemName = review['orderItemName'];
-                const review_content=review['content'];
-                const rate=review['rate'];
-                const review_date=review['reviewDate'];
-                const order_date=review['orderDate'];
-                const category=review['category'];
-                const button='<input type="hidden" value='+review_content+'><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="$review.changeModalContent(this)">리뷰보기</button><br></td></tr>'
-                content +=  middle+'<dd>'+order_date+'</dd>'+html_categoryNitem+'<span class="tit">'+category+'</span>' +
-                    '   <span class="txt oneline">'+orderItemName+'</span>' +html_review_date+
-                    '<dd>'+review_date+'</dd>'+btn+button;
+            //String orderItemName;
+          //  Integer count;
+           // boolean reviewed;
+            orderItems.forEach(function (orderItem) {
+                const orderItemName = orderItem['orderItemName'];
+                const count=orderItem['count'];
+                const reviewed=orderItem['reviewed'];
+                const orderDate=orderItem['orderDate'];
+
+                const button='<input type="hidden" value='+reviewed+'><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="$order.changeModalContent(this)">리뷰쓰러가기</button><br></td></tr>'
+
+                content +=  middle+orderDate+'<dd>수량:'+count+'</dd>'+html_categoryNitem+'<span class="tit">'+'</span>' +
+                    '   <span class="txt oneline">'+orderItemName+'</span>' +
+                    '<dd>'+'</dd>'+btn+button;
 
             });
 

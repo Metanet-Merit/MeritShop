@@ -20,12 +20,12 @@ public class OrderListController extends AbstractController {
     @GetMapping("/orders")
     public Result getOrders(@RequestParam Long userId) {
         //  , @CookieValue(name = "userId", required = false) Long useId) { //userId는 쿠키에서 가져오기
-        return orderListService.getOders(userId);
+        return orderListService.getOrders(userId);
     }
 
     @GetMapping("/orderItems")
-    public Result getOrderItems(@RequestParam Long orderId) {
-        return orderListService.getOderItems(orderId);
+    public Result getOrderItems(@RequestParam Long userId) {
+        return orderListService.getOderItems(userId);
     }
 
 }

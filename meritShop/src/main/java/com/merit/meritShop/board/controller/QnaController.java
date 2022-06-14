@@ -36,19 +36,25 @@ public class QnaController {
     }
 
     //문의사항 등록_user
-    @PostMapping("/user/qnaWrite")
-    public String write(Qna qna, Model model) {
-        String result = qnaService.writeQnA(qna);
+    @PostMapping("/user/qnaWrite/{itemId}")
+    public String write(QnaDTO qnaDTO,@CookieValue("userId") Long userId) {
+
+        String result = qnaService.writeQnA(qnaDTO,userId);
+        Long itemId=qnaDTO.getItemId();
         if(result == "success") {
-            Long id=qna.getItem().getItemId();
-            //return "redirect: /item/{id}";
-            return "qna/myQnaWrite";
+            return "redirect:/item/{itemId}";
         }
         else {
             return "qna/qnaList";
-
         }
     }
+    //문의사항 등록_user
+    @GetMapping("/user/qnaWrite/{itemId}")
+    public String writePage(@PathVariable Long itemId,Model model) {
+            model.addAttribute("itemId",itemId);
+            return "qna/myQnaWrite";
+    }
+
     //문의사항 답변_admin
     @PostMapping("/admin/reply")
     public String reply(QnaDTO qnaDTO,Model model){
@@ -84,9 +90,4 @@ public class QnaController {
             return "qna/qnaList";
         }
     }
-
-
-
-
-
 }

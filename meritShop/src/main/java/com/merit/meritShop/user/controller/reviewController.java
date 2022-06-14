@@ -11,25 +11,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/myPage")
-public class reviewController extends AbstractController {
+public class reviewController {
 
 
     @Autowired
     ReviewService reviewService;
 
     @GetMapping("/reviews")
-    @ResponseBody
-    public JSONObject getReviews(@RequestParam Long userId) {
-        Result result=reviewService.getReviews(userId);
-        return return2JSON(result);
+    public Result getReviews(@RequestParam Long userId) {
+        //  , @CookieValue(name = "userId", required = false) Long useId) { //userId는 쿠키에서 가져오기
+        return reviewService.getReviews(userId);
     }
 
     @PostMapping("review")
-    @ResponseBody
-    public JSONObject addReview(@RequestBody ReviewFormDTO reviewFormDTO){
-        Result result=reviewService.addReview(reviewFormDTO);
-        return return2JSON(result);
+    public Result addReview(@RequestBody ReviewFormDTO reviewFormDTO) {
+        return reviewService.addReview(reviewFormDTO);
     }
+
+    @GetMapping("/itemReviews")
+    public Result getItemReviews(@RequestParam Long itemId){
+        return reviewService.getItemReviews(itemId);
+    }
+
 }
