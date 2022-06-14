@@ -12,6 +12,7 @@ public class OrderItemHistDto {
     private String imgUrl;
     private Long orderId;
     private Long itemId;
+    private Long itemOptionId; //   상품 옵션 정보 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private String itemName;
     private int itemPrice;
     private int count; // 수량

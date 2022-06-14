@@ -85,6 +85,7 @@ public class OrderService {
             orderItem.setReviewed(false);
             orderItem.setOrderItemPrice(item.getPrice() * dto.getCount());
             orderItem.setOrders(orders);
+            orderItem.setItemOptionId(dto.getItemOptionId());
             orderItem = orderItemRepository.save(orderItem);
             list.add(orderItemRepository.save(orderItem));
 

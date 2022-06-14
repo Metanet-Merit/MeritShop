@@ -51,7 +51,7 @@ public class ReviewService {
                                 .orderDate(orderItem.getOrders().getOrderDate())
                                 .orderItemName(item.getItemName())
                                 .userName(user.getUserName())
-                                .url(item.getImgUrl())
+                                .uuidName(item.getImgUrl())
                                 .category(item.getCategory())
                                         .build();
                 log.info(review.getContent());
@@ -86,7 +86,7 @@ public class ReviewService {
                                 .orderItemName(item.getItemName())
                                 .userName(review.getUser().getUserName())
                                 .category(item.getCategory())
-                                .url(item.getImgUrl())
+                                .uuidName(item.getImgUrl())
                                 .build();
 
                         reviewFormDTOList.add(reviewFormDTO);

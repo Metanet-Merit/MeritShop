@@ -30,6 +30,8 @@ public class OrderItem extends BaseEntity {
     private Orders orders;
 
 
+    private Long itemOptionId;
+
     private int count;
 
     @Column(name="order_item_price")
@@ -37,7 +39,7 @@ public class OrderItem extends BaseEntity {
     private boolean reviewed;
 
     public OrderItemHistDto toHistDto(){
-        return new OrderItemHistDto(item.getImgUrl(),orders.getOrderId(),item.getItemId(),item.getItemName(),item.getPrice(),this.count,this.orderItemPrice,this.reviewed,orders.getAddress(),orders.getRecipient());
+        return new OrderItemHistDto(item.getImgUrl(),orders.getOrderId(),item.getItemId(),this.itemOptionId,item.getItemName(),item.getPrice(),this.count,this.orderItemPrice,this.reviewed,orders.getAddress(),orders.getRecipient());
     }
 
 }
