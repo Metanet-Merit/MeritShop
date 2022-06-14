@@ -131,6 +131,19 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item"th:classappend="${1== listPage.pageable.pageNumber+1}?'disabled'" >
+                                        <a class="page-link" th:href="@{/user/qnas(page=${listPage.pageable.pageNumber-1})}">Pre</a>
+                                    </li>
+                                    <li class="page-item" th:each="i:${#numbers.sequence(startPage,endPage)}"
+                                        th:classappend="${i==listPage.pageable.pageNumber+1}?'disabled'">
+                                        <a class="page-link" href="#" th:href="@{/user/qnas(page=${i-1})}" th:text="${i}">1</a></li>
+                                    <li class="page-item" th:classappend="${listPage.totalPages==listPage.pageable.pageNumber+1}?'disabled'">
+                                        <a class="page-link" href="#"  th:href="@{/user/qnas(page=${listPage.pageable.pageNumber+1})}">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
