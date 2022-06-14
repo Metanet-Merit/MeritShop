@@ -1,16 +1,14 @@
 package com.merit.meritShop.user.service;
 
 import com.merit.meritShop.user.domain.User;
-import com.merit.meritShop.user.dto.UserAdminViewDto;
+import com.merit.meritShop.user.dto.UserViewDto;
 import com.merit.meritShop.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.MultiValueMap;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
@@ -18,11 +16,11 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
 
-    public List<UserAdminViewDto> getAllUserInfo() {
+    public List<UserViewDto> getAllUserInfo() {
         List<User> userList = userRepository.findAll();
-        List<UserAdminViewDto> viewList = new ArrayList<>();
+        List<UserViewDto> viewList = new ArrayList<>();
         for (User user : userList) {
-            UserAdminViewDto view = UserAdminViewDto.builder()
+            UserViewDto view = UserViewDto.builder()
                     .userId(user.getUserId())
                     .email(user.getEmail())
                     .userName(user.getUserName())
@@ -36,27 +34,25 @@ public class UserService {
         return viewList;
     }
 
-    public UserAdminViewDto getUserDetail(Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        User user = null;
-        if (userOptional == null)
-            System.out.println("회원 없음");
-        else
-            user = userOptional.get();
-        UserAdminViewDto view = UserAdminViewDto.builder()
+    public UserViewDto getUserDetail(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(
+                "해당 유저가 없습니다. ID = " + id));
+        UserViewDto view = UserViewDto.builder()
                 .userId(user.getUserId())
                 .email(user.getEmail())
                 .userName(user.getUserName())
                 .role(user.getRole().equals("ROLE_USER") ? "일반 회원" : user.getRole().equals("ROLE_PREMIUM") ? "프리미엄 회원" : "블랙 회원")
                 .expireDate(getRemainDay(user.getRemainDay()))
-                .address1(user.getAddr1())
-                .address2(user.getAddr2())
-                .phone(user.getPhoneNumber())
+                .addr1(user.getAddr1())
+                .addr2(user.getAddr2())
+                .phoneNumber(user.getPhoneNumber())
                 .point(user.getPoint())
+                .zipcode(user.getZipcode())
+                .sex(user.getSex())
                 .build();
         return view;
     }
-
+    //patch
     public void updateUser(Map<String, Object> patchMap, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException(
                 "해당 유저가 없습니다. ID = " + userId));

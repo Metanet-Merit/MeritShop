@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserAdminViewDto {
+public class UserViewDto {
     private Long userId;
 
     private String userName;
@@ -23,9 +23,13 @@ public class UserAdminViewDto {
 
     private String expireDate;
 
-    private String address1;
+    private String addr1;
 
-    private String address2;
+    private String addr2;
 
-    private String phone;
+    private String phoneNumber;
+
+    private String sex;
+
+    private String zipcode;
 }

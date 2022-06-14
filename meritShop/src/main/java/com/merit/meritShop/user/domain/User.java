@@ -70,8 +70,26 @@ public class User {
             case "point":
                 this.point = Integer.parseInt(value.toString());
                 break;
+            case "userName":
+                this.userName = value.toString();
+                break;
+            case "phoneNumber":
+                this.phoneNumber = value.toString();
+                break;
+            case "sex":
+                this.sex = value.toString();
+                break;
+            case "addr1":
+                this.addr1 = value.toString();
+                break;
+            case "addr2":
+                this.addr2 = value.toString();
+                break;
+            case "zipcode":
+                this.zipcode = value.toString();
+                break;
             default:
-                throw new IllegalArgumentException("해당 column이 없습니다.");
+                throw new IllegalArgumentException("해당 column이 없습니다." + key);
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.merit.meritShop.user.controller;
 
-import com.merit.meritShop.user.domain.User;
-import com.merit.meritShop.user.dto.UserAdminViewDto;
+import com.merit.meritShop.user.dto.UserViewDto;
 import com.merit.meritShop.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,14 +21,14 @@ public class adminUserController {
 
     @GetMapping("/user/list")
     public String userList(Model model){
-        List<UserAdminViewDto> userList = userService.getAllUserInfo();
+        List<UserViewDto> userList = userService.getAllUserInfo();
         model.addAttribute("userList", userList);
         return "admin/user/userList";
     }
 
     @GetMapping("/user/detail")
     public String userDetail(Model model, @RequestParam Long userId){
-        UserAdminViewDto user = userService.getUserDetail(userId);
+        UserViewDto user = userService.getUserDetail(userId);
         model.addAttribute("user", user);
         return "admin/user/userDetail";
     }
