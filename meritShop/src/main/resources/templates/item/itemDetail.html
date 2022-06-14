@@ -133,29 +133,32 @@
 
                     </div>
                 </div>
-                <div style="display: none">리뷰 상세</div>
+                <div style="display: none">
+
+                </div>
                 <div style="display: none">
                     <div class="prd_qna_tit">
-                        <button class="btnInquiry goods_qna_inquiry" onclick="#">상품문의</button>
+                        <button class="btnInquiry goods_qna_inquiry" th:onclick="|location.href='@{/user/qnaWrite}'|">상품문의</button>
                     </div>
                     <ul class="prd_qna_list" id="prd_qna_list">
                         //보이는 화면
                         <li>
                             <div class="qna_tit_box">
                                 <p class="qna_question">
-                                    <span class="qna_flag">답변여부 넣기</span>
-                                    <a href="javascript:;" class="completeBind">qna title</a>
+                                    <span class="qna_flag"></span>
+                                    <a href="javascript:;" class="completeBind" ></a>
                                 </p>
                                 <p class="tx_userid">
-                                    <span>user_name</span>
+                                    <span ></span>
 
-                                </p><p class="tx_date">registerDate</p>
+                                </p>
+                                <p class="tx_date" ></p>
                             </div>
                             //title 클릭했을 때 보이는 내용들
                             <div class="qna_answer_box">
                                 <div class="tx_question">
-                                    <span class="ico_qna question">Q</span>
-                                    qna content
+                                    <span class="ico_qna question" >Q</span>
+
                                 </div>
                             </div>
                         </li>
