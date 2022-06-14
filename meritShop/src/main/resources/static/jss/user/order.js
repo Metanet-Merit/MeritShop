@@ -1,8 +1,9 @@
 $order= {
     //html에서 유저아이디 가져오기 or 쿠키에서 가져오기 or 컨트롤러에서 가져오기
     getOrders:function(){
+        userId=$Cookie.getCookie();
         url = '/myPage/orderItems';
-        param = {userId:1}
+        param = {userId:userId}
 
         $ajax.get(url, param, $order.getOrderListCallBack, $order.getOrderListErrCallback);
     },

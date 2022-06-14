@@ -1,10 +1,13 @@
 $review= {
-    //userId:document.getElementById("userId").value,
+
     //itemId:document.getElementById("itemId").value,
+    //userId:$Cookie.getCookie(),
+
     getReviews:function(){
+        userId=$Cookie.getCookie();
         url = '/myPage/reviews';
-        param = {userId:2}
-       // param={userId:userId}
+        param = {userId:userId}
+
         $ajax.get(url, param, $review.getReviewsCallBack, $review.getReviewsErrCallback);
     },
     getItemReviews:function(){

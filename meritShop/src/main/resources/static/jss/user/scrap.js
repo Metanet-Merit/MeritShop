@@ -1,18 +1,21 @@
 $scrap= {
+
     //itemId: document.getElementById('itemId').value,
-    //userId:document.getElementById('userId').value,
+
     addScrap:function(){
+        userId=$Cookie.getCookie();
         url = '/myPage/scrap';
         param = {
             itemId:1,
-            userId:1
+            userId:userId
         }
 
         $ajax.post(url, param, $scrap.addScrapCallBack, $scrap.addScrapErrCallback);
     },
     getScraps:function (){
+        userId=$Cookie.getCookie();
         url = '/myPage/scrap';
-        param = {userId:1}
+        param = {userId:userId}
 
         $ajax.get(url, param, $scrap.getScrapsCallBack, $scrap.getScrapsErrCallback);
     },
@@ -26,14 +29,11 @@ $scrap= {
             alert("찜정보 콘솔확인");
             console.log(obj);
 
-
-
         } else {
             var msg = JSON.parse(response).rtnMsg;
             alert(msg);
 
         }
-
 
     },
 
