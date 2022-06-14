@@ -4,6 +4,9 @@
 
 <head>
     <script type="application/javascript" src="/jss/user/review.js?version='1'"></script>
+    <script type="application/javascript" src="/jss/user/order.js?version='2'"></script>
+    <script type="application/javascript" src="/jss/user/scrap.js?version='3'"></script>
+    <script type="application/javascript" src="/jss/common/Cookie.js?version='2'"></script>
     <script type="application/javascript" src="/jss/common/ajax.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -17,6 +20,8 @@
 <body>
 
 <div th:replace="~{template/fragment/myPageHeader::header}"></div>
+<input id="userId" th:value="${userId}"/>
+<div th:text="${userId}">userId</div>
 
 <div class="listContainer">
     <div class="mainContentBox">
@@ -26,7 +31,7 @@
         <a type="button" onclick="$exam.exam()" class="item">
             <div class="text">내 정보 수정</div>
         </a>
-        <a type="button" onclick="$exam.exam()" class="item">
+        <a type="button" onclick="$order.getOrders()" class="item">
             <div class="text">구매 내역</div>
         </a>
         <a type="button" onclick="$review.getReviews()" class="item">
@@ -38,12 +43,22 @@
         <a type="button" onclick="$exam.exam()" class="item">
             <div class="text">쿠폰 / 적립금</div>
         </a>
+        <a type="button" onclick="$review.getItemReviews()" class="item">
+            <div class="text">아이템별리뷰</div>
+        </a>
+        <a type="button" onclick="$scrap.getScraps()" class="item">
+            <div class="text">찜 정보</div>
+        </a>
+        <a type="button" onclick="$scrap.addScrap()" class="item">
+            <div class="text">찜하기 테스트</div>
+        </a>
     </div>
     <div class="mainContent" id="content">
         여기에 내용이 나오면 됩니다아아ㅏㅏㅏㅏㅏㅏㅏㅏ<br>
         어쩌구 </br>
         저쩌구</br>
         자바스크립트 함수에서 이 태그 안에 내용을 넣으면 되겠죠?!!<br>
+       <span th:if="${userId} == NULL">쿠키가없어</span>
         <span th:text="${hello}">123</span>
     </div>
 </div>
