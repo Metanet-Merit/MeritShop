@@ -50,9 +50,11 @@ public class ReviewService {
                                 .reviewDate(review.getCreatedDate())
                                 .orderDate(orderItem.getOrders().getOrderDate())
                                 .orderItemName(item.getItemName())
+                                .userName(user.getUserName())
+                                .url(item.getImgUrl())
                                 .category(item.getCategory())
                                         .build();
-
+                log.info(review.getContent());
                 reviewFormDTOList.add(reviewFormDTO);
 
             }
@@ -63,7 +65,41 @@ public class ReviewService {
         }
 
     }
+    public Result<Map<String, Object>> getItemReviews(Long itemId) {
 
+        try {
+            Map<String, Object> map = new HashMap<>();
+            Item item=itemRepository.findById(itemId).get();
+            List<OrderItem> orderItemList=orderItemRepository.findOrderItemByItem(item);
+            List<ReviewFormDTO> reviewFormDTOList = new ArrayList<>();
+
+            for (OrderItem orderItem : orderItemList) {
+                List<Review> reviewList = reviewRepository.findReviewByOrderItem(orderItem);
+                for(Review review:reviewList){
+                    if(review!=null){
+
+                        ReviewFormDTO reviewFormDTO = ReviewFormDTO.builder()
+                                .content(review.getContent())
+                                .rate(review.getRate())
+                                .reviewDate(review.getCreatedDate())
+                                .orderDate(orderItem.getOrders().getOrderDate())
+                                .orderItemName(item.getItemName())
+                                .userName(review.getUser().getUserName())
+                                .category(item.getCategory())
+                                .url(item.getImgUrl())
+                                .build();
+
+                        reviewFormDTOList.add(reviewFormDTO);
+                    }
+                }
+            }
+            map.put("reviews", reviewFormDTOList);
+            return ResultCode.Success.result(map);
+        } catch (Exception e) {
+            return ResultCode.DB_ERROR.result();
+        }
+
+    }
     public Result<Review> addReview(ReviewFormDTO reviewFormDTO){
         return addReview(reviewFormDTO.getUserId(),reviewFormDTO.getOrderItemId(),reviewFormDTO.getContent(),reviewFormDTO.getRate());
     }

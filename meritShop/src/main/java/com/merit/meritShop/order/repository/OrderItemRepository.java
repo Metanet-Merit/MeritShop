@@ -1,5 +1,6 @@
 package com.merit.meritShop.order.repository;
 
+import com.merit.meritShop.item.domain.Item;
 import com.merit.meritShop.order.domain.OrderItem;
 import com.merit.meritShop.order.domain.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,5 @@ import java.util.List;
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     List<OrderItem> findOrderItemByOrders(Orders order);
+    List<OrderItem> findOrderItemByItem(Item item);
 }
