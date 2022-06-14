@@ -6,13 +6,13 @@ import com.merit.meritShop.item.domain.ItemSellStatus;
 import com.merit.meritShop.item.repository.ItemOptionRepository;
 import com.merit.meritShop.item.repository.ItemRepository;
 import com.merit.meritShop.item.service.ItemOptionService;
-import com.merit.meritShop.order.domain.OrderItem;
-import com.merit.meritShop.order.domain.OrderItemDto;
-import com.merit.meritShop.order.domain.Orders;
-import com.merit.meritShop.order.domain.PayFormDto;
+import com.merit.meritShop.order.domain.*;
 import com.merit.meritShop.order.repository.OrderItemRepository;
 import com.merit.meritShop.order.repository.OrderRepository;
+import com.merit.meritShop.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -37,8 +37,27 @@ public class OrderService {
     }
 
 
+    public List<OrderItemHistDto> getOrderHistory(User user){
+
+        List<OrderItemHistDto> dtoList = new ArrayList<>();
+
+        List<Orders> orders = orderRepository.findOrderByUser(user);
+
+        if(!orders.isEmpty()) {
+
+            for (Orders order : orders) {
+                List<OrderItem> items = orderItemRepository.findOrderItemByOrders(order);
+                for (OrderItem item : items) {
+                    dtoList.add(item.toHistDto());
+                }
+            }
+        }
+
+        return dtoList;
+    }
+
     @Transactional
-    public Long order(PayFormDto formDto){
+    public Long order(User user,PayFormDto formDto){
         List<OrderItem> list = new ArrayList<>();
         Orders orders = new Orders();
         orders.setOrderId(formDto.getOrderId());
@@ -71,8 +90,11 @@ public class OrderService {
 
         }
         orders.setOrderItemList(list);
+        orders.setAddress(formDto.getAddress());
+        orders.setRecipient(formDto.getRecipient());
         orders.updateTotalPrice();
         orders.setOrderDate(LocalDateTime.now());
+        orders.setUser(user);
         orders =orderRepository.save(orders);
 
 

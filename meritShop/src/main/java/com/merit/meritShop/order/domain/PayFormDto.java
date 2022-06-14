@@ -8,4 +8,6 @@ import java.util.List;
 public class PayFormDto {
     private List<OrderItemDto> orderItemDtoList;
     private Long orderId;
+    private String address;
+    private String recipient;
 }

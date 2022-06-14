@@ -215,7 +215,7 @@
 
                     <div class="col-md-6 form-group">
                         <label>수령인 이름</label>
-                        <input class="form-control" type="text" placeholder="홍길동">
+                        <input class="form-control" id="recipient_name" type="text" placeholder="홍길동">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>E-mail</label>
@@ -227,11 +227,11 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <label>주   소</label>
-                        <input class="form-control" type="text" placeholder="시/군/구">
+                        <input class="form-control" id="recipient_address1" type="text" placeholder="시/군/구">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>상세 주소</label>
-                        <input class="form-control" type="text" placeholder="메타아파트 x동 x호">
+                        <input class="form-control" id="recipient_address2" type="text" placeholder="메타아파트 x동 x호">
                     </div>
 
                 </div>
@@ -410,6 +410,9 @@
         var buyer_arr1 = document.querySelector("#buyer_arr1").value;
         var buyer_arr2 = document.querySelector("#buyer_arr2").value;
 
+        var recipient_name = document.querySelector("#recipient_name").value;
+        var recipient_address1 = document.querySelector("#recipient_address1").value;
+        var recipient_address2 = document.querySelector("#recipient_address2").value;
         var name = document.querySelectorAll(".itemName");
         var itemId = document.querySelectorAll(".itemId");
         var itemOptionId = document.querySelectorAll(".itemOptionId");
@@ -417,13 +420,17 @@
 
        // count = parseInt(count.substring(2,count.length));
         //buyer_postcode: "01181"
+
+
+
+
         if(total_price<50000){
             total_price += 3000;
         }
         IMP.request_pay({ // param
             pg: "kakaopay.TC0ONETIME",
             pay_method: "card",
-            merchant_uid: "43",
+            merchant_uid: "48912",
             name: name[0].textContent+"등 "+name.length+" 종",
             amount: total_price,
             buyer_email: buyer_email,
@@ -435,6 +442,11 @@
             if (rsp.success) {
                 alert("결제에 성공하였습니다. 에러 내용: " +  rsp.success);
                 var paramData = [];
+                if(recipient_name!=""){
+                    buyer_arr1 = recipient_address1;
+                    buyer_arr2 = recipient_address2;
+                    buyer_name = recipient_name;
+                }
 
                 for(let i=0; i<name.length; i++) {
                     var Data = {
@@ -447,7 +459,9 @@
                 }
                 var payFormDto ={
                     orderItemDtoList: paramData,
-                    orderId: rsp.merchant_uid
+                    orderId: rsp.merchant_uid,
+                    address: buyer_arr1+buyer_arr2,
+                    recipient: buyer_name
                 };
 
                 console.log(payFormDto)

@@ -1,4 +1,5 @@
 package com.merit.meritShop.order.domain;
+import com.merit.meritShop.common.domain.BaseEntity;
 import com.merit.meritShop.item.domain.Category;
 import com.merit.meritShop.item.domain.Item;
 import lombok.*;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @DynamicInsert
 @NoArgsConstructor
 @Table(name="order_item")
-public class OrderItem {
+public class OrderItem extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,5 +36,8 @@ public class OrderItem {
     private int orderItemPrice;
     private boolean reviewed;
 
+    public OrderItemHistDto toHistDto(){
+        return new OrderItemHistDto(item.getImgUrl(),orders.getOrderId(),item.getItemId(),item.getItemName(),item.getPrice(),this.count,this.orderItemPrice,this.reviewed,orders.getAddress(),orders.getRecipient());
+    }
 
 }
