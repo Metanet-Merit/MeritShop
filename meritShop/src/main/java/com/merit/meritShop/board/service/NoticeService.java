@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +46,11 @@ public class NoticeService {
             return null;
         }
     }
+    //조회수
+    @Transactional
+    public int updateView(Long noticeId) {
+        return noticeRepository.updateViews(noticeId);    }
+
 
     //글 수정
     public String noticeModify(Long noticeId,String noticeTitle,String noticeContent){

@@ -4,6 +4,9 @@ import com.merit.meritShop.user.domain.User;
 import com.merit.meritShop.user.dto.UserViewDto;
 import com.merit.meritShop.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,21 +19,11 @@ import java.util.*;
 public class UserService {
     private final UserRepository userRepository;
 
-    public List<UserViewDto> getAllUserInfo() {
-        List<User> userList = userRepository.findAll();
-        List<UserViewDto> viewList = new ArrayList<>();
-        for (User user : userList) {
-            UserViewDto view = UserViewDto.builder()
-                    .userId(user.getUserId())
-                    .email(user.getEmail())
-                    .userName(user.getUserName())
-                    .loginType(user.getLoginType())
-                    .role(user.getRole().equals("ROLE_USER") ? "일반 회원" : user.getRole().equals("ROLE_PREMIUM") ? "프리미엄 회원" : "블랙 회원")
-                    .expireDate(getRemainDay(user.getRemainDay()))
-                    .point(user.getPoint())
-                    .build();
-            viewList.add(view);
-        }
+    public Page<UserViewDto> getAllUserInfo(Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 5);
+        Page<User> userList = userRepository.findAll(pageable);
+        Page<UserViewDto> viewList = new UserViewDto().toDtoList(userList);
         return viewList;
     }
 
@@ -58,6 +51,15 @@ public class UserService {
                 "해당 유저가 없습니다. ID = " + userId));
         user.patch(patchMap);
     }
+    //회원 검색 (+페이징)
+    public Page<UserViewDto> search(String keyword, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 5);
+        Page<User> userList = userRepository.findByUserNameContaining(keyword, pageable);
+        Page<UserViewDto> viewList = new UserViewDto().toDtoList(userList);
+        return viewList;
+    }
+
 
     //구독 만료일 변환
     public String getRemainDay(String remain) {

@@ -3,6 +3,8 @@ package com.merit.meritShop.board.service;
 import com.merit.meritShop.board.domain.Qna;
 import com.merit.meritShop.board.dto.QnaDTO;
 import com.merit.meritShop.board.repository.QnaRepository;
+import com.merit.meritShop.item.domain.Item;
+import com.merit.meritShop.item.repository.ItemRepository;
 import com.merit.meritShop.user.domain.User;
 import com.merit.meritShop.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,11 @@ public class QnaService {
 
     @Autowired
     QnaRepository qnaRepository;
-
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ItemRepository itemRepository;
+
     //내가 작성한 문의사항 목록_user
     public List<Qna> myQnaList(Long userId) {
         User user=userRepository.findById(userId).get();
@@ -34,10 +38,17 @@ public class QnaService {
    }
 
    //문의사항 등록_user
-   public String writeQnA(Qna qna) {
+   public String writeQnA(QnaDTO qnaDTO,Long userId) {
        try{
+           User user=userRepository.findById(userId).get();
+           Item item=itemRepository.findById(qnaDTO.getItemId()).get();
+           Qna qna=new Qna();
            qna.setReplied(false);
            qna.setRegisterDate(LocalDateTime.now());
+           qna.setContent(qnaDTO.getContent());
+           qna.setTitle(qnaDTO.getTitle());
+           qna.setUser(user);
+           qna.setItem(item);
            qnaRepository.save(qna);
            return "success";
        } catch(Exception e) {
