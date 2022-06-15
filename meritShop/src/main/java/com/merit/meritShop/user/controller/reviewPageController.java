@@ -18,4 +18,9 @@ public class reviewPageController {
         return "myPage/reviewForm";
 
     }
+    @GetMapping("/reviewPage")
+    public String reviewPage(Model model){
+        return "myPage/review";
+
+    }
 }

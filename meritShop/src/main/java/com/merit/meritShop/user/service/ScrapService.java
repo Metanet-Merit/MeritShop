@@ -28,14 +28,14 @@ public class ScrapService {
 
         try {
             Map<String, Object> map = new HashMap<>();
-            Optional<User> optionalUser=userRepository.findById(userId);
-            User user=optionalUser.get();
-            List<Scrap> scrapList=scrapRepository.findScrapByUser(user);
+            Optional<User> optionalUser = userRepository.findById(userId);
+            User user = optionalUser.get();
+            List<Scrap> scrapList = scrapRepository.findScrapByUser(user);
             List<ScrapDTO> scrapDTOList = new ArrayList<>();
 
-            for (Scrap scrap:scrapList) {
+            for (Scrap scrap : scrapList) {
 
-                Item item=scrap.getItem();
+                Item item = scrap.getItem();
                 ScrapDTO scrapDTO = ScrapDTO.builder()
                         .itemName(item.getItemName())
                         .itemId(item.getItemId())
@@ -53,16 +53,25 @@ public class ScrapService {
 
     }
 
-    public Result<Scrap> addScrap(ScrapDTO scrapDTO){
-        return addScrap(scrapDTO.getUserId(),scrapDTO.getItemId());
+    public Result<Scrap> addScrap(ScrapDTO scrapDTO) {
+        return addScrap(scrapDTO.getUserId(), scrapDTO.getItemId());
     }
-    public Result<Scrap> addScrap(Long userId,Long itemId) {
+
+    public Result<Scrap> addScrap(Long userId, Long itemId) {
 
         try {
-            User user=userRepository.findById(userId).get();
-            Item item=itemRepository.findById(itemId).get();
+            if (userId == null) return ResultCode.NOT_LOGIN.result();
 
-            Scrap scrap=Scrap.builder()
+            User user = userRepository.findById(userId).get();
+            Item item = itemRepository.findById(itemId).get();
+            List<Scrap> scrapList = scrapRepository.findScrapByUser(user);
+
+            for (Scrap scrap : scrapList) {
+                if (scrap.getItem().getItemId() == itemId) {
+                    return ResultCode.SCRAP_ALREADY_EXISTS.result();
+                }
+            }
+            Scrap scrap = Scrap.builder()
                     .user(user)
                     .item(item)
                     .build();

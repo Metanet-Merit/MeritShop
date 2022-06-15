@@ -5,6 +5,9 @@
 <head>
   <script type="application/javascript" src="/jss/user/review.js?version='1'"></script>
   <script type="application/javascript" src="/jss/common/ajax.js"></script>
+  <script type="application/javascript" src="/jss/common/Cookie.js?version='1'"></script>
+  <script type="application/javascript" src="/jss/user/scrap.js"></script>
+  <script type="application/javascript" src="/jss/user/order.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -14,6 +17,11 @@
   <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
   <link rel="stylesheet" href="/css/review.css" type="text/css"/>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script>
     function findAddr(){
       new daum.Postcode({
@@ -74,7 +82,7 @@
     <a type="button" onclick="$exam.exam()" class="item">
       <div class="text">내 정보 수정</div>
     </a>
-    <a type="button" onclick="$exam.exam()" class="item">
+    <a type="button" onclick="$order.getOrders()" class="item">
       <div class="text">구매 내역</div>
     </a>
     <a type="button" onclick="$review.getReviews()" class="item">

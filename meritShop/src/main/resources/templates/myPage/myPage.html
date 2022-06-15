@@ -4,7 +4,10 @@
 
 <head>
     <script type="application/javascript" src="/jss/user/review.js?version='1'"></script>
+    <script type="application/javascript" src="/jss/common/Cookie.js?version='1'"></script>
     <script type="application/javascript" src="/jss/common/ajax.js"></script>
+    <script type="application/javascript" src="/jss/user/scrap.js"></script>
+    <script type="application/javascript" src="/jss/user/order.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -13,8 +16,12 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
     <link rel="stylesheet" href="/css/review.css" type="text/css"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    <meta charset="UTF-8">
     <title>마이 페이지</title>
     <style>
         input:disabled {
@@ -34,7 +41,7 @@
         <a type="button" th:href="@{/myPage/user/modify}" class="item">
             <div class="text">내 정보 수정</div>
         </a>
-        <a type="button" onclick="$exam.exam()" class="item">
+        <a type="button" onclick="$order.getOrders()" class="item">
             <div class="text">구매 내역</div>
         </a>
         <a type="button" onclick="$review.getReviews()" class="item">
@@ -45,6 +52,9 @@
         </a>
         <a type="button" onclick="$exam.exam()" class="item">
             <div class="text">쿠폰 / 적립금</div>
+        </a>
+        <a type="button" onclick="$scrap.getScraps()" class="item">
+            <div class="text">내 찜 내역</div>
         </a>
     </div>
     <div class="mainContent" id="content">
@@ -127,7 +137,6 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
-
         </div>
     </div>
 

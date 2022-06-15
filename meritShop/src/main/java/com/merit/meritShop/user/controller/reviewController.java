@@ -37,14 +37,14 @@ public class reviewController {
 
     @PostMapping("review/{itemId}")
     public String addReview(@ModelAttribute ReviewFormDTO reviewFormDTO
-                            ,@PathVariable("itemId") Long itemId
-                            ,@CookieValue("userId")Long userId) throws IOException {
-        String storedFileName=reviewService.storeFile(reviewFormDTO.getImg());
+            , @PathVariable("itemId") Long itemId
+            , @CookieValue("userId") Long userId) throws IOException {
+        String storedFileName = reviewService.storeFile(reviewFormDTO.getImg());
         reviewFormDTO.setUuidName(storedFileName);
         reviewFormDTO.setUserId(userId);
         reviewFormDTO.setOrderItemId(itemId);
-        Result<Review> result=reviewService.addReview(reviewFormDTO);
-        if(result.getResultCode().getCode()==0){
+        Result<Review> result = reviewService.addReview(reviewFormDTO);
+        if (result.getResultCode().getCode() == 0) {
             return "redirect:/myPage";
         }
         return "redirect:/user/login";
@@ -52,12 +52,9 @@ public class reviewController {
 
     @ResponseBody
     @GetMapping("/itemReviews")
-    public Result getItemReviews(@RequestParam Long itemId){
+    public Result getItemReviews(@RequestParam Long itemId) {
         return reviewService.getItemReviews(itemId);
     }
-
-
-
 
 
 }
