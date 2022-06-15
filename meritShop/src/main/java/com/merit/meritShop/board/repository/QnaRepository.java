@@ -1,6 +1,5 @@
 package com.merit.meritShop.board.repository;
 
-import com.merit.meritShop.board.domain.Notice;
 import com.merit.meritShop.board.domain.Qna;
 import com.merit.meritShop.user.domain.User;
 import org.springframework.data.domain.Page;

@@ -32,7 +32,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="alert" role="alert" th:each="qna : ${qnaList}">
+                            <tr class="alert" role="alert" th:each="notice : ${listPage}">
                                 <th scope="row"th:text="${notice.noticeId}"></th>
                                 <td>
                                     <a th:text="${notice.title}" th:href="@{/admin/notice/detail(noticeId=${notice.noticeId})}"></a>

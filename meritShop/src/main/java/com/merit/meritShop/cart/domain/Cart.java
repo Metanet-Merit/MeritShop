@@ -31,17 +31,4 @@ public class Cart {
     private Item item;
 
     private int count;//수량
-
-     /*@ElementCollection
-    @CollectionTable(
-            name = "cart_line"
-    )
-    @MapKeyColumn(name = "map_key")
-    private Map<Long, Cart> cart = new HashMap<>();
-
-    public  Cart(Long userId) {
-        this.user.getUserId() = userId;
-    }*/
-
-
 }

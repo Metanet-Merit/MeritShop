@@ -30,14 +30,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="alert" role="alert" th:each="qna : ${list}">
+                            <tr class="alert" role="alert" th:each="qna : ${listPage}">
                                 <th scope="row"th:text="${qna.qnaId}"></th>
                                 <td>
                                     <a th:text="${qna.title}" th:href="@{/qna/detail(qnaId=${qna.qnaId})}"></a>
                                 </td>
-                                <td scope="row"th:text="${user.user_name}">작성자</td>
-                                <td th:text="${#temporals.format(notice.modifyDate,'yyyy-MM-dd')}"></td>
-                                <td scope="row"th:text="${qna.replied}"></td>
+                                <td scope="row"th:text="${qna.userName}"></td>
+                                <td th:if = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.registerDate,'yyyy-MM-dd')}"></th:if>
+                                </td>
+                                <td th:unless = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.modifyDate,'yyyy-MM-dd')}"></th:if>
+                                </td>
+                                <!--<td scope="row"th:if="${qna.replied == 0}">미답변</td>
+                                <td scope="row"th:unless="${qna.replied == 1}">답변완료</td>-->
                             </tr>
                             </tbody>
                         </table>
