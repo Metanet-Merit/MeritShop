@@ -93,9 +93,6 @@ public class OrderListService {
         }
     */
 
-    @Value("${showItemPath}")
-    String Path;
-
     public Result<Map<String, Object>> getOderItems(Long userId) {
 
         try {

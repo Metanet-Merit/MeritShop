@@ -63,10 +63,10 @@ public class NaverLoginController extends LoginCommon {
                 + "state=" + state;
         String url = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&" + query;
         String token = getTokenByCode(url);
-        //System.out.println(token);
+        System.out.println(token);
 
         ResponseEntity<String> responseEntity = getEntityByToken(token, authUrl);
-        //System.out.println(responseEntity);
+        System.out.println(responseEntity);
         //처음 들어온 경우 디비에 추가
         UserSignInDto userSignInDto = signUpService.registerNaver(responseEntity);
         //아니면 바로 로그인 설정

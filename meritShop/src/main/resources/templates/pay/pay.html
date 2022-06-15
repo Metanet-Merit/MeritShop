@@ -25,16 +25,26 @@
 
 
     <style>
-        #modal {
+        .coupon_content {
+            border: solid #1c294e 1px ;
+            width: 350px;
+            hight: 150px;
+            text-align: center;
+            margin-top: 30px;
+
+        }
+
+        #my_modal {
             display: none;
-            width: 300px;
+            width: 500px;
+            height: 400px;
             padding: 20px 60px;
             background-color: #fefefe;
             border: 1px solid #888;
             border-radius: 3px;
         }
 
-        #modal,#modal_content .coupon_case{
+        #my_modal .modal_close_btn {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -210,11 +220,11 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <label>주   소</label>
-                        <input id="buyer_arr1" class="form-control" type="text" placeholder="시/군/구">
+                        <input name="addr1" type="text" class="form-control" id="buyer_address1" placeholder="서울특별시 강남구" required readonly onclick="findAddr1()">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>상세 주소</label>
-                        <input id="buyer_arr2"class="form-control" type="text" placeholder="메타아파트 x동 x호">
+                        <input id="buyer_address2"class="form-control" type="text" placeholder="ex) 101동-1004호">
                     </div>
 
 
@@ -244,11 +254,11 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <label>주   소</label>
-                        <input class="form-control" id="recipient_address1" type="text" placeholder="시/군/구">
+                        <input name="addr1" type="text" class="form-control" id="recipient_address1" placeholder="서울특별시 강남구" required readonly onclick="findAddr2()">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>상세 주소</label>
-                        <input class="form-control" id="recipient_address2" type="text" placeholder="메타아파트 x동 x호">
+                        <input class="form-control" id="recipient_address2" type="text" placeholder="ex) 101동-1004호">
                     </div>
 
                 </div>
@@ -260,6 +270,7 @@
                     <h4 class="font-weight-semi-bold m-0">Order Total</h4>
                 </div>
                 <div class="card-body">
+                    <input type="hidden" id="transactionCode" th:value="${transactionCode}">
                     <input type="hidden" id="order_id" th:value="${orderId}">
                     <h5 class="font-weight-medium mb-3">주문 상품</h5>
                     <div class="d-flex justify-content-between" th:each=" orderItem :${payList} ">
@@ -279,7 +290,12 @@
                         <h6 class="font-weight-medium">Shipping</h6>
                         <h6 class="font-weight-medium">￦0</h6>
                     </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Discount</h6>
+                        <h6 class="font-weight-medium" id="couponPrice">￦0</h6>
+                    </div>
                 </div>
+
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
@@ -291,16 +307,17 @@
                 사용 가능한  쿠폰 보기<br>
 
             <button id="popup_open_btn">쿠폰 사용</button>
-            <div id="modal">
-                <div id="modal_content">
-                    <div class="coupon_case" th:each="coupon:${couponList}">
-                        <input type="hidden" th:value="${coupon.couponCaseId}">
-                        <h5 th:text="${coupon.coupon.couponName}"></h5>
-                        <p th:if="${coupon.coupon.discountPrice!=0}" th:text="${coupon.coupon.discountPrice}"></p>
-                        <p th:if="${coupon.coupon.discountRate!=0.0}" th:text="${coupon.coupon.discountRate}"></p>
-                    </div>
+            <input type="hidden" id="couponCaseId">
 
+            <div id="my_modal">
+
+                <div class="coupon_content" th:each="coupon:${couponList}">
+                    <input type="hidden" class="couponId" th:value="${coupon.couponCaseId}">
+                    <h5 th:text="${coupon.coupon.couponName}"></h5>
+                    <p th:if="${coupon.coupon.discountPrice!=0}" class="couponPrice" th:text="${coupon.coupon.discountPrice}"></p>
+                    <p th:if="${coupon.coupon.discountRate!=0.0}" th:text="${coupon.coupon.discountRate}"></p>
                 </div>
+                   <a class="modal_close_btn">닫기</a>
             </div>
             <hr class="my-4">
 
@@ -412,6 +429,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 <script src="/mainPage/lib/easing/easing.min.js"></script>
 <script src="/mainPage/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- Contact Javascript File -->
 <script src="/mainPage/mail/jqBootstrapValidation.min.js"></script>
@@ -421,7 +439,50 @@
 <script src="/mainPage/js/main.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script>
+    function findAddr1(){
+        new daum.Postcode({
+            oncomplete: function(data) {
 
+                console.log(data);
+
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var jibunAddr = data.jibunAddress; // 지번 주소 변수
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                //document.getElementById('zipcode').value = data.zonecode;
+                if(roadAddr !== ''){
+                    document.getElementById("buyer_address1").value = roadAddr;
+                }
+                else if(jibunAddr !== ''){
+                    document.getElementById("buyer_address1").value = jibunAddr;
+                }
+            }
+        }).open();
+    }
+    function findAddr2(){
+        new daum.Postcode({
+            oncomplete: function(data) {
+
+                console.log(data);
+
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var jibunAddr = data.jibunAddress; // 지번 주소 변수
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                //document.getElementById('zipcode').value = data.zonecode;
+                if(roadAddr !== ''){
+                    document.getElementById("recipient_address1").value = roadAddr;
+                }
+                else if(jibunAddr !== ''){
+                    document.getElementById("recipient_address1").value = jibunAddr;
+                }
+            }
+        }).open();
+    }
     function requestPay() {
         // IMP.request_pay(param, callback) 결제창 호출
         console.log("0000");
@@ -433,8 +494,8 @@
         var buyer_name = document.querySelector("#buyer_name").value;
         var buyer_email = document.querySelector("#buyer_email").value;
         var buyer_tel = document.querySelector("#buyer_tel").value;
-        var buyer_arr1 = document.querySelector("#buyer_arr1").value;
-        var buyer_arr2 = document.querySelector("#buyer_arr2").value;
+        var buyer_address1 = document.querySelector("#buyer_address1").value;
+        var buyer_address2 = document.querySelector("#buyer_address2").value;
 
         var recipient_name = document.querySelector("#recipient_name").value;
         var recipient_address1 = document.querySelector("#recipient_address1").value;
@@ -443,11 +504,14 @@
         var itemId = document.querySelectorAll(".itemId");
         var itemOptionId = document.querySelectorAll(".itemOptionId");
         var count = document.querySelectorAll(".itemCount");
+        var transactionCode = document.getElementById("transactionCode").value;
+
+        var couponCaseId = document.getElementById("couponCaseId").value;
 
        // count = parseInt(count.substring(2,count.length));
         //buyer_postcode: "01181"
 
-
+        console.log(couponCaseId);
 
 
         if(total_price<50000){
@@ -456,21 +520,21 @@
         IMP.request_pay({ // param
             pg: "kakaopay.TC0ONETIME",
             pay_method: "card",
-            merchant_uid: "48912",
+            merchant_uid: transactionCode,
             name: name[0].textContent+"등 "+name.length+" 종",
             amount: total_price,
             buyer_email: buyer_email,
             buyer_name: buyer_name,
             buyer_tel: buyer_tel,
-            buyer_addr: buyer_arr1+buyer_arr2
+            buyer_addr: buyer_address1+buyer_address2
 
         }, function (rsp) { // callback
             if (rsp.success) {
                 alert("결제에 성공하였습니다. 에러 내용: " +  rsp.success);
                 var paramData = [];
                 if(recipient_name!=""){
-                    buyer_arr1 = recipient_address1;
-                    buyer_arr2 = recipient_address2;
+                    buyer_address1 = recipient_address1;
+                    buyer_address2 = recipient_address2;
                     buyer_name = recipient_name;
                 }
 
@@ -485,9 +549,10 @@
                 }
                 var payFormDto ={
                     orderItemDtoList: paramData,
-                    orderId: rsp.merchant_uid,
-                    address: buyer_arr1+buyer_arr2,
-                    recipient: buyer_name
+                    transactionCode: rsp.merchant_uid,
+                    address: buyer_address1+buyer_address2,
+                    recipient: buyer_name,
+                    couponCaseId: couponCaseId
                 };
 
                 console.log(payFormDto)
@@ -512,10 +577,17 @@
         });
     }
 
+</script>
+<script>
     function modal(id) {
         var zIndex = 9999;
         var modal = document.getElementById(id);
-        console.log(modal);
+        var couponCaseId =  document.getElementById("couponCaseId");
+        var discountP  = document.getElementById("couponPrice");
+        var totalP = document.getElementById("totalPrice");
+
+        console.log(discountP);
+        console.log(totalP);
 
         // 모달 div 뒤에 희끄무레한 레이어
         var bg = document.createElement('div');
@@ -537,6 +609,18 @@
             bg.remove();
             modal.style.display = 'none';
         });
+        modal.querySelectorAll('.coupon_content').forEach(n=>n.addEventListener('click', function() {
+            bg.remove();
+            modal.style.display = 'none';
+            couponCaseId.value = n.getElementsByClassName("couponId")[0].value;
+            var price = parseInt(n.getElementsByClassName("couponPrice")[0].textContent);
+            console.log(price);
+            discountP.textContent = '￦'+price;
+            totalP.textContent =  '￦'+(parseInt(totalP.textContent.substring(1,totalP.textContent.length))-price);
+
+            console.log(couponCaseId.value);
+
+        }));
 
         modal.setStyle({
             position: 'fixed',
@@ -563,10 +647,9 @@
 
     document.getElementById('popup_open_btn').addEventListener('click', function() {
         // 모달창 띄우기
-        modal('modal_content');
+        modal('my_modal');
     });
 </script>
-
 </body>
 
 </html>
