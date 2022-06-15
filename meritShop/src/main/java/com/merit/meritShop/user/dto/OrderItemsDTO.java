@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderItemsDTO {
+    Long orderItemId;
     LocalDateTime orderDate;
     String orderItemName;
     String url;

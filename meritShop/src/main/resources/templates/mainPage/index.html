@@ -38,6 +38,7 @@
                     <a class="text-dark" href="">Support</a>
                     <span class="text-muted px-2">|</span>
                     <a class="text-dark" href="/admin" sec:authorize="hasRole('ROLE_ADMIN')">관리자 페이지</a>
+                    <a class="text-dark" href="/myPage" sec:authorize="hasRole('ROLE_USER')">마이 페이지</a>
 
                 </div>
             </div>
@@ -146,9 +147,11 @@
                             </div>
                             <a href="#" class="nav-item nav-link">공지사항</a>
                         </div>
-                        <div class="navbar-nav ml-auto py-0">
+                        <div sec:authorize="isAnonymous()" class="navbar-nav ml-auto py-0">
                             <a href="/user/login" class="nav-item nav-link">Login</a>
-                            <a href="/user/login" class="nav-item nav-link">Register</a>
+                        </div>
+                        <div sec:authorize="isAuthenticated()" class="navbar-nav ml-auto py-0">
+                            <a href="/user/logout" class="nav-item nav-link">로그아웃</a>
                         </div>
                     </div>
                 </nav>

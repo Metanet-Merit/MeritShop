@@ -1,5 +1,6 @@
 package com.merit.meritShop.order.controller;
 
+import com.merit.meritShop.coupon.repository.CouponCaseRepository;
 import com.merit.meritShop.item.domain.Item;
 import com.merit.meritShop.item.domain.ItemOption;
 import com.merit.meritShop.item.repository.ItemOptionRepository;
@@ -32,6 +33,7 @@ public class OrderController {
     private final ItemOptionRepository itemOptionRepository;
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
+    private final CouponCaseRepository couponCaseRepository;
 
 
     @PostMapping("/order")
@@ -67,7 +69,9 @@ public class OrderController {
 
 
     @GetMapping("/pay")
-    public String getPayForm( PayFormDto dtoList, Model model){
+    public String getPayForm( HttpServletRequest request,PayFormDto dtoList, Model model){
+
+        Long userId = getIdFromCookies(request.getCookies());
 
         List<OrderItemDto> dtos = dtoList.getOrderItemDtoList();
         List<PayItemDto> payList = new ArrayList<>();
@@ -91,6 +95,7 @@ public class OrderController {
         model.addAttribute("orderId",orderService.getOrderId());
         model.addAttribute("payList",payList);
         model.addAttribute("totalPrice",totalPrice);
+        model.addAttribute("couponList",couponCaseRepository.findAllByUserUserIdAndUsedIsFalse(userId));
 
 
         return "pay/pay";
