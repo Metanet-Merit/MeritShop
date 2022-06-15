@@ -49,7 +49,9 @@ public class NoticeService {
     //조회수
     @Transactional
     public int updateView(Long noticeId) {
-        return noticeRepository.updateViews(noticeId);    }
+
+        return noticeRepository.updateViews(noticeId);
+    }
 
 
     //글 수정

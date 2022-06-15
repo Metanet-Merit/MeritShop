@@ -42,7 +42,7 @@ public class NoticeController {
     public String userNoticeList(Model model, @PageableDefault(size = 5) Pageable pageable) {
         Page<Notice> listPage = noticeRepository.findAll(pageable);
 
-        int startPage= Math.max(1,listPage.getPageable().getPageNumber()-4);
+        int startPage = Math.max(1,listPage.getPageable().getPageNumber()-4);
         int endPage=Math.min(listPage.getTotalPages(),listPage.getPageable().getPageNumber()+4);
 
         model.addAttribute("startPage", startPage);
@@ -80,7 +80,7 @@ public class NoticeController {
     public String userNoticeDetail(Model model, @RequestParam Long noticeId) {
         Notice notice = noticeService.noticeDetail(noticeId);
         noticeService.updateView(noticeId);
-        if(notice == null){
+        if(notice == null) {
             return "redirect:list";
         }
         //log.info(notice.toString());
@@ -101,7 +101,7 @@ public class NoticeController {
                                Notice notice) {
 
         String result= noticeService.noticeModify(noticeId,notice.getTitle(),notice.getContent());
-        if (result == "Success"){
+        if (result == "Success") {
             return "redirect:/admin/notice/list";
         }
         else {

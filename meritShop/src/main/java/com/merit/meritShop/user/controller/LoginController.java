@@ -32,10 +32,32 @@ public class LoginController extends LoginCommon {
 
     @PostMapping("/login")
     public void login(UserSignInDto userSignInDto, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("@@");
         userSignInDto.setLoginType("local");
+        System.out.println("??");
         JwtResponseDto jwt = loginService.login(userSignInDto);
+        System.out.println("!!");
         setCookieAndRedirectMain(jwt, request, response);
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {//
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("Authorization") || cookie.getName().equals("userId")
+            || cookie.getName().equals("userName") || cookie.getName().equals("JSESSIONID")) {
+                    cookie.setMaxAge(0); // 쿠키의 expiration 타임을 0으로 하여 없앤다.
+                    cookie.setPath("/");
+                    response.addCookie(cookie);
+                }
+            }
+        }
+        else
+            return "login/login";
+        return "redirect:/main";
+    }
+
 
 
 

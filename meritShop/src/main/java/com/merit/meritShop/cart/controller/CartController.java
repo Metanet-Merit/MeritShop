@@ -1,27 +1,59 @@
 package com.merit.meritShop.cart.controller;
 
 import com.merit.meritShop.cart.domain.Cart;
+import com.merit.meritShop.cart.dto.CartDto;
 import com.merit.meritShop.cart.service.CartService;
+import com.merit.meritShop.item.repository.ItemRepository;
+import com.merit.meritShop.order.domain.OrderItemDto;
+import com.merit.meritShop.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class CartController {
-    @Autowired
-    CartService cartService;
+
+    private final CartService cartService;
+    private  final UserRepository userRepository;
+    private  final ItemRepository itemRepository;
+
 
     //목록
     @GetMapping("/cart")
-    public String cartList(Model model, @RequestParam Long userId) {
+    public String cartList(Model model, @CookieValue(name = "userId", required = false) Long userId) {
         List<Cart> cartList = cartService.cartList(userId);
 
-        //model.addAttribute("list", cartList);
+        model.addAttribute("list", cartList);
         return "cart/cart";
+    }
+    //장바구니 등록
 
+    @PostMapping("/cart")
+    public String add( CartDto cartDto, @CookieValue("userId") Long userId) {
+        // dto : itemId,itemOptionId ,count
+
+
+        String result = cartService.add(cartDto, userId);
+        Long itemId = cartDto.getItemId();
+        if(result == "success") {
+            return "cart/cart";
+        }
+        else {
+            return "redirect:/item/{itemId}";
+        }
+    }
+    //장바구니 삭제
+
+    @GetMapping("/cart/delete/{cartId}")
+    public String deleteCart(@PathVariable Long cartId,Model model) {
+        String result=cartService.deleteCart(cartId);
+        if(result!="Success") model.addAttribute("errMsg","상품 삭제를 실패했습니다");
+
+        return"redirect:/cart";
     }
 }

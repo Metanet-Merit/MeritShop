@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.nio.file.AccessDeniedException;
@@ -37,7 +38,7 @@ public class JwtUtil implements Serializable {
     @Value("${jwt.secret}")
     private String secret;
 
-    //인트라 아이디 가져오기
+    //아이디 가져오기
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
@@ -65,7 +66,13 @@ public class JwtUtil implements Serializable {
 
     // Request의 Header에서 token 값을 가져옵니다. "X-AUTH-TOKEN" : "TOKEN값'
     public String resolveToken(HttpServletRequest req) {
-        final String requestTokenHeader = req.getHeader("Authorization");
+        Cookie[] cookies = req.getCookies();
+        String header = null;
+        if (cookies != null)
+            for (Cookie c : cookies)
+                if (c.getName().equals("Authorization"))
+                    header = "Bearer " + c.getValue();
+        final String requestTokenHeader = header;//req.getHeader("Authorization");
         // only the Token
         String username = null;
         String jwtToken = null;
@@ -88,7 +95,8 @@ public class JwtUtil implements Serializable {
 
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailService.loadUserByUsername(this.getUsernameFromToken(token));
+        Claims claims = getAllClaimsFromToken(token);
+        UserDetails userDetails = userDetailService.loadUserByUsername(this.getUsernameFromToken(token), claims.get("loginType").toString());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
@@ -96,6 +104,8 @@ public class JwtUtil implements Serializable {
     public String generateToken(UserToken userToken) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userToken.getId());
+        claims.put("role", userToken.getRole());
+        claims.put("loginType", userToken.getLoginType());
        // claims.put("userPassword", userToken.getPassword());
         return doGenerateToken(claims, userToken);
     }
