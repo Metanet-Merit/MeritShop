@@ -2,6 +2,9 @@ package com.merit.meritShop.user.service;
 
 import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.common.domain.ResultCode;
+import com.merit.meritShop.item.domain.Item;
+import com.merit.meritShop.item.domain.ItemOption;
+import com.merit.meritShop.item.repository.ItemOptionRepository;
 import com.merit.meritShop.order.domain.OrderItem;
 import com.merit.meritShop.order.repository.OrderItemRepository;
 import com.merit.meritShop.order.repository.OrderRepository;
@@ -11,6 +14,7 @@ import com.merit.meritShop.user.domain.User;
 import com.merit.meritShop.user.dto.OrderItemsDTO;
 import com.merit.meritShop.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,6 +27,8 @@ public class OrderListService {
     OrderRepository orderRepository;
     @Autowired
     OrderItemRepository orderItemRepository;
+    @Autowired
+    ItemOptionRepository itemOptionRepository;
 
 
     public Result<Map<String, Object>> getOrders(Long userId) {
@@ -86,6 +92,10 @@ public class OrderListService {
             }
         }
     */
+
+    @Value("${showItemPath}")
+    String Path;
+
     public Result<Map<String, Object>> getOderItems(Long userId) {
 
         try {
@@ -102,14 +112,20 @@ public class OrderListService {
                 for (Orders order : orderList) {
                     List<OrderItem> orderItemList = orderItemRepository.findOrderItemByOrders(order);
                     for (OrderItem orderItem : orderItemList) {
+                        ItemOption itemOption=itemOptionRepository.findById(orderItem.getItemOptionId()).get();
+                        Item item=orderItem.getItem();
+                        Orders orders=orderItem.getOrders();
 
                         OrderItemsDTO orderItemsDTO = OrderItemsDTO.builder()
                                 .count(orderItem.getCount())
-                                .orderItemName(orderItem.getItem().getItemName())
+                                .orderItemName(item.getItemName())
                                 .reviewed(orderItem.isReviewed())
-                                .orderDate(orderItem.getOrders().getOrderDate())
-                                .url(orderItem.getItem().getImgUrl())
+                                .orderDate(orders.getOrderDate())
+                                .url(item.getImgUrl())
                                 .orderItemId(orderItem.getOrderItemId())
+                                .orderId(orders.getOrderId())
+                                .category(item.getCategory())
+                                .orderItemOptionName(itemOption.getOptName())
                                 .build();
 
                         orderItemsDTOS.add(orderItemsDTO);

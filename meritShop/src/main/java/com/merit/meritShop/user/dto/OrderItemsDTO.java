@@ -10,11 +10,23 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderItemsDTO {
-    Long orderItemId;
+
+
+    private String url;
+    private Long orderId;
+    private Long orderItemId;
+    private Long itemId;
+    private Long itemOptionId;
+    private String orderItemName;
+    private String orderItemOptionName;
+    private int itemPrice;
+    private int count;
+    private int orderItemPrice;
+    private String category;
+    private boolean reviewed;
+    private String address;
+    private String recipient;
     LocalDateTime orderDate;
-    String orderItemName;
-    String url;
-    Integer count;
-    boolean reviewed;
+
 
 }

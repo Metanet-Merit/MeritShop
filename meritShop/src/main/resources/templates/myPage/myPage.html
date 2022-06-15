@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="/css/myPage.css" />
 
 <head>
-    <script type="application/javascript" src="/jss/user/review.js?version='1'"></script>
+    <script type="application/javascript" src="/jss/user/review.js?version='3'"></script>
     <script type="application/javascript" src="/jss/common/Cookie.js?version='1'"></script>
     <script type="application/javascript" src="/jss/common/ajax.js"></script>
     <script type="application/javascript" src="/jss/user/scrap.js"></script>
@@ -41,7 +41,7 @@
         <a type="button" th:href="@{/myPage/user/modify}" class="item">
             <div class="text">내 정보 수정</div>
         </a>
-        <a type="button" onclick="$order.getOrders()" class="item">
+        <a type="button" th:href="@{/myPage/MyOrderItems}" class="item">
             <div class="text">구매 내역</div>
         </a>
         <a type="button" onclick="$review.getReviews()" class="item">

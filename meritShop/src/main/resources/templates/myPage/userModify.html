@@ -83,7 +83,7 @@
     <a type="button" onclick="$exam.exam()" class="item">
       <div class="text">내 정보 수정</div>
     </a>
-    <a type="button" onclick="$order.getOrders()" class="item">
+    <a type="button" th:href="@{/myPage/MyOrderItems}" class="item">
       <div class="text">구매 내역</div>
     </a>
     <a type="button" onclick="$review.getReviews()" class="item">

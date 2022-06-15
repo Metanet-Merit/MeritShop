@@ -5,6 +5,7 @@ import com.merit.meritShop.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
@@ -26,6 +27,8 @@ public class myPageController {
             return "myPage/myPage";
         }
     }
+
+
 
     public Long getIdFromCookies(Cookie[] cookies) {
         if (cookies == null)

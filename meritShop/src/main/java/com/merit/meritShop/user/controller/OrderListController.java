@@ -4,13 +4,11 @@ import com.merit.meritShop.common.controller.AbstractController;
 import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.user.service.OrderListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-
-@RestController
+@Controller
 @RequestMapping("myPage/")
 public class OrderListController extends AbstractController {
 
@@ -23,9 +21,18 @@ public class OrderListController extends AbstractController {
         return orderListService.getOrders(userId);
     }
 
-    @GetMapping("/orderItems")
-    public Result getOrderItems(@RequestParam Long userId) {
-        return orderListService.getOderItems(userId);
+    @GetMapping("/MyOrderItems")
+    public String getMyOrderItems(@CookieValue("userId") Long userId, Model model) {
+        Result result = orderListService.getOderItems(userId);
+        if (result.getResultCode().getCode() != 0) {
+            return "redirect:/myPage";
+        }
+        model.addAttribute("result", result);
+        return "myPage/myOrderPage";
     }
 
+    @GetMapping("orderItems")
+    public String getOrderItems() {
+        return "redirect:/main";
+    }
 }
