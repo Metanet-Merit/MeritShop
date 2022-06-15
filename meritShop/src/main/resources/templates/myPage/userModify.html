@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
   <script>
     function findAddr(){
       new daum.Postcode({
@@ -94,6 +95,9 @@
     <a type="button" onclick="$exam.exam()" class="item">
       <div class="text">쿠폰 / 적립금</div>
     </a>
+    <a type="button" onclick="$scrap.getScraps()" class="item">
+      <div class="text">내 찜 내역</div>
+    </a>
   </div>
   <div class="mainContent" id="content">
     <div id="commonField">
@@ -155,6 +159,31 @@
     </div>
 </div>
 </div>
+
+<div class="container">
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">리뷰 내용</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 
 <div th:replace="~{template/fragment/myPageFooter::footer}"></div>
 </body>
