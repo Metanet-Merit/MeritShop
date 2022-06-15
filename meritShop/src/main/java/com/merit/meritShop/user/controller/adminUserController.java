@@ -36,7 +36,8 @@ public class adminUserController {
         return "admin/user/userList";
     }
 
-    @GetMapping("/user/search")    public String search(String keyword, Model model, @PageableDefault(direction = Sort.Direction.DESC) Pageable pageable) {
+    @GetMapping("/user/search")
+    public String search(String keyword, Model model, @PageableDefault(direction = Sort.Direction.DESC) Pageable pageable) {
         Page<UserViewDto> searchList = userService.search(keyword, pageable);
         model.addAttribute("userList", searchList);
         return "admin/user/userList";
