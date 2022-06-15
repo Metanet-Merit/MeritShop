@@ -175,6 +175,8 @@
     <div class="row px-xl-5">
         <div class="col-lg-8 table-responsive mb-5">
 
+            <form action="/pay" id="cart_form" onSubmit="return false;">
+
             <table class="table table-bordered text-center mb-0">
                 <thead class="bg-secondary text-dark">
                 <tr>
@@ -185,7 +187,6 @@
                     <th>삭제</th>
                 </tr>
                 </thead>
-                <form action="/pay" id="cart_form">
                 <tbody class="align-middle">
 
                 <tr th:each="cart:${list}">
@@ -212,17 +213,17 @@
                         </div>
                     </td>
                     <td class="align-middle" th:text="${cart.item.price}"></td>
-                    <td class="align-middle">
-                        <button class="btn btn-sm btn-primary">
-                            <a th:href="'/cart/delete/'+${cart.cartId}"></a>
-                            <i class="fa fa-times"></i>
+                    <td class="align-middle" th:onclick="'location.href=/cart/delete/'+ @{${cart.cartId}}">
+                        <button type="button" class="btn btn-sm btn-primary" aria-label="Close">
+                            <span aria-hidden="true" th:data-id="${cart.cartId}" onclick="deleteCartItem(this)">&times;</span>
                         </button>
                     </td>
                 </tr>
-                </tbody>
-                </form>
-            </table>
 
+                </tbody>
+
+            </table>
+            </form>
         </div>
         <div class="col-lg-4">
             <div class="card border-secondary mb-5">
@@ -244,7 +245,9 @@
                         <h5 class="font-weight-bold">총 예상 결제 금액</h5>
                         <h5 class="font-weight-bold" ></h5>
                     </div>
-                    <button id="orderBtn" class="btn btn-block btn-primary my-3 py-3">주문하기</button>
+                    <div id="orderBtn">
+                    <button  class="btn btn-block btn-primary my-3 py-3">주문하기</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -344,10 +347,38 @@
 <script>
     window.onload = function() {
         document.getElementById('orderBtn').onclick = function() {
-            document.getElementById('cart_frm').submit();
+            document.getElementById('cart_form').submit();
             return false;
         };
     };
+
+    function deleteCartItem(obj){
+        var cartItemId = obj.dataset.id;
+        //  var token = $("meta[name='_csrf']").attr("content");
+        // var header = $("meta[name='_csrf_header']").attr("content");
+
+        var url = "/cart/delete/" + cartItemId;
+
+        $.ajax({
+            url      : url,
+            type     : "DELETE",
+            dataType : "json",
+            cache   : false,
+            success  : function(result, status){
+                location.href='/cart';
+            },
+            error : function(jqXHR, status, error){
+
+                if(jqXHR.status == '401'){
+                    alert('로그인 후 이용해주세요');
+                    location.href='/members/login';
+                } else{
+                    alert(jqXHR.responseJSON.message);
+                }
+
+            }
+        });
+    }
 </script>
 </body>
 

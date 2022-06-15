@@ -56,11 +56,11 @@ public class CartController {
     }
     //장바구니 삭제
 
-    @GetMapping("/cart/delete/{cartId}")
-    public String deleteCart(@PathVariable Long cartId,Model model) {
+    @DeleteMapping("/cart/delete/{cartId}")
+    public ResponseEntity deleteCart(@PathVariable Long cartId) {
         String result=cartService.deleteCart(cartId);
-        if(result!="Success") model.addAttribute("errMsg","상품 삭제를 실패했습니다");
+        //if(result!="Success") model.addAttribute("errMsg","상품 삭제를 실패했습니다");
 
-        return"redirect:/cart";
+        return new ResponseEntity<Long>(cartId, HttpStatus.OK);
     }
 }

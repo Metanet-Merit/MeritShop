@@ -41,8 +41,7 @@ public class Orders {
     @OneToMany(mappedBy = "orders",cascade = CascadeType.ALL)
     private List<OrderItem> orderItemList ;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private CouponCase coupon;
+    private Long couponCaseId;
 
     private String recipient;
 

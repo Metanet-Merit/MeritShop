@@ -10,4 +10,5 @@ public class PayFormDto {
     private Long orderId;
     private String address;
     private String recipient;
+    private Long couponCaseId;
 }

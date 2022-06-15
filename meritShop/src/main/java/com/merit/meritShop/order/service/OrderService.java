@@ -1,5 +1,9 @@
 package com.merit.meritShop.order.service;
 
+import com.merit.meritShop.coupon.domain.Coupon;
+import com.merit.meritShop.coupon.domain.CouponCase;
+import com.merit.meritShop.coupon.repository.CouponCaseRepository;
+import com.merit.meritShop.coupon.repository.CouponRepository;
 import com.merit.meritShop.item.domain.Item;
 import com.merit.meritShop.item.domain.ItemOption;
 import com.merit.meritShop.item.domain.ItemSellStatus;
@@ -28,6 +32,8 @@ public class OrderService {
     private final ItemRepository itemRepository;
     private final ItemOptionRepository itemOptionRepository;
     private final ItemOptionService itemOptionService;
+    private final CouponCaseRepository couponCaseRepository;
+    private final CouponRepository couponRepository;
 
     public long getOrderId(){
         return orderRepository.countAllBy()+1;
@@ -61,6 +67,8 @@ public class OrderService {
         List<OrderItem> list = new ArrayList<>();
         Orders orders = new Orders();
         orders.setOrderId(formDto.getOrderId());
+        CouponCase couponCase = couponCaseRepository.findById(formDto.getCouponCaseId()).get();
+        Coupon coupon = couponRepository.findById(couponCase.getCoupon().getCouponId()).get();
 
         for(OrderItemDto dto:formDto.getOrderItemDtoList()) {
 
@@ -90,12 +98,17 @@ public class OrderService {
             list.add(orderItemRepository.save(orderItem));
 
         }
+        couponCase.setUsed(true);
         orders.setOrderItemList(list);
         orders.setAddress(formDto.getAddress());
         orders.setRecipient(formDto.getRecipient());
         orders.updateTotalPrice();
+
+        orders.setTotalPrice(orders.getTotalPrice()-coupon.getDiscountPrice());
+
         orders.setOrderDate(LocalDateTime.now());
         orders.setUser(user);
+        orders.setCouponCaseId(formDto.getCouponCaseId());
         orders =orderRepository.save(orders);
 
 

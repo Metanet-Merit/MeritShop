@@ -25,16 +25,26 @@
 
 
     <style>
-        #modal {
+        .coupon_content {
+            border: solid #1c294e 1px ;
+            width: 350px;
+            hight: 150px;
+            text-align: center;
+            margin-top: 30px;
+
+        }
+
+        #my_modal {
             display: none;
-            width: 300px;
+            width: 500px;
+            height: 400px;
             padding: 20px 60px;
             background-color: #fefefe;
             border: 1px solid #888;
             border-radius: 3px;
         }
 
-        #modal,#modal_content .coupon_case{
+        #my_modal .modal_close_btn {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -279,7 +289,12 @@
                         <h6 class="font-weight-medium">Shipping</h6>
                         <h6 class="font-weight-medium">￦0</h6>
                     </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Discount</h6>
+                        <h6 class="font-weight-medium" id="couponPrice">￦0</h6>
+                    </div>
                 </div>
+
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
@@ -291,16 +306,17 @@
                 사용 가능한  쿠폰 보기<br>
 
             <button id="popup_open_btn">쿠폰 사용</button>
-            <div id="modal">
-                <div id="modal_content">
-                    <div class="coupon_case" th:each="coupon:${couponList}">
-                        <input type="hidden" th:value="${coupon.couponCaseId}">
-                        <h5 th:text="${coupon.coupon.couponName}"></h5>
-                        <p th:if="${coupon.coupon.discountPrice!=0}" th:text="${coupon.coupon.discountPrice}"></p>
-                        <p th:if="${coupon.coupon.discountRate!=0.0}" th:text="${coupon.coupon.discountRate}"></p>
-                    </div>
+            <input type="hidden" id="couponCaseId">
 
+            <div id="my_modal">
+
+                <div class="coupon_content" th:each="coupon:${couponList}">
+                    <input type="hidden" class="couponId" th:value="${coupon.couponCaseId}">
+                    <h5 th:text="${coupon.coupon.couponName}"></h5>
+                    <p th:if="${coupon.coupon.discountPrice!=0}" class="couponPrice" th:text="${coupon.coupon.discountPrice}"></p>
+                    <p th:if="${coupon.coupon.discountRate!=0.0}" th:text="${coupon.coupon.discountRate}"></p>
                 </div>
+                   <a class="modal_close_btn">닫기</a>
             </div>
             <hr class="my-4">
 
@@ -444,10 +460,12 @@
         var itemOptionId = document.querySelectorAll(".itemOptionId");
         var count = document.querySelectorAll(".itemCount");
 
+        var couponCaseId = document.getElementById("couponCaseId").value;
+
        // count = parseInt(count.substring(2,count.length));
         //buyer_postcode: "01181"
 
-
+        console.log(couponCaseId);
 
 
         if(total_price<50000){
@@ -456,7 +474,7 @@
         IMP.request_pay({ // param
             pg: "kakaopay.TC0ONETIME",
             pay_method: "card",
-            merchant_uid: "48912",
+            merchant_uid: "48988",
             name: name[0].textContent+"등 "+name.length+" 종",
             amount: total_price,
             buyer_email: buyer_email,
@@ -487,7 +505,8 @@
                     orderItemDtoList: paramData,
                     orderId: rsp.merchant_uid,
                     address: buyer_arr1+buyer_arr2,
-                    recipient: buyer_name
+                    recipient: buyer_name,
+                    couponCaseId: couponCaseId
                 };
 
                 console.log(payFormDto)
@@ -512,10 +531,17 @@
         });
     }
 
+</script>
+<script>
     function modal(id) {
         var zIndex = 9999;
         var modal = document.getElementById(id);
-        console.log(modal);
+        var couponCaseId =  document.getElementById("couponCaseId");
+        var discountP  = document.getElementById("couponPrice");
+        var totalP = document.getElementById("totalPrice");
+
+        console.log(discountP);
+        console.log(totalP);
 
         // 모달 div 뒤에 희끄무레한 레이어
         var bg = document.createElement('div');
@@ -537,6 +563,18 @@
             bg.remove();
             modal.style.display = 'none';
         });
+        modal.querySelectorAll('.coupon_content').forEach(n=>n.addEventListener('click', function() {
+            bg.remove();
+            modal.style.display = 'none';
+            couponCaseId.value = n.getElementsByClassName("couponId")[0].value;
+            var price = parseInt(n.getElementsByClassName("couponPrice")[0].textContent);
+            console.log(price);
+            discountP.textContent = '￦'+price;
+            totalP.textContent =  '￦'+(parseInt(totalP.textContent.substring(1,totalP.textContent.length))-price);
+
+            console.log(couponCaseId.value);
+
+        }));
 
         modal.setStyle({
             position: 'fixed',
@@ -563,10 +601,9 @@
 
     document.getElementById('popup_open_btn').addEventListener('click', function() {
         // 모달창 띄우기
-        modal('modal_content');
+        modal('my_modal');
     });
 </script>
-
 </body>
 
 </html>
