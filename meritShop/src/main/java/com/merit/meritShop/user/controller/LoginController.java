@@ -27,14 +27,16 @@ public class LoginController extends LoginCommon {
     JwtUtil jwtTokenProvider;
     @GetMapping("/login")
     public String login(){
-        System.out.println("외않되");
         return "login/login";
     }
 
     @PostMapping("/login")
     public void login(UserSignInDto userSignInDto, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("@@");
         userSignInDto.setLoginType("local");
+        System.out.println("??");
         JwtResponseDto jwt = loginService.login(userSignInDto);
+        System.out.println("!!");
         setCookieAndRedirectMain(jwt, request, response);
     }
 
