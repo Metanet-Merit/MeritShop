@@ -200,13 +200,13 @@
                     <td class="align-middle" >
                         <div class="input-group quantity mx-auto" style="width: 100px;">
                             <div class="input-group-btn">
-                                <button class="btn btn-sm btn-primary btn-minus" >
+                                <button class="btn btn-sm btn-primary btn-minus" th:data-id="${cart.cartId}" onclick="minusCartCount(this)" >
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <input type="text" class="form-control form-control-sm bg-secondary text-center" th:name="'orderItemDtoList['+${cartStat.index}+'].count'" th:value="${cart.count}">
                             <div class="input-group-btn">
-                                <button class="btn btn-sm btn-primary btn-plus">
+                                <button class="btn btn-sm btn-primary btn-plus" th:data-id="${cart.cartId}" onclick="plusCartCount(this)">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -351,6 +351,60 @@
             return false;
         };
     };
+    function plusCartCount(obj){
+        var cartItemId = obj.dataset.id
+        //  var token = $("meta[name='_csrf']").attr("content");
+        // var header = $("meta[name='_csrf_header']").attr("content");
+        console.log(cartItemId);
+        var url = "/cart/plus/" + cartItemId;
+
+        $.ajax({
+            url      : url,
+            type     : "PUT",
+            dataType : "json",
+            cache   : false,
+            success  : function(result, status){
+                location.href='/cart';
+            },
+            error : function(jqXHR, status, error){
+
+                if(jqXHR.status == '401'){
+                    alert('로그인 후 이용해주세요');
+                    location.href='/members/login';
+                } else{
+                    alert(jqXHR.responseJSON.message);
+                }
+
+            }
+        });
+    }
+    function minusCartCount(obj){
+        var cartItemId = obj.dataset.id
+        //  var token = $("meta[name='_csrf']").attr("content");
+        // var header = $("meta[name='_csrf_header']").attr("content");
+        console.log(cartItemId);
+        var url = "/cart/minus/" + cartItemId;
+
+        $.ajax({
+            url      : url,
+            type     : "PUT",
+            dataType : "json",
+            cache   : false,
+            success  : function(result, status){
+                location.href='/cart';
+            },
+            error : function(jqXHR, status, error){
+
+                if(jqXHR.status == '401'){
+                    alert('로그인 후 이용해주세요');
+                    location.href='/members/login';
+                } else{
+                    alert(jqXHR.responseJSON.message);
+                }
+
+            }
+        });
+    }
 
     function deleteCartItem(obj){
         var cartItemId = obj.dataset.id;
