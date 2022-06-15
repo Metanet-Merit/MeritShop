@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 public interface ItemOptionRepository extends JpaRepository<ItemOption,Long> {
     List<ItemOption> findAllByItem(Item item);
@@ -25,6 +26,6 @@ public interface ItemOptionRepository extends JpaRepository<ItemOption,Long> {
     @Query(value="update ItemOption op set op.quantity = :count where op.itemOptionId = :OptionId")
     void updateOptionQuantity(@Param("OptionId") Long OptionId,@Param("count") int count);
 
-
+    Optional<ItemOption> findItemOptionByItem(Item item);
 
 }

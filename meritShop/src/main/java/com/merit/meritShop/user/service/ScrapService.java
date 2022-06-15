@@ -3,6 +3,8 @@ package com.merit.meritShop.user.service;
 import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.common.domain.ResultCode;
 import com.merit.meritShop.item.domain.Item;
+import com.merit.meritShop.item.domain.ItemOption;
+import com.merit.meritShop.item.repository.ItemOptionRepository;
 import com.merit.meritShop.item.repository.ItemRepository;
 import com.merit.meritShop.scrap.domain.Scrap;
 import com.merit.meritShop.user.domain.User;
@@ -23,6 +25,8 @@ public class ScrapService {
     ScrapRepository scrapRepository;
     @Autowired
     ItemRepository itemRepository;
+    @Autowired
+    ItemOptionRepository itemOptionRepository;
 
     public Result<Map<String, Object>> getScraps(Long userId) {
 
@@ -36,10 +40,16 @@ public class ScrapService {
             for (Scrap scrap : scrapList) {
 
                 Item item = scrap.getItem();
+
+                ItemOption itemOption= itemOptionRepository.findItemOptionByItem(item).get();
                 ScrapDTO scrapDTO = ScrapDTO.builder()
                         .itemName(item.getItemName())
                         .itemId(item.getItemId())
                         .url(item.getImgUrl())
+                        .itemOptionName(itemOption.getOptName())
+                        .category(item.getCategory())
+                        .url(item.getImgUrl())
+                        .itemPrice(item.getPrice())
                         .build();
 
                 scrapDTOList.add(scrapDTO);

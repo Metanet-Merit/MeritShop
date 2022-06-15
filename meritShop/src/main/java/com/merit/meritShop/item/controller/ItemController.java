@@ -1,9 +1,11 @@
 package com.merit.meritShop.item.controller;
 
+import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.item.domain.*;
 import com.merit.meritShop.item.repository.ItemImgRepository;
 import com.merit.meritShop.item.repository.ItemOptionRepository;
 import com.merit.meritShop.item.service.ItemService;
+import com.merit.meritShop.user.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +33,7 @@ public class ItemController {
     private final ItemService itemService;
     private final ItemImgRepository itemImgRepository;
     private final ItemOptionRepository itemOptionRepository;
+    private final ReviewService reviewService;
 
     @GetMapping("item/{id}")
     public String getItemDetail(@PathVariable("id") long id, Model model){
@@ -46,8 +50,9 @@ public class ItemController {
         }
         itemFormDto.setOptions(itemOptionDtoList);
 
+        Result result=reviewService.getItemReviews(id);
 
-
+        model.addAttribute("result", result);
         model.addAttribute("itemFormDto",itemFormDto);
         model.addAttribute("itemImgDto",itemImgDto);
 

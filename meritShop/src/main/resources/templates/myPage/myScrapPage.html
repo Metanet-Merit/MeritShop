@@ -22,6 +22,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+
     <title>마이 페이지</title>
     <style>
         input:disabled {
@@ -61,57 +62,75 @@
         <div id="commonField">
             <div class="row justify-content-left">
                 <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section">내 정보 보기</h2>
+
                 </div>
             </div>
             <div class="container">
                 <div class="row justify-content-center">
-                    <form method="post" class="row g-3 justify-content-center" th:object="${user}" >
 
-                        <div class="col-md-4">
-                            <label for="userName" class="form-label">회원 이름</label>
-                            <input name="userName" type="text" th:field="*{userName}" class="form-control" id="userName" disabled />
+
+                    <div style="text-align: center" class="mypage-conts">
+                        <div class="title-area linezero">
+
                         </div>
-                        <div class="col-md-8">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="phoneNumber" class="form-label">전화번호</label>
-                            <input name="phoneNumber" type="text" th:field="*{phoneNumber}" class="form-control" id="phoneNumber" disabled />
-                        </div>
-                        <div class="col-md-2">
-                            <label for="sex" class="form-label">성별</label>
-                            <input name="sex" type="text" th:field="*{sex}" class="form-control" id="sex" disabled />
-                        </div>
-                        <div class="col-md-6">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="addr1" class="form-label">주소</label>
-                            <input name="addr1" type="text" th:field="*{addr1}" class="form-control" id="addr1" disabled />
-                        </div>
-                        <div class="col-md-4">
-                            <label for="addr2" class="form-label">상세 주소</label>
-                            <input name="addr2" type="text" th:field="*{addr2}" class="form-control" id="addr2" disabled />
-                        </div>
-                        <div class="col-md-2">
-                        </div>
-                        <div class="col-md-2">
-                            <label for="inputState" class="form-label">회원 유형</label>
-                            <input name="role" class="form-control" type="text" th:value="${user.role}" id="inputState" disabled />
-                        </div>
-                        <div class="col-md-2">
-                            <label for="point" class="form-label">적립금</label>
-                            <input name="point" type="text" th:field="*{point}" class="form-control" id="point" disabled />
-                        </div>
-                        <div class="col-md-2">
-                            <label for="expire" class="form-label">구독 만료일</label>
-                            <input name="expireDate" type="text" th:field="*{expireDate}" class="form-control" id="expire" disabled />
-                        </div>
-                        <div class="col-md-6">
-                        </div>
-                        <div class="col-12">
-                            <button type="button" th:onclick="'location.href=\'' + @{user/modify} + '\''" class="btn btn-primary">수정하기</button>
-                        </div>
-                    </form>
+                        <table class="board-list-2s mgT20 new">
+
+                            <colgroup>
+                                <col style="width:49%;">
+                                <col style="width:39%;">
+                                <col style="width:12%;">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col" colspan="2">찜한 상품</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            <span th:each="scraps:${result['rtnObj']['scraps']}">
+                            <tr>
+                                <td class="subject">
+                                    <div class="area">
+                                        <div class="area">
+                                            <a class="thum" href="#">
+                                                <img style="width: 15px; height: 15px" th:src="${scraps['url']}" alt="[승관 Pick] 라네즈 네오 쿠션 매트 15g 5종 택1">
+                                            </a>
+                                            <div class="textus">
+                                                <a class="" href="" data-attr="리뷰^리뷰상품^상품클릭">
+                                                    <span class="tit" th:text="${scraps['category']}">아이템 종류(카테고리)넣으세요</span>
+                                                    <span class="txt oneline" th:text="${scraps['itemName']}">아이템 이름 넣으세요</span>
+                                                    <p class="txt_option" th:text="${scraps['itemOptionName']}">옵션 이름 넣으세요</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="subject">
+                                    <div class="area">
+                                        <div class="textus" style="width:90%;">
+                                            <dl class="data review-data">
+                                            </dl>
+                                            <div class="rating">
+
+                                                <span class="txt"></span>
+                                                <span class="point pt5"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                            </span>
+                            </tbody>
+                        </table>
+
+                        <!-- 공통 딤처리 -->
+                        <div class="dim"></div>
+                        <!-- //공통 딤처리 -->
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -141,7 +160,6 @@
     </div>
 
 </div>
-
 
 <div th:replace="~{template/fragment/myPageFooter::footer}"></div>
 </body>

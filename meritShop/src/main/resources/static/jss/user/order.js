@@ -41,7 +41,7 @@ $order= {
             '                <div class="area">\n' +
             '                    <div class="area">\n' +
             '                        <a class="thum" href="#" data-attr="리뷰^리뷰상품^상품클릭">\n' +
-            '                            <img style="width: 15px; height: 15px" src="https://image.oliveyoung.co.kr/uploads/images/goods/10/0000/0014/A00000014938397ko.jpg?l=ko" alt="[승관 Pick] 라네즈 네오 쿠션 매트 15g 5종 택1" onerror="common.errorImg(this);">\n' +
+            '                            <img style="width: 15px; height: 15px" src="C://study//img//item//5f5ccfda-c186-415b-ad37-e5edb5784821.jpg" alt="이미지" >\n' +
             '                        </a>\n' +
             '                        <div class="textus">\n' +
             '                            <dl class="data review-data">\n' +

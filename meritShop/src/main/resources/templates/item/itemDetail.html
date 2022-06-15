@@ -113,7 +113,7 @@
                 </li>
                 <li id="reviewInfo">
                     <a href="#tab2" class="goods" data-tap="tab-2">리뷰
-                        <span>(843)</span>
+                        <span th:text="${result['rtnObj']['count']}">(843)</span>
                     </a>
                 </li>
                 <li id="qnaInfo">
@@ -137,6 +137,17 @@
                     </div>
                 </div>
                 <div style="display: none">
+
+                    <ul class="prd_qna_list" id="prd_qna_list" th:each="reviews:${result['rtnObj']['reviews']}">
+
+                        <li>
+                            <span th:text="'리뷰 작성 날짜:  '+ ${#temporals.format(reviews['reviewDate'],'yyyy-MM-dd')}">리뷰 작성 날짜</span>
+                            <input type="hidden" th:value="${reviews['content']}"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="changeModalContent(this)">리뷰보기</button><br></td></tr>
+                        </li>
+
+
+                    </ul>
+
 
                 </div>
                 <div style="display: none">
@@ -205,7 +216,9 @@
         };
     };
 
-
+    function changeModalContent(e){
+        $(".modal-body").text(e.previousSibling.value);
+    }
 
     const getCookieValue = (key) => {
         let cookieKey = key + "=";
@@ -291,5 +304,29 @@
 
 
 </script>
+
+    <div class="container">
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">리뷰 내용</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 </div>

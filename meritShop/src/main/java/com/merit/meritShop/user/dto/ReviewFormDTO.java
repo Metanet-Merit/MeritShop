@@ -20,6 +20,7 @@ public class ReviewFormDTO {
     private String uuidName;
     private MultipartFile img;
     private String category;
-    LocalDateTime reviewDate;
-    LocalDateTime orderDate;
+    private LocalDateTime reviewDate;
+    private LocalDateTime orderDate;
+
 }
