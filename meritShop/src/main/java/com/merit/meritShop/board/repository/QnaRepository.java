@@ -1,6 +1,7 @@
 package com.merit.meritShop.board.repository;
 
 import com.merit.meritShop.board.domain.Qna;
+import com.merit.meritShop.item.domain.Item;
 import com.merit.meritShop.user.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,4 +15,6 @@ public interface QnaRepository extends JpaRepository<Qna, Long> {
 
     @Query("SELECT q FROM Qna q ORDER BY q.qnaId DESC")
     Page<Qna> findAll(Pageable pageable);
+
+    List<Qna> findAllByItem(Item item);
 }

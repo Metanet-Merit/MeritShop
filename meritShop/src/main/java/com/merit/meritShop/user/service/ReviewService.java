@@ -100,6 +100,7 @@ public class ReviewService {
 
             map.put("reviews", reviewFormDTOList);
             map.put("count",reviewFormDTOList.size());
+
             return ResultCode.Success.result(map);
         } catch (Exception e) {
             return ResultCode.DB_ERROR.result();

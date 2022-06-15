@@ -118,7 +118,7 @@
                 </li>
                 <li id="qnaInfo">
                     <a href="#tab3" class="goods" data-tap="tab-3">Q&amp;A
-                        <span>(19)</span>
+                        <span th:text="${qnaResult['rtnObj']['count']}">(19)</span>
                     </a>
                 </li>
             </ul>
@@ -139,13 +139,10 @@
                 <div style="display: none">
 
                     <ul class="prd_qna_list" id="prd_qna_list" th:each="reviews:${result['rtnObj']['reviews']}">
-
                         <li>
                             <span th:text="'리뷰 작성 날짜:  '+ ${#temporals.format(reviews['reviewDate'],'yyyy-MM-dd')}">리뷰 작성 날짜</span>
                             <input type="hidden" th:value="${reviews['content']}"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="changeModalContent(this)">리뷰보기</button><br></td></tr>
                         </li>
-
-
                     </ul>
 
 
@@ -156,52 +153,14 @@
                             <a th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">상품문의</a>
                         </button>
                     </div>
-                    <ul class="prd_qna_list" id="prd_qna_list">
-                        //보이는 화면
+                    <ul class="prd_qna_list" id="prd_qna_list" th:each="qna:${qnaResult['rtnObj']['qnas']}">
                         <li>
-                            <div class="qna_tit_box">
-                                <p class="qna_question">
-                                    <span class="qna_flag"></span>
-                                    <a href="javascript:;" class="completeBind" ></a>
-                                </p>
-                                <p class="tx_userid">
-                                    <span ></span>
-
-                                </p>
-                                <p class="tx_date" ></p>
-                            </div>
-                            //title 클릭했을 때 보이는 내용들
-                            <div class="qna_answer_box">
-                                <div class="tx_question">
-                                    <span class="ico_qna question" >Q</span>
-
-                                </div>
-                            </div>
+                            <span th:text="'리뷰 작성 날짜:  '+ ${#temporals.format(qna['registerDate'],'yyyy-MM-dd')}">문의사항 작성 날짜</span>
+                             <span th:if="${qna['replied']} == true">
+                                 <input type="hidden" th:value="${qna['reply']}"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="changeModalContent(this)">답변보기</button><br></td></tr>
+                             </span>
                         </li>
-                        //답변완료 보이는 화면
-                        <li class="show">
-                            <div class="qna_tit_box">
-                                <p class="qna_question">
-                                    <span class="qna_flag">답변여부 넣기</span>
-                                    <a href="javascript:;" class="completeBind">qna title</a>
-                                </p>
-                                <p class="tx_userid">
-                                    <span>user_name</span>
 
-                                </p><p class="tx_date">registerDate</p>
-                            </div>
-                            //title 클릭했을 때 보이는 내용들
-                            <div class="qna_answer_box">
-                                <div class="tx_question">
-                                    <span class="ico_qna question">Q</span>
-                                    qna content
-                                </div>
-                                <div class="tx_answer">
-                                    <span class="ico_qna answer">reply</span>
-                                    qna reply
-                                </div>
-                            </div>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -315,7 +274,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">리뷰 내용</h4>
+                        <h4 class="modal-title"></h4>
                     </div>
                     <div class="modal-body">
                         <p>Some text in the modal.</p>

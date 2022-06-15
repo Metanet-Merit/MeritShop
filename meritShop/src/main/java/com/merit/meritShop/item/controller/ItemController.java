@@ -1,5 +1,6 @@
 package com.merit.meritShop.item.controller;
 
+import com.merit.meritShop.board.service.QnaService;
 import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.item.domain.*;
 import com.merit.meritShop.item.repository.ItemImgRepository;
@@ -34,6 +35,7 @@ public class ItemController {
     private final ItemImgRepository itemImgRepository;
     private final ItemOptionRepository itemOptionRepository;
     private final ReviewService reviewService;
+    private final QnaService qnaService;
 
     @GetMapping("item/{id}")
     public String getItemDetail(@PathVariable("id") long id, Model model){
@@ -51,7 +53,9 @@ public class ItemController {
         itemFormDto.setOptions(itemOptionDtoList);
 
         Result result=reviewService.getItemReviews(id);
+        Result qnaResult=qnaService.getItemQnas(id);
 
+        model.addAttribute("qnaResult",qnaResult);
         model.addAttribute("result", result);
         model.addAttribute("itemFormDto",itemFormDto);
         model.addAttribute("itemImgDto",itemImgDto);
