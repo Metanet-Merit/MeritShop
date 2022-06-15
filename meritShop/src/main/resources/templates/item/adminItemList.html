@@ -17,6 +17,24 @@
         <style type="text/css">
         </style>
     </head>
+    <style>
+        .btn_submit {
+            display: inline-block;
+            outline: none;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 2px 15px;
+            min-width: 60px;
+            border: none;
+            color: #2e59d9;
+            background-color: #fff;
+            border: 2px solid;
+            border-color: #2e59d9;
+            transition: background-color .17s ease,color .17s ease;
+        }
+    </style>
 
     <div id="wrap">
 
@@ -29,7 +47,7 @@
 
             <div class="title">
                 <span class="brd_rtop mgb10">
-					<span class="btn_orange"><a href="/admin/itemForm">상품 추가</a></span>
+					<span class="btn_submit"><a href="/admin/itemForm">상품 추가</a></span>
                 </span>
             </div>
 
@@ -37,11 +55,14 @@
             <div class="search">
                 <strong>카테고리</strong>
                 <select name="" style="width:180px;">
-                    <option>Select Item</option>
+                    <option>페이스</option>
+                    <option>아이</option>
+                    <option>치크</option>
+                    <option>립</option>
                 </select>
-                <strong class="mgl50">Status</strong>
-                <select name="" style="width:180px;">
-                    <option>품   절</option>
+                <strong class="mgl50">상품 상태</strong>
+                <select name="" style="width:168px;">
+                    <option>품절</option>
                     <option>판매 중</option>
                     <option>준비 중</option>
                 </select><br />
@@ -51,8 +72,8 @@
                     <option>상품 이름</option>
 
                 </select>
-                <input name="" type="text" class="keyword" title="keyword" style="width:238px;" />
-                <span class="btn_search"><a href="#">Search</a></span>
+                <input name="" type="text" class="keyword" title="keyword" style="width: 238px; height: 22px" />
+                <span class="btn_search"><a href="#" style="border-radius: 3px">검색</a></span>
             </div>
             <!-- search -->
 
@@ -79,7 +100,7 @@
                     <th>대표사진</th>
                     <th>상품이름</th>
                     <th>카테고리</th>
-                    <th>Edit</th>
+                    <th>수정</th>
                 </tr>
                 </thead>
                 <tbody th:each=" item:${items}">
@@ -88,7 +109,7 @@
                     <td><img th:src="${item.imgUrl}" width="100" height="100" alt=""></td>
                     <td th:text="${item.itemName}"></td>
                     <td th:text="${item.category}"></td>
-                    <td><span class="btn_s_green"><a th:href="'/admin/updateItem/'+${item.itemId}">Edit</a></span></td>
+                    <td><span class="btn_submit"><a th:href="'/admin/updateItem/'+${item.itemId}">Edit</a></span></td>
                 </tr>
 
                 </tbody>

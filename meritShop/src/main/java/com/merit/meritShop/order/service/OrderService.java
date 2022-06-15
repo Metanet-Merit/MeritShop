@@ -1,5 +1,9 @@
 package com.merit.meritShop.order.service;
 
+import com.merit.meritShop.coupon.domain.Coupon;
+import com.merit.meritShop.coupon.domain.CouponCase;
+import com.merit.meritShop.coupon.repository.CouponCaseRepository;
+import com.merit.meritShop.coupon.repository.CouponRepository;
 import com.merit.meritShop.item.domain.Item;
 import com.merit.meritShop.item.domain.ItemOption;
 import com.merit.meritShop.item.domain.ItemSellStatus;
@@ -28,6 +32,8 @@ public class OrderService {
     private final ItemRepository itemRepository;
     private final ItemOptionRepository itemOptionRepository;
     private final ItemOptionService itemOptionService;
+    private final CouponCaseRepository couponCaseRepository;
+    private final CouponRepository couponRepository;
 
     public long getOrderId(){
         return orderRepository.countAllBy()+1;
@@ -60,8 +66,17 @@ public class OrderService {
     public Long order(User user,PayFormDto formDto){
         List<OrderItem> list = new ArrayList<>();
         Orders orders = new Orders();
-        orders.setOrderId(formDto.getOrderId());
+        orders.setTransactionCode(formDto.getTransactionCode());
+        System.out.println(formDto.getCouponCaseId());
+        int discountP =0;
+        if(formDto.getCouponCaseId()!=null) {
+            CouponCase couponCase = couponCaseRepository.findById(formDto.getCouponCaseId()).get();
+            Coupon coupon = couponRepository.findById(couponCase.getCoupon().getCouponId()).get();
 
+            couponCase.setUsed(true);
+            discountP=coupon.getDiscountPrice();
+
+        }
         for(OrderItemDto dto:formDto.getOrderItemDtoList()) {
 
             Item item = itemRepository.findById(dto.getItemId()).get();
@@ -90,15 +105,18 @@ public class OrderService {
             list.add(orderItemRepository.save(orderItem));
 
         }
+
         orders.setOrderItemList(list);
         orders.setAddress(formDto.getAddress());
         orders.setRecipient(formDto.getRecipient());
         orders.updateTotalPrice();
+
+        orders.setTotalPrice(orders.getTotalPrice()-discountP);
+
         orders.setOrderDate(LocalDateTime.now());
         orders.setUser(user);
+        orders.setCouponCaseId(formDto.getCouponCaseId());
         orders =orderRepository.save(orders);
-
-
 
         return orders.getOrderId();
 

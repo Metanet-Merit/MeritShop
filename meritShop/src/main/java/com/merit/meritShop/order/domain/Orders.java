@@ -20,9 +20,12 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name="orders")
 public class Orders {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="order_id")
     private Long orderId;
+
+    private String transactionCode; // orderId 대용 날짜 + uuid
+
 
     @Column(name="order_date")
     private LocalDateTime orderDate;
@@ -41,8 +44,7 @@ public class Orders {
     @OneToMany(mappedBy = "orders",cascade = CascadeType.ALL)
     private List<OrderItem> orderItemList ;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private CouponCase coupon;
+    private Long couponCaseId;
 
     private String recipient;
 

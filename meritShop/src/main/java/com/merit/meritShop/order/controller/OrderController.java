@@ -22,8 +22,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -42,10 +45,10 @@ public class OrderController {
            // System.out.println(dto);
         User user = userRepository.findById(getIdFromCookies(request.getCookies())).get();
 
-            orderService.order(user,dto);
+           Long orderId= orderService.order(user,dto);
 
 
-        return new ResponseEntity<Long>(dto.getOrderId(), HttpStatus.OK);
+        return new ResponseEntity<Long>(orderId, HttpStatus.OK);
     }
 
     @GetMapping("/orderHistory")
@@ -92,7 +95,7 @@ public class OrderController {
         for (PayItemDto p : payList) {
             totalPrice += (p.getPrice() * p.getCount());
         }
-        model.addAttribute("orderId",orderService.getOrderId());
+        model.addAttribute("transactionCode", LocalDateTime.now().toString()+ UUID.randomUUID().toString());
         model.addAttribute("payList",payList);
         model.addAttribute("totalPrice",totalPrice);
         model.addAttribute("couponList",couponCaseRepository.findAllByUserUserIdAndUsedIsFalse(userId));
