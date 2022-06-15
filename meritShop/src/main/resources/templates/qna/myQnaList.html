@@ -140,7 +140,7 @@
                                     <td>
                                         <a th:text="${qna.title}" th:href="@{/qna/detail(qnaId=${qna.qnaId})}"></a>
                                     </td>
-                                    <td th:text="${#temporals.format(notice.modifyDate,'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#temporals.format(qna.modifyDate,'yyyy-MM-dd')}"></td>
                                     <td scope="row"th:text="${qna.replied}"></td>
                                 </tr>
                                 </tbody>
