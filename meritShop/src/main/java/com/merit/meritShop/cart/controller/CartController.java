@@ -8,6 +8,8 @@ import com.merit.meritShop.order.domain.OrderItemDto;
 import com.merit.meritShop.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,18 +36,20 @@ public class CartController {
     //장바구니 등록
 
     @PostMapping("/cart")
-    public String add( CartDto cartDto, @CookieValue("userId") Long userId) {
+    public ResponseEntity add(@RequestBody CartDto cartDto, @CookieValue("userId") Long userId) {
         // dto : itemId,itemOptionId ,count
-
-
+        System.out.println(cartDto);
+        cartDto.setUserId(userId);
         String result = cartService.add(cartDto, userId);
         Long itemId = cartDto.getItemId();
-        if(result == "success") {
-            return "cart/cart";
-        }
-        else {
-            return "redirect:/item/{itemId}";
-        }
+//        if(result == "success") {
+//            return "cart/cart";
+//        }
+//        else {
+//            return "redirect:/item/{itemId}";
+//        }
+
+        return new ResponseEntity<Long>(2L, HttpStatus.OK);
     }
     //장바구니 삭제
 

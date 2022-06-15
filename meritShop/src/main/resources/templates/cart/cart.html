@@ -186,16 +186,17 @@
                 </thead>
                 <tbody class="align-middle">
                 <tr th:each="cart:${list}">
-                    <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;" th:text="${cart.item.itemName}"></td>
+
+                    <td class="align-middle"><input type="hidden" th:value="${cart.itemOptionId}"><img th:src="${cart.item.imgUrl}" alt="" style="width: 50px;" th:text="${cart.item.itemName}"></td>
                     <td class="align-middle" th:text="${cart.item.price}"></td>
-                    <td class="align-middle">
+                    <td class="align-middle" >
                         <div class="input-group quantity mx-auto" style="width: 100px;">
                             <div class="input-group-btn">
                                 <button class="btn btn-sm btn-primary btn-minus" >
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
+                            <input type="text" class="form-control form-control-sm bg-secondary text-center" th:value="${cart.count}">
                             <div class="input-group-btn">
                                 <button class="btn btn-sm btn-primary btn-plus">
                                     <i class="fa fa-plus"></i>
@@ -206,7 +207,7 @@
                     <td class="align-middle" th:text="${cart.item.price}"></td>
                     <td class="align-middle">
                         <button class="btn btn-sm btn-primary">
-                            <a th:href="@{/cart/delete/${cart.cartId}}">
+                            <a th:href="'/cart/delete/'+${cart.cartId}">
                             <i class="fa fa-times"></i>
                         </button>
                     </td>
