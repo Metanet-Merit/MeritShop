@@ -109,9 +109,9 @@ public class OrderListService {
                 for (Orders order : orderList) {
                     List<OrderItem> orderItemList = orderItemRepository.findOrderItemByOrders(order);
                     for (OrderItem orderItem : orderItemList) {
-                        ItemOption itemOption=itemOptionRepository.findById(orderItem.getItemOptionId()).get();
-                        Item item=orderItem.getItem();
-                        Orders orders=orderItem.getOrders();
+                        ItemOption itemOption = itemOptionRepository.findById(orderItem.getItemOptionId()).get();
+                        Item item = orderItem.getItem();
+                        Orders orders = orderItem.getOrders();
 
                         OrderItemsDTO orderItemsDTO = OrderItemsDTO.builder()
                                 .count(orderItem.getCount())
@@ -137,5 +137,36 @@ public class OrderListService {
             return ResultCode.DB_ERROR.result();
         }
     }
+
+
+    public Result<Map<String, Object>> getAllOrders() {
+
+        try {
+            Map<String, Object> map = new HashMap<>();
+            List<OrderItem> orderItemList = orderItemRepository.findAll();
+            List<OrderDTO> orderDTOList = new ArrayList<>();
+
+            for (OrderItem orderItem : orderItemList) {
+                User user = orderItem.getOrders().getUser();
+                Orders order = orderItem.getOrders();
+                OrderDTO orderDTO = OrderDTO.builder()
+                        .userId(user.getUserId())
+                        .userName(user.getUserName())
+                        .orderDate(order.getOrderDate())
+                        .itemName(orderItem.getItem().getItemName())
+                        .orderId(order.getOrderId())
+                        .totalPrice(order.getTotalPrice())
+                        .orderDate(order.getOrderDate()).build();
+
+                orderDTOList.add(orderDTO);
+            }
+            map.put("orders", orderDTOList);
+            return ResultCode.Success.result(map);
+
+        } catch (Exception e) {
+            return ResultCode.DB_ERROR.result();
+        }
+    }
+
 
 }

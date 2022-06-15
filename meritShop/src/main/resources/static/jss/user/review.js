@@ -84,7 +84,7 @@ $review= {
             '                </div>\n' +
             '            </td>\n' +
             '            <td>\n' +
-            '                <button type="button" class="btn-review--small"  data-write-yn="Y" onclick="mypage.gdasCompleteList.appraisalModify(this);">리뷰수정</button><br>\n' ;
+            '           <!--     <button type="button" class="btn-review--small"  data-write-yn="Y" onclick="mypage.gdasCompleteList.appraisalModify(this);">리뷰수정</button><br>\n-->' ;
 
         const suffix=
 
@@ -209,7 +209,7 @@ $review= {
                 '                </div>\n' +
                 '            </td>\n' +
                 '            <td>\n' +
-                '                <button type="button" class="btn-review--small"  data-write-yn="Y" onclick="mypage.gdasCompleteList.appraisalModify(this);">리뷰수정</button><br>\n' ;
+                '          <!--      <button type="button" class="btn-review--small"  data-write-yn="Y" onclick="mypage.gdasCompleteList.appraisalModify(this);">리뷰수정</button><br>\n-->' ;
 
                 const suffix=
 
