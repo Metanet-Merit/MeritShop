@@ -25,6 +25,12 @@ public class SignUpService {
         return true;
     }
 
+    public int idCheck(String email) {
+        if (userRepository.existsByEmail(email))
+            return 1;
+        return 0;
+    }
+
     public boolean isExist(String email, String loginType) {
         boolean Exist = userRepository.existsByEmailAndLoginType(email,loginType);
         if (Exist) return true;
