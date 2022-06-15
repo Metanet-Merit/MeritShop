@@ -8,16 +8,8 @@ $order= {
         $ajax.get(url, param, $order.getOrderListCallBack, $order.getOrderListErrCallback);
     },
 
-    changeModalContent:function(e){
-
-        if(e.previousSibling.value=="true"){
-            alert("이미 리뷰를 작성했네요!");
-        }
-        else{
-
-            $(".modal-body").text("리뷰쓰기 페이지로 이동하기");
-        }
-
+    goToReview:function(orderItemId){
+        location.href = "/reviewForm/"+orderItemId;
 
     },
 
@@ -116,9 +108,14 @@ $order= {
                 const count=orderItem['count'];
                 const reviewed=orderItem['reviewed'];
                 const orderDate=orderItem['orderDate'];
+                const orderItemId=orderItem['orderItemId'];
+                var button='';
+                console.log(reviewed);
+                if(reviewed==false){
 
-                const button='<input type="hidden" value='+reviewed+'><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="$order.changeModalContent(this)">리뷰쓰러가기</button><br></td></tr>'
+                    button+='<input type="hidden" value='+reviewed+'><button type="button" class="btn-review--small" onclick="$order.goToReview('+orderItemId+')">리뷰쓰러가기</button><br></td></tr>'
 
+                }
                 content +=  middle+orderDate+'<dd>수량:'+count+'</dd>'+html_categoryNitem+'<span class="tit">'+'</span>' +
                     '   <span class="txt oneline">'+orderItemName+'</span>' +
                     '<dd>'+'</dd>'+btn+button;
@@ -137,7 +134,7 @@ $order= {
 
     getOrderListErrCallback: function (response) {
         console.log(response);//에러화면 띄우기
-        alert("잠시 후 다시 시도해 주세요");
+        alert("로그인 하셨나요? 잠시 후 다시 시도해 주세요");
         return;
     }
 }
