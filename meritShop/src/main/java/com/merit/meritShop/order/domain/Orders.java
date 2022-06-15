@@ -44,6 +44,7 @@ public class Orders {
     @JoinColumn(name="coupon_id")
     private Coupon coupon;
 
+    private String recipient;
 
     public void updateTotalPrice(){
         int total =0;
