@@ -35,7 +35,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             if (email.equals(requestEmail))
                 throw new AuthenticationCredentialsNotFoundException(email);
             Authentication auth = jwtTokenProvider.getAuthentication(token);    // 인증 객체 생성
-            //System.out.println(auth);
             SecurityContextHolder.getContext().setAuthentication(auth); // SecurityContextHolder에 인증 객체 저장
         }
         filterChain.doFilter(servletRequest, servletResponse);

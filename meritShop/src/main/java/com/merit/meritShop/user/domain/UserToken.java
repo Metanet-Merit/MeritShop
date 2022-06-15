@@ -15,10 +15,16 @@ public class UserToken {
 
     private String email;
 
+    private String role;
+
+    private String loginType;
+
 
     public UserToken(User entity) {
         this.id = entity.getUserId();
         this.email = entity.getEmail();
+        this.role = entity.getRole();
+        this.loginType = entity.getLoginType();
     }
 
 }

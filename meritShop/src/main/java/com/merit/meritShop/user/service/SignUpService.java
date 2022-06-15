@@ -1,5 +1,6 @@
 package com.merit.meritShop.user.service;
 
+import com.merit.meritShop.coupon.service.CouponService;
 import com.merit.meritShop.user.domain.User;
 import com.merit.meritShop.user.dto.UserSignInDto;
 import com.merit.meritShop.user.dto.UserSignUpDto;
@@ -14,18 +15,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class SignUpService {
     private final UserRepository userRepository;
+    private final CouponService couponService;
 
     public boolean save(UserSignUpDto userSignUpDto) {
         if (isExist(userSignUpDto.getEmail(), "local"))
             return false; //중복 회원가입
-        userRepository.save(userSignUpDto.toEntity());
+        User user = userRepository.save(userSignUpDto.toEntity());
+        couponService.publishCouponToUser(user,1L);
         return true;
     }
 
     public boolean isExist(String email, String loginType) {
-        boolean emailExist = userRepository.existsByEmail(email);
-        boolean loginExist = userRepository.existsByLoginType(loginType);
-        if (emailExist && loginExist)   return true;
+        boolean Exist = userRepository.existsByEmailAndLoginType(email,loginType);
+        if (Exist) return true;
         return false;
     }
     public UserSignInDto registerGoogle(ResponseEntity<String> googleEntity) {
@@ -39,8 +41,10 @@ public class SignUpService {
                 .loginType("google")
                 .build();
         //한번 회원등록하면 save하지말고 바로 로그인 절차로 이동
-        if (!isExist(jsonObject.getString("email"), "google"))
-            userRepository.save(entity);
+        if (!isExist(jsonObject.getString("email"), "google")){
+            User user =userRepository.save(entity);
+            couponService.publishCouponToUser(user,1L);
+        }
        return new UserSignInDto(email, password, "google");
     }
 
@@ -55,8 +59,10 @@ public class SignUpService {
                 .userName(jsonObject.getJSONObject("properties").getString("nickname"))
                 .loginType("kakao")
                 .build();
-        if (!isExist(json.getString("email"), "kakao"))
-            userRepository.save(entity);
+        if (!isExist(json.getString("email"), "kakao")){
+            User user =userRepository.save(entity);
+            couponService.publishCouponToUser(user,1L);
+        }
         return new UserSignInDto(email, password, "kakao");
     }
 
@@ -73,8 +79,10 @@ public class SignUpService {
                 .sex(json.getString("gender"))
                 .loginType("naver")
                 .build();
-        if (!isExist(json.getString("email"), "naver"))
-            userRepository.save(entity);
+        if (!isExist(json.getString("email"), "naver")){
+            User user = userRepository.save(entity);
+            couponService.publishCouponToUser(user,1L);
+        }
         return new UserSignInDto(email, password, "naver");
     }
 }

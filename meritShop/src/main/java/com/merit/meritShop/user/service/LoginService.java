@@ -23,7 +23,6 @@ public class LoginService {
 
     public JwtResponseDto login (UserSignInDto userSignInDto) {
         Optional<User> user = userRepository.findByEmailAndLoginType(userSignInDto.getEmail(), userSignInDto.getLoginType());
-
         if (user == null)
             System.out.println("회원 없음"); //이후에 예외처리해야함
         UserToken usertoken = new UserToken(user.get());

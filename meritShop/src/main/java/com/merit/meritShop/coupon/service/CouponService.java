@@ -26,20 +26,23 @@ public class CouponService {
         couponRepository.save(new Coupon().update(dto));
     }
 
-    public void publishCouponToUser(Long userId, Long couponId){
+    public void publishCouponToUser(User user, Long couponId){
 
-        User user = userRepository.findById(userId).get();
         Coupon coupon = couponRepository.findById(couponId).get();
-        CouponCase cc = new CouponCase();
-        cc.setCoupon(coupon);
-        cc.setUser(user);
-        cc.setSerialCode(UUID.randomUUID().toString());
-        cc.setStartDate(LocalDateTime.now().plusDays(coupon.getStartNum()));
-        cc.setEndDate(LocalDateTime.now().plusDays(coupon.getEndNum()));
+        if(coupon!=null) {
+            CouponCase cc = new CouponCase();
+            cc.setCoupon(coupon);
+            cc.setUser(user);
+            cc.setSerialCode(UUID.randomUUID().toString());
+            cc.setStartDate(LocalDateTime.now().plusDays(coupon.getStartNum()));
+            cc.setEndDate(LocalDateTime.now().plusDays(coupon.getEndNum()));
+            cc.setUsed(false);
 
-        couponCaseRepository.save(cc);
-
+            couponCaseRepository.save(cc);
+        }
     }
+
+
     @Transactional
     public void updateCoupon(CouponFormDto dto){
         Coupon coupon = couponRepository.findById(dto.getCouponId()).get();
