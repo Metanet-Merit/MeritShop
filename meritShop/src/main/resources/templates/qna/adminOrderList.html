@@ -13,7 +13,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section">문의사항</h2>
+                    <h2 class="heading-section">주문내역</h2>
                 </div>
             </div>
             <div class="row">
@@ -23,41 +23,27 @@
                             <thead class="thead-dark">
                             <tr>
                                 <th style="background-color: #2e59d9">번호</th>
-                                <th style="background-color: #2e59d9">제목</th>
-                                <th style="background-color: #2e59d9">작성자</th>
-                                <th style="background-color: #2e59d9">작성일</th>
-                                <th style="background-color: #2e59d9">답변여부</th>
+                                <th style="background-color: #2e59d9">주문일자</th>
+                                <th style="background-color: #2e59d9">주문자</th>
+                                <th style="background-color: #2e59d9">수령인</th>
+                                <th style="background-color: #2e59d9">배송지</th>
+                                <th style="background-color: #2e59d9">총 주문가격</th>
+
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="alert" role="alert" th:each="qna : ${listPage}">
-                                <th scope="row"th:text="${qna.qnaId}"></th>
-                                <td>
-                                    <a th:text="${qna.title}" th:href="@{/qna/detail(qnaId=${qna.qnaId})}"></a>
-                                </td>
-                                <td scope="row"th:text="${qna.userName}"></td>
-                                <td th:if = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.registerDate,'yyyy-MM-dd')}"></th:if>
-                                </td>
-                                <td th:unless = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.modifyDate,'yyyy-MM-dd')}"></th:if>
-                                </td>
+                            <tr class="alert" role="alert" th:each="order : ${result['rtnObj']['orders']}">
+                                <th scope="row"th:text="${order['orderId']}"></th>
+                                <td th:text="${#temporals.format(order['orderDate'],'yyyy-MM-dd')}"/>
+                                <td scope="row"th:text="${order['userName']}"></td>
+                                <td scope="row"th:text="${order['recipient']}"></td>
+                                <td scope="row"th:text="${order['address']}"></td>
+                                <td scope="row"th:text="${order['totalPrice']}"></td>
                                 <!--<td scope="row"th:if="${qna.replied == 0}">미답변</td>
                                 <td scope="row"th:unless="${qna.replied == 1}">답변완료</td>-->
                             </tr>
                             </tbody>
                         </table>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item"th:classappend="${1== listPage.pageable.pageNumber+1}?'disabled'" >
-                                    <a class="page-link" th:href="@{/admin/qnas(page=${listPage.pageable.pageNumber-1})}">Pre</a>
-                                </li>
-                                <li class="page-item" th:each="i:${#numbers.sequence(startPage,endPage)}"
-                                    th:classappend="${i==listPage.pageable.pageNumber+1}?'disabled'">
-                                    <a class="page-link" href="#" th:href="@{/admin/qnas(page=${i-1})}" th:text="${i}">1</a></li>
-                                <li class="page-item" th:classappend="${listPage.totalPages==listPage.pageable.pageNumber+1}?'disabled'">
-                                    <a class="page-link" href="#"  th:href="@{/admin/qnas(page=${listPage.pageable.pageNumber+1})}">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>

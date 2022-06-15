@@ -143,19 +143,20 @@ public class OrderListService {
 
         try {
             Map<String, Object> map = new HashMap<>();
-            List<OrderItem> orderItemList = orderItemRepository.findAll();
+            List<Orders> orderList = orderRepository.findAll();
             List<OrderDTO> orderDTOList = new ArrayList<>();
 
-            for (OrderItem orderItem : orderItemList) {
-                User user = orderItem.getOrders().getUser();
-                Orders order = orderItem.getOrders();
+            for (Orders order : orderList) {
+                User user = order.getUser();
+
                 OrderDTO orderDTO = OrderDTO.builder()
                         .userId(user.getUserId())
                         .userName(user.getUserName())
                         .orderDate(order.getOrderDate())
-                        .itemName(orderItem.getItem().getItemName())
                         .orderId(order.getOrderId())
                         .totalPrice(order.getTotalPrice())
+                        .recipient(order.getRecipient())
+                        .address(order.getAddress())
                         .orderDate(order.getOrderDate()).build();
 
                 orderDTOList.add(orderDTO);

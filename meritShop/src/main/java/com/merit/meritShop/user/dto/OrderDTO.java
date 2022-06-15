@@ -20,4 +20,8 @@ public class OrderDTO {
     private Integer count;
     private Integer totalPrice;
     private LocalDateTime orderDate;
+    private String category;
+    private boolean reviewed;
+    private String address;
+    private String recipient;
 }
