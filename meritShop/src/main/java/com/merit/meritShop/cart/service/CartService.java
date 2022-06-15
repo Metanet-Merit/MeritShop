@@ -43,6 +43,7 @@ public class CartService {
             cart.setUser(user);
             cart.setItem(item);
             cart.setCount(cartDto.getCount());
+            cart.setItemOptionId(cartDto.getItemOptionId());
             cartRepository.save(cart);
 
             return "success";

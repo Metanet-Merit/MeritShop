@@ -106,9 +106,6 @@
         </a>
     </div>
     <div class="mainContent" id="content" style="margin: 50px 0px 0px 0px">
-                   <div style="display: inline-block; margin: 0 5px;  padding-left: 995px; ">
-                        <button class="sub-btn"><a th:href="@{/qna/write}">등록</a></button>
-                    </div>
                     <div class="col-md-12" style="padding: 0px">
                         <div class="table-wrap">
                             <table class="table" style="width: 500px;">
@@ -121,7 +118,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="alert" role="alert" th:each="qna : ${list}">
+                                <tr class="alert" role="alert" th:each="qna : ${myQnaList}">
                                     <th scope="row"th:text="${qna.qnaId}"></th>
                                     <td>
                                         <a th:text="${qna.title}" th:href="@{/qna/detail(qnaId=${qna.qnaId})}"></a>
@@ -133,14 +130,14 @@
                             </table>
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-center">
-                                    <li class="page-item"th:classappend="${1== listPage.pageable.pageNumber+1}?'disabled'" >
-                                        <a class="page-link" th:href="@{/user/qnas(page=${listPage.pageable.pageNumber-1})}">Pre</a>
+                                    <li class="page-item"th:classappend="${1== myQnaList.pageable.pageNumber+1}?'disabled'" >
+                                        <a class="page-link" th:href="@{/user/qnas(page=${myQnaList.pageable.pageNumber-1})}">Pre</a>
                                     </li>
                                     <li class="page-item" th:each="i:${#numbers.sequence(startPage,endPage)}"
-                                        th:classappend="${i==listPage.pageable.pageNumber+1}?'disabled'">
+                                        th:classappend="${i==myQnaList.pageable.pageNumber+1}?'disabled'">
                                         <a class="page-link" href="#" th:href="@{/user/qnas(page=${i-1})}" th:text="${i}">1</a></li>
-                                    <li class="page-item" th:classappend="${listPage.totalPages==listPage.pageable.pageNumber+1}?'disabled'">
-                                        <a class="page-link" href="#"  th:href="@{/user/qnas(page=${listPage.pageable.pageNumber+1})}">Next</a>
+                                    <li class="page-item" th:classappend="${myQnaList.totalPages==myQnaList.pageable.pageNumber+1}?'disabled'">
+                                        <a class="page-link" href="#"  th:href="@{/user/qnas(page=${myQnaList.pageable.pageNumber+1})}">Next</a>
                                     </li>
                                 </ul>
                             </nav>

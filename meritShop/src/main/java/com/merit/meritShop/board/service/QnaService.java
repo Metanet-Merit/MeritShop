@@ -27,9 +27,9 @@ public class QnaService {
     ItemRepository itemRepository;
 
     //내가 작성한 문의사항 목록_user
-    public List<Qna> myQnaList(Long userId) {
+    public Page<Qna> myQnaList(Long userId,Pageable pageable) {
         User user = userRepository.findById(userId).get();
-        List<Qna> qnaList = qnaRepository.findByUser(user);
+        Page<Qna> qnaList = qnaRepository.findByUser(user,pageable);
         return qnaList;
     }
 
