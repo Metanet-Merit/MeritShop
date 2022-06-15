@@ -81,7 +81,7 @@
                 <hr class="my-4">
                 <div id="options">
                     option<br>
-                    <select id="itmeOptionId" name="orderItemDtoList[0].itemOptionId" style="width:180px;">
+                    <select id="itemOptionId" name="orderItemDtoList[0].itemOptionId" style="width:180px;">
                         <option>Select option</option>
                         <option th:each="option:${itemFormDto.options}" th:if="${option?.quantity>0}"
                                     th:value="${option?.itemOptionId}"
@@ -94,7 +94,7 @@
                     <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
                 </div>
                 <div th:if="${itemFormDto.status != T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
-                    <button type="button" class="btn btn-light border border-primary btn-lg" onclick="">장바구니 담기</button>
+                    <button type="button" class="btn btn-light border border-primary btn-lg" onclick="cart()">장바구니 담기</button>
                     <button type="button" class="btn btn-primary btn-lg"  id="order_btn">주문하기</button>
                 </div>
                 <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
@@ -140,8 +140,10 @@
 
                 </div>
                 <div style="display: none">
-                    <div class="prd_qna_tit">
-                        <button class="btnInquiry goods_qna_inquiry" th:onclick="|location.href='@{/user/qnaWrite}'|">상품문의</button>
+                    <div class="prd_qna_tit" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
+                        <button class="btnInquiry goods_qna_inquiry" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
+                            <a th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">상품문의</a>
+                        </button>
                     </div>
                     <ul class="prd_qna_list" id="prd_qna_list">
                         //보이는 화면
@@ -203,6 +205,8 @@
         };
     };
 
+
+
     const getCookieValue = (key) => {
         let cookieKey = key + "=";
         let result = "";
@@ -220,9 +224,8 @@
         }
         return result;
     }
-    function order(){
-        var token = getCookieValue("Authorization");
-        var url = "/order";
+    function cart(){
+        var url = "/cart";
         var paramData = {
             itemId : $("#itemId").val(),
             itemOptionId : $("#itemOptionId").val(),
@@ -239,13 +242,12 @@
             data     : param,
             dataType : "json",
             cache   : false,
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", token);
-            },
+
             success  : function(result, status){
 
                 console.log(result);
-                location.href='/pay/'+result;
+                alert("장바구니 추가!!");
+                location.href='/cart';
             },
             error : function(jqXHR, status, error){
 
