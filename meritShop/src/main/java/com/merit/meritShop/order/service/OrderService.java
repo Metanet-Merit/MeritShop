@@ -66,10 +66,17 @@ public class OrderService {
     public Long order(User user,PayFormDto formDto){
         List<OrderItem> list = new ArrayList<>();
         Orders orders = new Orders();
-        orders.setOrderId(formDto.getOrderId());
-        CouponCase couponCase = couponCaseRepository.findById(formDto.getCouponCaseId()).get();
-        Coupon coupon = couponRepository.findById(couponCase.getCoupon().getCouponId()).get();
+        orders.setTransactionCode(formDto.getTransactionCode());
+        System.out.println(formDto.getCouponCaseId());
+        int discountP =0;
+        if(formDto.getCouponCaseId()!=null) {
+            CouponCase couponCase = couponCaseRepository.findById(formDto.getCouponCaseId()).get();
+            Coupon coupon = couponRepository.findById(couponCase.getCoupon().getCouponId()).get();
 
+            couponCase.setUsed(true);
+            discountP=coupon.getDiscountPrice();
+
+        }
         for(OrderItemDto dto:formDto.getOrderItemDtoList()) {
 
             Item item = itemRepository.findById(dto.getItemId()).get();
@@ -98,20 +105,18 @@ public class OrderService {
             list.add(orderItemRepository.save(orderItem));
 
         }
-        couponCase.setUsed(true);
+
         orders.setOrderItemList(list);
         orders.setAddress(formDto.getAddress());
         orders.setRecipient(formDto.getRecipient());
         orders.updateTotalPrice();
 
-        orders.setTotalPrice(orders.getTotalPrice()-coupon.getDiscountPrice());
+        orders.setTotalPrice(orders.getTotalPrice()-discountP);
 
         orders.setOrderDate(LocalDateTime.now());
         orders.setUser(user);
         orders.setCouponCaseId(formDto.getCouponCaseId());
         orders =orderRepository.save(orders);
-
-
 
         return orders.getOrderId();
 
