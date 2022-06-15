@@ -1,6 +1,7 @@
 package com.merit.meritShop.order.domain;
 
 import com.merit.meritShop.coupon.domain.Coupon;
+import com.merit.meritShop.coupon.domain.CouponCase;
 import com.merit.meritShop.user.domain.User;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -41,8 +42,7 @@ public class Orders {
     private List<OrderItem> orderItemList ;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="coupon_id")
-    private Coupon coupon;
+    private CouponCase coupon;
 
     private String recipient;
 

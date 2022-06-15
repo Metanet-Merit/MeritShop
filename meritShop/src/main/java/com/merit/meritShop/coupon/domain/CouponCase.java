@@ -29,5 +29,7 @@ public class CouponCase extends BaseEntity {
 
     private LocalDateTime endDate;
 
+    private Boolean used;
+
 
 }
