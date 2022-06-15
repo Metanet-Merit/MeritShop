@@ -14,5 +14,14 @@ public class CartDto {
     Long itemOptionId;
     int count;
 
-
+    @Override
+    public String toString() {
+        return "CartDto{" +
+                "cartId=" + cartId +
+                ", userId=" + userId +
+                ", itemId=" + itemId +
+                ", itemOptionId=" + itemOptionId +
+                ", count=" + count +
+                '}';
+    }
 }

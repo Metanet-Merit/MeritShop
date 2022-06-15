@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface QnaRepository extends JpaRepository<Qna, Long> {
-    List<Qna> findByUser(User user);
+    Page<Qna> findByUser(User user,Pageable pageable);
 
     @Query("SELECT q FROM Qna q ORDER BY q.qnaId DESC")
     Page<Qna> findAll(Pageable pageable);

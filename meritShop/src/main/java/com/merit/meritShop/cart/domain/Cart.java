@@ -30,5 +30,7 @@ public class Cart {
     @JoinColumn(name="item_id")
     private Item item;
 
+    private Long itemOptionId;
+
     private int count;//수량
 }
