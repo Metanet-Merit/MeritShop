@@ -1,29 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Title</title>
+    <title>공지사항</title>
+
 </head>
-<body>
-<div class="container">
-    <h2>문의사항 등록</h2>
-    <form action="writepro" method="post">
-        <table class="table table-hover">
-            <tbody>
-            <tr>
-                <td><input type="text" class="form-control" placeholder="글 제목" name="title" maxlength="40"></td>
-            </tr>
-            <tr>
-                <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="content" maxlength="1024" style="height: 400px;"></textarea></td>
-            </tr>
-            </tbody>
-        </table>
-        <input type="submit" class="btn btn-primary pull-right" style="background-color: #4e555b; border-color: #4e555b" value="글쓰기">
-    </form>
-</div>
-</body>
+<th:block layout:fragment="content">
+    <!-- Begin Page Content -->
+    <div class="container" style="width: 65%">
+        <h2>공지사항 등록</h2>
+        <form action="writepro" method="post">
+            <table class="table table-hover">
+                <tbody>
+                <tr>
+                    <td><input type="text" class="form-control" placeholder="글 제목" name="title" maxlength="40"></td>
+                </tr>
+                <tr>
+                    <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="content" maxlength="1024" style="height: 400px;"></textarea></td>
+                </tr>
+                </tbody>
+            </table>
+            <button class="list-btn" th:onclick="|location.href='@{/admin/notice/list}'|" style="margin-top: 0px">목록</button>
+            <input type="submit" class="btn btn-primary pull-right" style="background-color: white; border: 2px solid; border-color: #2e59d9; color: #2e59d9;" value="글쓰기">
+        </form>
+    </div>
+</th:block>
 </html>

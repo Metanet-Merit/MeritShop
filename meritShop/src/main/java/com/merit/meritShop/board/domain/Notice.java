@@ -32,4 +32,6 @@ public class Notice {
     private LocalDateTime modifyDate;
 
     private int views;
+
+
 }

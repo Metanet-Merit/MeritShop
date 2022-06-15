@@ -4,6 +4,8 @@ import com.merit.meritShop.user.domain.User;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Entity
@@ -28,6 +30,18 @@ public class Cart {
     @JoinColumn(name="item_id")
     private Item item;
 
+    private Long itemOptionId;
+
     private int count;//수량
 
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "cartId=" + cartId +
+                ", user=" + user +
+                ", item=" + item +
+                ", itemOptionId=" + itemOptionId +
+                ", count=" + count +
+                '}';
+    }
 }

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="utf-8">
-    <title>EShopper - Bootstrap Shop Template</title>
+    <title>meta-shopping mall</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -22,6 +22,34 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/mainPage/css/style.css" rel="stylesheet">
+
+
+    <style>
+        .coupon_content {
+            border: solid #1c294e 1px ;
+            width: 350px;
+            hight: 150px;
+            text-align: center;
+            margin-top: 30px;
+
+        }
+
+        #my_modal {
+            display: none;
+            width: 500px;
+            height: 400px;
+            padding: 20px 60px;
+            background-color: #fefefe;
+            border: 1px solid #888;
+            border-radius: 3px;
+        }
+
+        #my_modal .modal_close_btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,6 +63,8 @@
                 <a class="text-dark" href="">Help</a>
                 <span class="text-muted px-2">|</span>
                 <a class="text-dark" href="">Support</a>
+                <span class="text-muted px-2">|</span>
+                <a class="text-dark" href="/admin" sec:authorize="hasRole('ROLE_ADMIN')">관리자 페이지</a>
             </div>
         </div>
         <div class="col-lg-6 text-center text-lg-right">
@@ -58,9 +88,9 @@
         </div>
     </div>
     <div class="row align-items-center py-3 px-xl-5">
-        <div class="col-lg-3 d-none d-lg-block">
-            <a href="" class="text-decoration-none">
-                <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
+        <div class="col-lg-3 d-none d-lg-block" th:onclick="'location.href=' + '\''+'/main'+'\''">
+            <a href="/main" class="text-decoration-none">
+                <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">Meta</span>Shop</h1>
             </a>
         </div>
         <div class="col-lg-6 col-6 text-left">
@@ -122,8 +152,8 @@
         </div>
         <div class="col-lg-9">
             <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-                <a href="" class="text-decoration-none d-block d-lg-none">
-                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
+                <a href="/main" class="text-decoration-none d-block d-lg-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">Meta</span>Shop</h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -140,11 +170,11 @@
                                 <a href="checkout.html" class="dropdown-item">Checkout</a>
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a href="contact.html" class="nav-item nav-link">공지사항</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="" class="nav-item nav-link">Login</a>
-                        <a href="" class="nav-item nav-link">Register</a>
+                        <a href="/user/login" class="nav-item nav-link">Login</a>
+                        <a href="/user/login" class="nav-item nav-link">Register</a>
                     </div>
                 </div>
             </nav>
@@ -178,23 +208,23 @@
 
                     <div class="col-md-6 form-group">
                         <label>주문자 이름</label>
-                        <input class="form-control" type="text" placeholder="고길동">
+                        <input id="buyer_name"class="form-control" type="text" placeholder="고길동">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>E-mail</label>
-                        <input class="form-control" type="text" placeholder="example@email.com">
+                        <input id="buyer_email"class="form-control" type="text" placeholder="example@email.com">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>휴대전화 번호</label>
-                        <input class="form-control" type="text" placeholder="010 1234 5678">
+                        <input id="buyer_tel"class="form-control" type="text" placeholder="010 1234 5678">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>주   소</label>
-                        <input class="form-control" type="text" placeholder="시/군/구">
+                        <input id="buyer_arr1" class="form-control" type="text" placeholder="시/군/구">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>상세 주소</label>
-                        <input class="form-control" type="text" placeholder="메타아파트 x동 x호">
+                        <input id="buyer_arr2"class="form-control" type="text" placeholder="메타아파트 x동 x호">
                     </div>
 
 
@@ -211,8 +241,8 @@
                 <div class="row">
 
                     <div class="col-md-6 form-group">
-                        <label>수취인 이름</label>
-                        <input class="form-control" type="text" placeholder="홍길동">
+                        <label>수령인 이름</label>
+                        <input class="form-control" id="recipient_name" type="text" placeholder="홍길동">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>E-mail</label>
@@ -224,11 +254,11 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <label>주   소</label>
-                        <input class="form-control" type="text" placeholder="시/군/구">
+                        <input class="form-control" id="recipient_address1" type="text" placeholder="시/군/구">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>상세 주소</label>
-                        <input class="form-control" type="text" placeholder="메타아파트 x동 x호">
+                        <input class="form-control" id="recipient_address2" type="text" placeholder="메타아파트 x동 x호">
                     </div>
 
                 </div>
@@ -240,30 +270,56 @@
                     <h4 class="font-weight-semi-bold m-0">Order Total</h4>
                 </div>
                 <div class="card-body">
+                    <input type="hidden" id="order_id" th:value="${orderId}">
                     <h5 class="font-weight-medium mb-3">주문 상품</h5>
-                    <div class="d-flex justify-content-between" th:each=" orderItem :${orders.orderItemList} ">
-                        <p th:text="${orderItem.item.itemName}"></p>
-                        <p th:text="${orderItem.count}"></p>
-                        <p th:text="${orderItem.orderItemPrice}"></p>
+                    <div class="d-flex justify-content-between" th:each=" orderItem :${payList} ">
+                        <input type="hidden" class="itemId" th:value="${orderItem.itemId}">
+                        <input type="hidden" class="itemOptionId" th:value="${orderItem.itemOptionId}">
+                        <p class="itemName" th:text="${orderItem.itemName}"></p>
+                        <p class="itemCount" th:value="${orderItem.count}" th:text="'X '+${orderItem.count}"></p>
+                        <p th:text="'￦'+${orderItem.price}"></p>
                     </div>
 
                     <hr class="mt-0">
                     <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium">Subtotal</h6>
-                        <h6 class="font-weight-medium" th:text="'￦'+ ${orders.totalPrice}"></h6>
+                        <h6 class="font-weight-medium" th:text="'￦'+ ${totalPrice}"></h6>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Shipping</h6>
                         <h6 class="font-weight-medium">￦0</h6>
                     </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Discount</h6>
+                        <h6 class="font-weight-medium" id="couponPrice">￦0</h6>
+                    </div>
                 </div>
+
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
-                        <h5 class="font-weight-bold" th:text="'￦'+${orders.totalPrice}"></h5>
+                        <h5 class="font-weight-bold" id="totalPrice" th:text="'￦'+${totalPrice}"></h5>
                     </div>
                 </div>
             </div>
+
+                사용 가능한  쿠폰 보기<br>
+
+            <button id="popup_open_btn">쿠폰 사용</button>
+            <input type="hidden" id="couponCaseId">
+
+            <div id="my_modal">
+
+                <div class="coupon_content" th:each="coupon:${couponList}">
+                    <input type="hidden" class="couponId" th:value="${coupon.couponCaseId}">
+                    <h5 th:text="${coupon.coupon.couponName}"></h5>
+                    <p th:if="${coupon.coupon.discountPrice!=0}" class="couponPrice" th:text="${coupon.coupon.discountPrice}"></p>
+                    <p th:if="${coupon.coupon.discountRate!=0.0}" th:text="${coupon.coupon.discountRate}"></p>
+                </div>
+                   <a class="modal_close_btn">닫기</a>
+            </div>
+            <hr class="my-4">
+
             <div class="card border-secondary mb-5">
                 <div class="card-header bg-secondary border-0">
                     <h4 class="font-weight-semi-bold m-0">Payment</h4>
@@ -277,13 +333,13 @@
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" name="payment" id="directcheck">
+                            <input type="radio" class="custom-control-input" name="payment" id="kakaoPay">
                             <label class="custom-control-label" for="kakaoPay" >kakaoPay</label>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
-                    <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
+                    <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" onclick="requestPay()">결제 하기</button>
                 </div>
             </div>
         </div>
@@ -370,15 +426,184 @@
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="mainPage/lib/easing/easing.min.js"></script>
-<script src="mainPage/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/mainPage/lib/easing/easing.min.js"></script>
+<script src="/mainPage/lib/owlcarousel/owl.carousel.min.js"></script>
 
 <!-- Contact Javascript File -->
-<script src="mainPage/mail/jqBootstrapValidation.min.js"></script>
-<script src="mainPage/mail/contact.js"></script>
+<script src="/mainPage/mail/jqBootstrapValidation.min.js"></script>
+<script src="/mainPage/mail/contact.js"></script>
 
 <!-- Template Javascript -->
-<script src="mainPage/js/main.js"></script>
+<script src="/mainPage/js/main.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script>
+
+    function requestPay() {
+        // IMP.request_pay(param, callback) 결제창 호출
+        console.log("0000");
+        var IMP = window.IMP; // 생략 가능
+        IMP.init("imp35544083"); // 예: imp00000000
+         var total_price =document.querySelector("#totalPrice").textContent;
+        total_price= parseInt(total_price.substring(1,total_price.length));
+        //var order_id =parseInt(document.querySelector("#order_id").value);
+        var buyer_name = document.querySelector("#buyer_name").value;
+        var buyer_email = document.querySelector("#buyer_email").value;
+        var buyer_tel = document.querySelector("#buyer_tel").value;
+        var buyer_arr1 = document.querySelector("#buyer_arr1").value;
+        var buyer_arr2 = document.querySelector("#buyer_arr2").value;
+
+        var recipient_name = document.querySelector("#recipient_name").value;
+        var recipient_address1 = document.querySelector("#recipient_address1").value;
+        var recipient_address2 = document.querySelector("#recipient_address2").value;
+        var name = document.querySelectorAll(".itemName");
+        var itemId = document.querySelectorAll(".itemId");
+        var itemOptionId = document.querySelectorAll(".itemOptionId");
+        var count = document.querySelectorAll(".itemCount");
+
+        var couponCaseId = document.getElementById("couponCaseId").value;
+
+       // count = parseInt(count.substring(2,count.length));
+        //buyer_postcode: "01181"
+
+        console.log(couponCaseId);
+
+
+        if(total_price<50000){
+            total_price += 3000;
+        }
+        IMP.request_pay({ // param
+            pg: "kakaopay.TC0ONETIME",
+            pay_method: "card",
+            merchant_uid: "48988",
+            name: name[0].textContent+"등 "+name.length+" 종",
+            amount: total_price,
+            buyer_email: buyer_email,
+            buyer_name: buyer_name,
+            buyer_tel: buyer_tel,
+            buyer_addr: buyer_arr1+buyer_arr2
+
+        }, function (rsp) { // callback
+            if (rsp.success) {
+                alert("결제에 성공하였습니다. 에러 내용: " +  rsp.success);
+                var paramData = [];
+                if(recipient_name!=""){
+                    buyer_arr1 = recipient_address1;
+                    buyer_arr2 = recipient_address2;
+                    buyer_name = recipient_name;
+                }
+
+                for(let i=0; i<name.length; i++) {
+                    var Data = {
+                        itemId: parseInt(itemId[i].value),
+                        itemOptionId: parseInt(itemOptionId[i].value),
+                        count: parseInt(count[i].textContent.substring(2,count[i].textContent.length))
+
+                    };
+                    paramData.push(Data);
+                }
+                var payFormDto ={
+                    orderItemDtoList: paramData,
+                    orderId: rsp.merchant_uid,
+                    address: buyer_arr1+buyer_arr2,
+                    recipient: buyer_name,
+                    couponCaseId: couponCaseId
+                };
+
+                console.log(payFormDto)
+                 payFormDto = JSON.stringify(payFormDto);
+                console.log(payFormDto)
+
+                jQuery.ajax({
+                    url: "http://localhost:8080/order", // 예: https://www.myservice.com/payments/complete
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    dataType : "json",
+                    data: payFormDto
+                }).done(function (data) {
+                    // 가맹점 서버 결제 API 성공시 로직
+                    alert("good");
+                    location.href="/main";
+                })
+
+            } else {
+                alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+            }
+        });
+    }
+
+</script>
+<script>
+    function modal(id) {
+        var zIndex = 9999;
+        var modal = document.getElementById(id);
+        var couponCaseId =  document.getElementById("couponCaseId");
+        var discountP  = document.getElementById("couponPrice");
+        var totalP = document.getElementById("totalPrice");
+
+        console.log(discountP);
+        console.log(totalP);
+
+        // 모달 div 뒤에 희끄무레한 레이어
+        var bg = document.createElement('div');
+        bg.setStyle({
+            position: 'fixed',
+            zIndex: zIndex,
+            left: '0px',
+            top: '0px',
+            width: '100%',
+            height: '100%',
+            overflow: 'auto',
+            // 레이어 색갈은 여기서 바꾸면 됨
+            backgroundColor: 'rgba(0,0,0,0.4)'
+        });
+        document.body.append(bg);
+
+        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+        modal.querySelector('.modal_close_btn').addEventListener('click', function() {
+            bg.remove();
+            modal.style.display = 'none';
+        });
+        modal.querySelectorAll('.coupon_content').forEach(n=>n.addEventListener('click', function() {
+            bg.remove();
+            modal.style.display = 'none';
+            couponCaseId.value = n.getElementsByClassName("couponId")[0].value;
+            var price = parseInt(n.getElementsByClassName("couponPrice")[0].textContent);
+            console.log(price);
+            discountP.textContent = '￦'+price;
+            totalP.textContent =  '￦'+(parseInt(totalP.textContent.substring(1,totalP.textContent.length))-price);
+
+            console.log(couponCaseId.value);
+
+        }));
+
+        modal.setStyle({
+            position: 'fixed',
+            display: 'block',
+            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+            // 시꺼먼 레이어 보다 한칸 위에 보이기
+            zIndex: zIndex + 1,
+
+            // div center 정렬
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            msTransform: 'translate(-50%, -50%)',
+            webkitTransform: 'translate(-50%, -50%)'
+        });
+    }
+
+    // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
+    Element.prototype.setStyle = function(styles) {
+        for (var k in styles) this.style[k] = styles[k];
+        return this;
+    };
+
+    document.getElementById('popup_open_btn').addEventListener('click', function() {
+        // 모달창 띄우기
+        modal('my_modal');
+    });
+</script>
 </body>
 
 </html>

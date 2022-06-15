@@ -1,55 +1,66 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>공지사항 목록</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/css/notice.css" type="text/css">
+    <link rel="stylesheet" href="/css/board.css" type="text/css">
 </head>
-<body>
-    <!-- HEADER -->
-    <!--<div th:insert="" id="header"></div>-->
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 text-center mb-5">
-                <h2 class="heading-section">공지사항</h2>
+<th:block layout:fragment="content">
+    <div id="commonField">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">공지사항</h2>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div style="display: inline-block; margin: 0 5px;  padding-left: 1000px; ">
-            <button class="sub-btn"><a style="color: white" th:href="@{/notice/write}">공지사항 등록</a></button>
-            </div>
-            <div class="col-md-12">
-                <div class="table-wrap">
-                    <table class="table">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>번호</th>
-                            <th>제목</th>
-                            <th>등록일</th>
-                            <th>조회수</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="alert" role="alert" th:each="notice : ${list}">
-                            <th scope="row"th:text="${notice.noticeId}"></th>
-                            <td>
-                                <a th:text="${notice.title}" th:href="@{/notice/detail(noticeId=${notice.noticeId})}"></a>
-                            </td>
-                            <td>작성일</td>
-                            <td>조회수</td>
-                        </tr>
-                        </tbody>
-                    </table>
+            <div class="row">
+                <div style="display: inline-block; margin: 0 5px;  padding-left: 995px; ">
+                    <button class="sub-btn"><a th:href="@{/admin/notice/write}">공지사항 등록</a></button>
+                </div>
+                <div class="col-md-12">
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th style="background-color: #2e59d9">번호</th>
+                                <th style="background-color: #2e59d9">제목</th>
+                                <th style="background-color: #2e59d9">등록일</th>
+                                <th style="background-color: #2e59d9">조회수</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="alert" role="alert" th:each="notice : ${listPage}">
+                                <th scope="row"th:text="${notice.noticeId}"></th>
+                                <td>
+                                    <a th:text="${notice.title}" th:href="@{/admin/notice/detail(noticeId=${notice.noticeId})}"></a>
+                                </td>
+                                <td th:if = "${notice.modifyDate == null}" th:text="${#temporals.format(notice.registerDate,'yyyy-MM-dd')}"></th:if>
+                                </td>
+                                <td th:unless = "${notice.modifyDate == null}" th:text="${#temporals.format(notice.modifyDate,'yyyy-MM-dd')}"></th:if>
+                                </td>
+                                <td th:text="${notice.views}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item"th:classappend="${1== listPage.pageable.pageNumber+1}?'disabled'" >
+                                    <a class="page-link" th:href="@{/admin/notice/list(page=${listPage.pageable.pageNumber-1})}">Pre</a>
+                                </li>
+                                <li class="page-item" th:each="i:${#numbers.sequence(startPage,endPage)}"
+                                    th:classappend="${i==listPage.pageable.pageNumber+1}?'disabled'">
+                                    <a class="page-link" href="#" th:href="@{/admin/notice/list(page=${i-1})}" th:text="${i}">1</a></li>
+                                <li class="page-item" th:classappend="${listPage.totalPages==listPage.pageable.pageNumber+1}?'disabled'">
+                                    <a class="page-link" href="#"  th:href="@{/admin/notice/list(page=${listPage.pageable.pageNumber+1})}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-    <!-- FOOTER -->
-    <!--<div th:insert="" id="footer"></div>-->
-</body>
+</th:block>
 </html>

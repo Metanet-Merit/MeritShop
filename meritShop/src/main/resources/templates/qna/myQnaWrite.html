@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>문의사항 작성</title>
+    <link rel="stylesheet" href="/css/qna.css" type="text/css">
+</head>
+<body>
+
+
+
+<div class="pop-conts">
+
+    <th:input type="hidden" name="itemId" value="${itemId}"></th:input>
+    <th scope="row"th:text="${itemId}"></th>
+    <form name="sForm" id="sForm" th:action=@{'/user/qnaWrite/'+${itemId}} method="post">
+        <input type="text" name="title" id="title" value=""/>
+
+        <h1 class="ptit">상품 Q&amp;A 작성</h1>
+        <div class="mypage-qna-write disabled">
+            <div class="optionSec">
+            </div>
+            </p>
+            <div class="reviews-write">
+                <textarea cols="5" rows="1" name="content" id="content" placeholder="문의사항을 등록해주세요" ></textarea>
+                <p><span id="curTxtLength">0</span>자/250자</p>
+            </div>
+
+            <div class="btnGroup">
+                <button id="cancel" type="button" class="btnGray" onclick="javascript:mypage.gdsQna.form.popupClose();" disabled="disabled">취소</button>
+                <button id="reg"  class="btnGreen" type="submit" >등록</button>
+            </div>
+            <div class="usage-guide">
+                <h2 class="stit">이용안내</h2>
+                <ul>
+                    <li>재판매글, 상업성 홍보글, 미풍양속을 해치는 글 등 상품 Q&amp;A의 취지에 어긋나는 글은 삭제될 수 있습니다.</li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

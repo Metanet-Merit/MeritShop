@@ -1,0 +1,153 @@
+
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#Container {
+    overflow: hidden;
+    width: 100%;
+    min-width: 1020px;
+}
+#Contents {
+    width: 1020px;
+    height: 100%;
+    margin: 0 auto;
+}
+.sub_title_area.customer {
+    height: 100px;
+    background: #faeee1 url(https://www.oliveyoung.co.kr/pc-static-root/image/top/bg_customer_top.png) no-repeat 50% 0;
+}.board-view-1s {
+     table-layout: fixed;
+     width: 100%;
+     border-top: 2px solid #888;
+     border-bottom: 2px solid #888;
+ }
+.mgT40 {
+    margin-top: 40px!important;
+}
+table {
+    border-spacing: 0;
+    border: 0;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+td {
+    display: table-cell;
+
+}
+.board-view-1s>tbody>tr>td {
+    padding: 30px 20px;
+    color: #333;
+    font-size: 16px;
+    line-height: 26px;
+    vertical-align: top;
+}
+.board-view-1s>tbody>tr>td .tit {
+    display: inline-block;
+    color: #333;
+    font-size: 22px;
+    line-height: 28px;
+}
+.board-view-1s>tbody>tr>td.data {
+    color: #888;
+    font-size: 14px;
+    text-align: right;
+    line-height: 18px;
+}
+.board-view-1s>tbody>tr>td.textus {
+    background: url(https://www.oliveyoung.co.kr/pc-static-root/image/comm/bar_dott7x1.gif) repeat-x 0 0;
+    word-break: break-all;
+    height: 350px;
+}
+.board-view-1s>tbody>tr>td {
+    padding: 30px 20px;
+    color: #333;
+    font-size: 16px;
+    line-height: 26px;
+}
+ol, ul {
+    list-style: none;
+}
+.prev-next li {
+    overflow: hidden;
+    padding: 20px 0 20px 20px;
+    border-bottom: 1px solid #e6e6e6;
+    font-size: 0;
+    line-height: 0;
+}
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+.contEditor {
+    text-align: left;
+}
+.list-btn {
+    margin-top: 10px;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 16px;
+    height: 32px;
+    min-width: 60px;
+    min-height: 32px;
+    border: none;
+    color: #2e59d9;
+    background-color: #fff;
+    border: 2px solid;
+    border-color: #2e59d9;
+    transition: background-color .17s ease,color .17s ease;
+}
+.mfy-btn {
+    margin-top: 10px;
+    margin-right: 10px;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 16px;
+    height: 32px;
+    min-width: 60px;
+    min-height: 32px;
+    border: none;
+    color: #2e59d9;
+    background-color: #fff;
+    border: 2px solid;
+    border-color: #2e59d9;
+    transition: background-color .17s ease,color .17s ease;
+}
+.del-btn {
+    margin-top: 10px;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 16px;
+    height: 32px;
+    min-width: 60px;
+    min-height: 32px;
+    border: none;
+    color: red;
+    background-color: #fff;
+    border: 2px solid;
+    border-color: red;
+    transition: background-color .17s ease,color .17s ease;
+}

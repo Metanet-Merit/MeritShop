@@ -1,4 +1,5 @@
 package com.merit.meritShop.user.domain;
+import com.merit.meritShop.common.domain.BaseEntity;
 import com.merit.meritShop.order.domain.OrderItem;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @DynamicInsert
 @NoArgsConstructor
 @Table(name="review")
-public class Review {
+public class Review extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="review_id")

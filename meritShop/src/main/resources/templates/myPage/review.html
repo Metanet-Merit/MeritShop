@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="css/review.css" type="text/css"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div style="text-align: center" class="mypage-conts">
+    <div class="title-area linezero">
+        <h2 class="tit">리뷰</h2>
+    </div>
+    <table class="board-list-2s mgT20 new">
+        <caption>상품, 리뷰로 이루어진 리뷰 목록 표</caption>
+        <colgroup>
+            <col style="width:49%;">
+            <col style="width:39%;">
+            <col style="width:12%;">
+        </colgroup>
+        <thead>
+        <tr>
+            <th scope="col">상품</th>
+            <th scope="col" colspan="2">리뷰</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="subject">
+                <div class="area">
+                    <div class="area">
+                        <a class="thum" href="#" data-attr="리뷰^리뷰상품^상품클릭">
+                            <img style="width: 15px; height: 15px" src="https://image.oliveyoung.co.kr/uploads/images/goods/10/0000/0014/A00000014938397ko.jpg?l=ko" alt="[승관 Pick] 라네즈 네오 쿠션 매트 15g 5종 택1" onerror="common.errorImg(this);">
+                        </a>
+                        <div class="textus">
+                            <dl class="data review-data">
+                                <dt>구매일자</dt>
+                                <dd>구매일자 넣으세요</dd>
+                            </dl>
+                            <a class="" href="javascript:mypage.gdasList.moveGoodsDetailReview('A000000149383','리뷰_리뷰상품');" data-attr="리뷰^리뷰상품^상품클릭">
+                                <span class="tit">아이템 종류(카테고리)넣으세요</span>
+                                <span class="txt oneline">아이템 이름 넣으세요</span>
+
+                                <p class="txt_option"><em>옵션</em>옵션 이름 넣으세요</p>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="subject">
+                <div class="area">
+                    <div class="textus" style="width:90%;">
+                        <dl class="data review-data">
+                            <dt>작성일자</dt>
+                            <dd>리뷰 작성 일자 넣으세요</dd>
+                        </dl>
+                        <div class="rating">
+
+							<span class="txt"></span>
+                            <span class="point pt5"></span>
+                        </div>
+                     </div>
+                </div>
+            </td>
+            <td>
+                <button type="button" class="btn-review--small"  data-write-yn="Y" onclick="mypage.gdasCompleteList.appraisalModify(this);">리뷰수정</button><br>
+               <button type="button" class="btn-review--small" onclick="mypage.reviewerInfo.goReviewDetail('13513072')" data-attr="리뷰^리뷰보기^리뷰보기">리뷰보기</button><br>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+    <!-- 공통 딤처리 -->
+    <div class="dim"></div>
+    <!-- //공통 딤처리 -->
+
+
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

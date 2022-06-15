@@ -36,6 +36,7 @@ public class UserSignUpDto {
                 .addr1(addr1)
                 .addr2(addr2)
                 .zipcode(zipcode)
+                .loginType("local")
                 .build();
 
     }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자_문의사항목록</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/board.css" type="text/css">
+</head>
+<th:block layout:fragment="content">
+    <div id="commonField">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">문의사항</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th style="background-color: #2e59d9">번호</th>
+                                <th style="background-color: #2e59d9">제목</th>
+                                <th style="background-color: #2e59d9">작성자</th>
+                                <th style="background-color: #2e59d9">작성일</th>
+                                <th style="background-color: #2e59d9">답변여부</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="alert" role="alert" th:each="qna : ${listPage}">
+                                <th scope="row"th:text="${qna.qnaId}"></th>
+                                <td>
+                                    <a th:text="${qna.title}" th:href="@{/qna/detail(qnaId=${qna.qnaId})}"></a>
+                                </td>
+                                <td scope="row"th:text="${qna.userName}"></td>
+                                <td th:if = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.registerDate,'yyyy-MM-dd')}"></th:if>
+                                </td>
+                                <td th:unless = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.modifyDate,'yyyy-MM-dd')}"></th:if>
+                                </td>
+                                <!--<td scope="row"th:if="${qna.replied == 0}">미답변</td>
+                                <td scope="row"th:unless="${qna.replied == 1}">답변완료</td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item"th:classappend="${1== listPage.pageable.pageNumber+1}?'disabled'" >
+                                    <a class="page-link" th:href="@{/admin/qnas(page=${listPage.pageable.pageNumber-1})}">Pre</a>
+                                </li>
+                                <li class="page-item" th:each="i:${#numbers.sequence(startPage,endPage)}"
+                                    th:classappend="${i==listPage.pageable.pageNumber+1}?'disabled'">
+                                    <a class="page-link" href="#" th:href="@{/admin/qnas(page=${i-1})}" th:text="${i}">1</a></li>
+                                <li class="page-item" th:classappend="${listPage.totalPages==listPage.pageable.pageNumber+1}?'disabled'">
+                                    <a class="page-link" href="#"  th:href="@{/admin/qnas(page=${listPage.pageable.pageNumber+1})}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+</th:block>
+</html>

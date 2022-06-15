@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<head>
+    <!-- CSS only -->
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/board.css" type="text/css">
+    <meta charset="UTF-8">
+    <title>회원 관리 페이지</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+
+    <!-- Begin Page Content -->
+
+    <div id="commonField">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-3">
+                    <h2 class="heading-section">회원 관리</h2>
+                </div>
+            </div>
+            <form th:action="@{/admin/user/search}"  class="input-group" method="get">
+                <input type="text" name="keyword" class="form-control col-md-6 mb-3 bg-white border-0 small" placeholder="찾고자 하는 회원 이름 입력" aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append mb-3">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th style="background-color: #2e59d9">회원명</th>
+                                <th style="background-color: #2e59d9">계정</th>
+                                <th style="background-color: #2e59d9">로그인 유형</th>
+                                <th style="background-color: #2e59d9">회원 유형</th>
+                                <th style="background-color: #2e59d9">적립금</th>
+                                <th style="background-color: #2e59d9">구독 만료일</th>
+                                <th style="background-color: #2e59d9"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="alert" role="alert" th:each="user : ${userList}">
+                                <th scope="row" th:text="${user.userName}"></th>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.loginType}"></td>
+                                <td th:text="${user.role}"></td>
+                                <td th:text="${user.point}"></td>
+                                <td th:text="${user.expireDate}"></td>
+                                <td><button class="sub-btn"><a th:href="@{/admin/user/detail(userId=${user.userId})}">조회</a></button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav style="text-align: center;">
+        <ul class="pagination pagination justify-content-center"
+            th:with="start=${T(java.lang.Math).floor(userList.number/5)*5 + 1},
+                    last=(${start + 4 < userList.totalPages ? start + 4 : userList.totalPages})">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/admin/user/list(page=1)}" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only" aria-hidden="true">First</span>
+                </a>
+            </li>
+
+            <li th:class="${userList.first} ? 'disabled'" class="page-item">
+                <a class="page-link" th:href="${userList.first} ? '#' :@{/admin/user/list(page=${userList.number})}" aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == userList.number + 1} ? 'active'" class="page-item">
+                <a class="page-link" th:text="${page}" th:href="@{/admin/user/list(page=${page})}"></a>
+            </li>
+
+            <li th:class="${userList.last} ? 'disabled'" class="page-item">
+                <a class="page-link" th:href="${userList.last} ? '#' : @{/admin/user/list(page=${userList.number + 2})}" aria-label="Next">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+
+            <li>
+                <a class="page-link" th:href="@{/admin/user/list(page=${userList.totalPages})}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only" aria-hidden="true">Last</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</th:block>
+
+</body>
+</html>

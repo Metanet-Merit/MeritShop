@@ -1,6 +1,7 @@
 package com.merit.meritShop.order.domain;
 
 import com.merit.meritShop.coupon.domain.Coupon;
+import com.merit.meritShop.coupon.domain.CouponCase;
 import com.merit.meritShop.user.domain.User;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -20,7 +21,6 @@ import java.util.List;
 @Table(name="orders")
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="order_id")
     private Long orderId;
 
@@ -38,13 +38,12 @@ public class Orders {
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToMany(mappedBy = "orders")
+    @OneToMany(mappedBy = "orders",cascade = CascadeType.ALL)
     private List<OrderItem> orderItemList ;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="coupon_id")
-    private Coupon coupon;
+    private Long couponCaseId;
 
+    private String recipient;
 
     public void updateTotalPrice(){
         int total =0;

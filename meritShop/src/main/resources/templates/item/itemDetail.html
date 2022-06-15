@@ -37,20 +37,26 @@
             padding-bottom: 13px;
         }
     </style>
+    <link rel="stylesheet" href="/css/item.css" type="text/css">
 <div id="wrap" class="container-fluid ">
 
 
     <div id="container" style="margin-left:0%;margin-right:10%">
         <div class="location"><a href="#">Home</a> &gt; <a href="#">대분류</a> &gt;<a href="#">소분류</a> &gt; <a href="#"><span class="txt_w">상품 관리</span></a></div>
         <div class="contents">
-            <input type="hidden" id="itemId" th:value="${itemFormDto.itemId}">
             <div class="repImgDiv">
                 <img th:src="${itemImgDto[0].imgUrl}" class = "img-fluid rounded repImg" >
             </div>
 
             <div class="wd50">
-                <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
+                <form action="/pay" id="frm">
+                    <input type="hidden" id="itemId" name="orderItemDtoList[0].itemId" th:value="${itemFormDto.itemId}">
+
+                    <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
                     판매중
+                </span>
+                    <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).LACK}" class="badge badge-danger mgb-15">
+                    품절 임박
                 </span>
                 <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="badge btn-danger mgb-15" >
                     품절
@@ -67,24 +73,17 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">수량</span>
                         </div>
-                        <input type="number" name="count" id="count" class="form-control" value="1" min="1">
+                        <input type="number" name="orderItemDtoList[0].count" id="count" class="form-control" value="1" min="1">
                     </div>
                 </div>
                 <hr class="my-4">
                 <div id="rate" class="rating" data-size="lg"  > 평점: 5.0 </div>
                 <hr class="my-4">
-                <div id="couponbox">
-                    사용 가능한  쿠폰 보기<br>
-                    <select name="" style="width:180px;">
-                        <option>Select coupon</option>
-                    </select>
-                </div>
-                <hr class="my-4">
                 <div id="options">
                     option<br>
-                    <select id="optionId" name="option" style="width:180px;">
+                    <select id="itemOptionId" name="orderItemDtoList[0].itemOptionId" style="width:180px;">
                         <option>Select option</option>
-                        <option th:each="option:${itemFormDto.options}"
+                        <option th:each="option:${itemFormDto.options}" th:if="${option?.quantity>0}"
                                     th:value="${option?.itemOptionId}"
                                     th:utext="${option?.optionName}"></option>
                     </select>
@@ -94,40 +93,142 @@
                     <h5>결제 금액</h5>
                     <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
                 </div>
-                <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="text-right">
-                    <button type="button" class="btn btn-light border border-primary btn-lg" onclick="">장바구니 담기</button>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
+                <div th:if="${itemFormDto.status != T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
+                    <button type="button" class="btn btn-light border border-primary btn-lg" onclick="cart()">장바구니 담기</button>
+                    <button type="button" class="btn btn-primary btn-lg"  id="order_btn">주문하기</button>
                 </div>
                 <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
                     <button type="button" class="btn btn-danger btn-lg">품절</button>
                 </div>
+
+                </form>
+            </div>
+
+        </div>
+        <div class="tabList">
+            <ul class="prd_detail_tab" id="tabList">
+                <li class="on" id="productInfo">
+                    <a href="#tab1" class="goods" data-tap="tab-1">상품설명
+                    </a>
+                </li>
+                <li id="reviewInfo">
+                    <a href="#tab2" class="goods" data-tap="tab-2">리뷰
+                        <span>(843)</span>
+                    </a>
+                </li>
+                <li id="qnaInfo">
+                    <a href="#tab3" class="goods" data-tap="tab-3">Q&amp;A
+                        <span>(19)</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="prd_detail_cont" id="tabContent">
+                <div>
+                    <div class="jumbotron jumbotron-fluid mgt-30">
+                        <div class="Description">
+                            <h4 class="display-5">상품 상세 설명</h4>
+                            <p class="lead" th:text="${itemFormDto.description}"></p>
+                        </div>
+
+                    </div>
+                    <div th:each="itemImg : ${itemImgDto}" class="text-center">
+                        <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="800">
+
+                    </div>
+                </div>
+                <div style="display: none">
+
+                </div>
+                <div style="display: none">
+                    <div class="prd_qna_tit" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
+                        <button class="btnInquiry goods_qna_inquiry" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
+                            <a th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">상품문의</a>
+                        </button>
+                    </div>
+                    <ul class="prd_qna_list" id="prd_qna_list">
+                        //보이는 화면
+                        <li>
+                            <div class="qna_tit_box">
+                                <p class="qna_question">
+                                    <span class="qna_flag"></span>
+                                    <a href="javascript:;" class="completeBind" ></a>
+                                </p>
+                                <p class="tx_userid">
+                                    <span ></span>
+
+                                </p>
+                                <p class="tx_date" ></p>
+                            </div>
+                            //title 클릭했을 때 보이는 내용들
+                            <div class="qna_answer_box">
+                                <div class="tx_question">
+                                    <span class="ico_qna question" >Q</span>
+
+                                </div>
+                            </div>
+                        </li>
+                        //답변완료 보이는 화면
+                        <li class="show">
+                            <div class="qna_tit_box">
+                                <p class="qna_question">
+                                    <span class="qna_flag">답변여부 넣기</span>
+                                    <a href="javascript:;" class="completeBind">qna title</a>
+                                </p>
+                                <p class="tx_userid">
+                                    <span>user_name</span>
+
+                                </p><p class="tx_date">registerDate</p>
+                            </div>
+                            //title 클릭했을 때 보이는 내용들
+                            <div class="qna_answer_box">
+                                <div class="tx_question">
+                                    <span class="ico_qna question">Q</span>
+                                    qna content
+                                </div>
+                                <div class="tx_answer">
+                                    <span class="ico_qna answer">reply</span>
+                                    qna reply
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-
-        <div class="jumbotron jumbotron-fluid mgt-30">
-            <div class="Description">
-                <h4 class="display-5">상품 상세 설명</h4>
-                <p class="lead" th:text="${itemFormDto.description}"></p>
-              </div>
-
-        </div>
-        <div th:each="itemImg : ${itemImgDto}" class="text-center">
-            <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="800">
-
-        </div>
-
-    
 </div>
 </div>
 <script>
-    function order(){
-        //  var token = $("meta[name='_csrf']").attr("content");
-        //   var header = $("meta[name='_csrf_header']").attr("content");
+    window.onload = function() {
+        document.getElementById('order_btn').onclick = function() {
+            document.getElementById('frm').submit();
+            return false;
+        };
+    };
 
-        var url = "/order";
+
+
+    const getCookieValue = (key) => {
+        let cookieKey = key + "=";
+        let result = "";
+        const cookieArr = document.cookie.split(";");
+
+        for(let i = 0; i < cookieArr.length; i++) {
+            if(cookieArr[i][0] === " ") {
+                cookieArr[i] = cookieArr[i].substring(1);
+            }
+
+            if(cookieArr[i].indexOf(cookieKey) === 0) {
+                result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
+                return result;
+            }
+        }
+        return result;
+    }
+    function cart(){
+        var url = "/cart";
         var paramData = {
             itemId : $("#itemId").val(),
-            optionId : $("#optionId").val(),
+            itemOptionId : $("#itemOptionId").val(),
             count : $("#count").val()
 
         };
@@ -141,16 +242,18 @@
             data     : param,
             dataType : "json",
             cache   : false,
+
             success  : function(result, status){
 
                 console.log(result);
-                location.href='/pay/'+result;
+                alert("장바구니 추가!!");
+                location.href='/cart';
             },
             error : function(jqXHR, status, error){
 
                 if(jqXHR.status == '401'){
                     alert('로그인 후 이용해주세요');
-                    location.href='/User/login';
+                    location.href='/user/login';
                 } else{
                     //alert(jqXHR.responseText);
                     console.log("현재는 이것만 뜬다네 ㅎㅎ");
@@ -160,38 +263,33 @@
         });
     }
 
-    function requestPay() {
-        // IMP.request_pay(param, callback) 결제창 호출
-        console.log("0000");
-        var IMP = window.IMP; // 생략 가능
-        IMP.init("imp355440836"); // 예: imp00000000
-        var name = document.querySelector("#itemName").textContent;
-        var price = parseInt(document.querySelector("#itemPrice").textContent);
-        var count = parseInt(document.querySelector("#count").value);
-        var total_price = price*count;
-        if(total_price<50000){
-            total_price += 3000;
-        }
+</script>
+<script>
+    const tabMenu = document.querySelectorAll('#tabList>li');
 
-        IMP.request_pay({ // param
-            pg: "kakaopay.TC0ONETIME",
-            pay_method: "card",
-            merchant_uid: "ORD20180131-003013",
-            name: name,
-            amount: total_price,
-            buyer_email: "scalpi177@gmail.com",
-            buyer_name: "윤재현",
-            buyer_tel: "010-4**2-4242",
-            buyer_addr: "서울특별시 강남구 신사동",
-            buyer_postcode: "01181"
-        }, function (rsp) { // callback
-            if (rsp.success) {
-                alert("결제에 성공하였습니다. 에러 내용: " +  rsp.success);
-            } else {
-                alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+    const tabContent = document.querySelectorAll('#tabContent>div');
+
+    tabMenu.forEach(function (item, idx) {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            showContent(idx);
+            for(var i=0; i<3; i++) {
+                tabMenu[i].classList.remove("on");
             }
+            tabMenu[idx].classList.add("on");
         });
-    }
+
+    });
+    function showContent(num) {
+        tabContent.forEach(function (item) {
+            item.style.display = 'none';
+
+        });
+        tabContent[num].style = 'block';
+
+    };
+
 
 </script>
+
 </div>

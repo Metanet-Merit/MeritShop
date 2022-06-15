@@ -5,7 +5,6 @@
 
     <!-- Sidebar -->
     <ul th:fragment="sidebar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="admin">
             <div class="sidebar-brand-icon rotate-n-15">
@@ -34,7 +33,7 @@
 
         <!-- Nav Item - 회원 관리 -->
         <li class="nav-item">
-            <a class="nav-link" id="nav-user" type="button" onclick="moveUser()" >
+            <a class="nav-link" type="button" th:href="@{/admin/user/list}" >
                 <i class="fas fa-fw fa-cog"></i>
                 <span>회원 관리</span>
             </a>
@@ -42,7 +41,7 @@
 
         <!-- Nav Item - 상품 관리 -->
         <li class="nav-item">
-            <a class="nav-link" type="button" onclick="moveItem()">
+            <a class="nav-link" type="button" th:href="@{/admin/itemList}">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>상품 관리</span></a>
         </li>
@@ -64,14 +63,14 @@
 
         <!-- Nav Item - 공지사항 -->
         <li class="nav-item">
-            <a class="nav-link" type="button" onclick="moveNotice()" >
+            <a class="nav-link" type="button" th:href="@{/admin/notice/list}">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>공지사항</span></a>
         </li>
 
         <!-- Nav Item - 문의사항 -->
         <li class="nav-item">
-            <a class="nav-link" type="button" onclick="moveQna()">
+            <a class="nav-link" type="button" th:href="@{/admin/qnas}">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>문의사항</span></a>
         </li>

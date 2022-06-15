@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/myPage.css" />
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/css/board.css" type="text/css">
+<head>
+    <script type="application/javascript" src="/js/User/exam.js"></script>
+    <meta charset="UTF-8">
+    <title>내 문의사항 페이지</title>
+    <style>
+        a {
+            width: 100px;
+        }
+        table {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="header" >
+    <div class="container-fluid">
+        <div class="row bg-secondary py-2 px-xl-5">
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark" href="">FAQs</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Help</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Support</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-dark pl-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center py-3 px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a href="" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
+                </a>
+            </div>
+            <div class="col-lg-6 col-6 text-left">
+                <form action="">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for products">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-transparent text-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3 col-6 text-right">
+                <a href="" class="btn border">
+                    <i class="fas fa-heart text-primary"></i>
+                    <span class="badge">0</span>
+                </a>
+                <a href="" class="btn border">
+                    <i class="fas fa-shopping-cart text-primary"></i>
+                    <span class="badge">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+    <div th:replace="~{template/fragment/myPageHeader::header}"></div>
+
+<div class="listContainer">
+    <div class="mainContentBox">
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">내 정보 조회</div>
+        </a>
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">내 정보 수정</div>
+        </a>
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">구매 내역</div>
+        </a>
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">리뷰 내역</div>
+        </a>
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">문의사항</div>
+        </a>
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">쿠폰 / 적립금</div>
+        </a>
+    </div>
+    <div class="mainContent" id="content" style="margin: 50px 0px 0px 0px">
+                    <div class="col-md-12" style="padding: 0px">
+                        <div class="table-wrap">
+                            <table class="table" style="width: 500px;">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th style="background-color: #fff; color: #D19C97">번호</th>
+                                    <th style="background-color: #fff; color: #D19C97">제목</th>
+                                    <th style="background-color: #fff; color: #D19C97">작성일</th>
+                                    <th style="background-color: #fff; color: #D19C97">답변여부</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="alert" role="alert" th:each="qna : ${myQnaList}">
+                                    <th scope="row"th:text="${qna.qnaId}"></th>
+                                    <td>
+                                        <a th:text="${qna.title}" th:href="@{/qna/detail(qnaId=${qna.qnaId})}"></a>
+                                    </td>
+                                    <td th:text="${#temporals.format(notice.modifyDate,'yyyy-MM-dd')}"></td>
+                                    <td scope="row"th:text="${qna.replied}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item"th:classappend="${1== myQnaList.pageable.pageNumber+1}?'disabled'" >
+                                        <a class="page-link" th:href="@{/user/qnas(page=${myQnaList.pageable.pageNumber-1})}">Pre</a>
+                                    </li>
+                                    <li class="page-item" th:each="i:${#numbers.sequence(startPage,endPage)}"
+                                        th:classappend="${i==myQnaList.pageable.pageNumber+1}?'disabled'">
+                                        <a class="page-link" href="#" th:href="@{/user/qnas(page=${i-1})}" th:text="${i}">1</a></li>
+                                    <li class="page-item" th:classappend="${myQnaList.totalPages==myQnaList.pageable.pageNumber+1}?'disabled'">
+                                        <a class="page-link" href="#"  th:href="@{/user/qnas(page=${myQnaList.pageable.pageNumber+1})}">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+</div>
+    <br>
+<div th:replace="~{template/fragment/myPageFooter::footer}"></div>
+</body>
+</html>
