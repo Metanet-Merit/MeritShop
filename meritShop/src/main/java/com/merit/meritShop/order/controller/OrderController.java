@@ -4,18 +4,23 @@ import com.merit.meritShop.item.domain.Item;
 import com.merit.meritShop.item.domain.ItemOption;
 import com.merit.meritShop.item.repository.ItemOptionRepository;
 import com.merit.meritShop.item.repository.ItemRepository;
-import com.merit.meritShop.order.domain.OrderItemDto;
-import com.merit.meritShop.order.domain.Orders;
-import com.merit.meritShop.order.domain.PayFormDto;
-import com.merit.meritShop.order.domain.PayItemDto;
+import com.merit.meritShop.order.domain.*;
 import com.merit.meritShop.order.service.OrderService;
+import com.merit.meritShop.user.domain.User;
+import com.merit.meritShop.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,17 +31,38 @@ public class OrderController {
     private final OrderService orderService;
     private final ItemOptionRepository itemOptionRepository;
     private final ItemRepository itemRepository;
+    private final UserRepository userRepository;
 
 
     @PostMapping("/order")
-    public ResponseEntity getOrderPage( @RequestBody PayFormDto dto ){
+    public ResponseEntity getOrderPage( HttpServletRequest request,@RequestBody PayFormDto dto ){
 
            // System.out.println(dto);
+        User user = userRepository.findById(getIdFromCookies(request.getCookies())).get();
 
-            orderService.order(dto);
+            orderService.order(user,dto);
 
 
         return new ResponseEntity<Long>(dto.getOrderId(), HttpStatus.OK);
+    }
+
+    @GetMapping("/orderHistory")
+    public String getOrderHistory(HttpServletRequest request,Model model){
+        // 사용자 불러와야 댐
+        PageRequest pageRequest =  PageRequest.of(0,10);
+
+        User user = userRepository.findById(getIdFromCookies(request.getCookies())).get();
+
+        List<OrderItemHistDto> dtolist= orderService.getOrderHistory(user);
+
+        final int start = (int)pageRequest.getOffset();
+        final int end = Math.min((start + pageRequest.getPageSize()), dtolist.size());
+        final Page<OrderItemHistDto> page = new PageImpl<>(dtolist.subList(start, end), pageRequest, dtolist.size());
+
+        model.addAttribute("orderItemHistList",dtolist);
+        model.addAttribute("maxPage",10);
+
+        return "order/orderHistory";
     }
 
 
@@ -68,5 +94,16 @@ public class OrderController {
 
 
         return "pay/pay";
+    }
+
+    public Long getIdFromCookies(Cookie[] cookies) {
+        if (cookies == null)
+            return null;
+        for(Cookie c : cookies) {
+            if (c.getName().equals("userId")) {
+                return Long.parseLong(c.getValue());
+            }
+        }
+        return null;
     }
 }

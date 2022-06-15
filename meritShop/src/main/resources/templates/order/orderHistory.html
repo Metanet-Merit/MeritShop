@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<tbody><tr>
+    <th>주문번호</th>
+    <th>상품명</th>
+    <th>판매단가</th>
+    <th>수량</th>
+    <th>소계금액</th>
+    <th>주문현황</th>
+    <th>배송/구매확정</th>
+</tr>
+</tbody>
+<table cellspacing="0" cellpadding="0" width="785" class="tb_myPg02">
+    <colgroup><col width="76"><col width=""><col width="80"><col width="40"><col width="80"><col width="80"><col width="85"><col width="60"><!-- 한줄 반복 시작 -->
+    </colgroup>
+    <tbody th:each="orderItemHist:${orderItemHistList}"><tr>
+
+
+    <td class="first" align="center" rowspan="1">
+        <div class="order_date">2022-02-24</div>
+        <a href="javascript:detailInfo('20220224084609437987');" class="link_accent02" th:text="${orderItemHist.orderId}">2022022408<br>4609437987</a><br>
+
+    </td>
+
+    <td class="prd_title ">
+
+        <div class="prd_imgBox">
+            <img th:src="${orderItemHist.imgUrl}">
+        </div>
+        <div class="prd_titleBox">
+            <a href="#" target="_blank" th:text="${orderItemHist.itemName}">[10% 다운로드쿠폰] [공식수입]뱅앤올룹슨 ...</a>
+
+        </div>
+    </td>
+    <td class=" opt_price1" valign="middle" align="center" th:text="${orderItemHist.itemPrice}">
+
+    </td>
+    <td class="" valign="middle" align="center" th:text="${orderItemHist.count}">
+        1
+    </td>
+    <td class=" " align="center" th:text="${orderItemHist.OrderItemPrice}">
+
+    </td>
+        <td class="" align="center">
+            <a title="구매확정일 : 2022/02/27">구매확정</a>
+        </td>
+    <td class="" align="center">
+        <button onclick="cancelPay()">환불하기</button>
+    </td>
+    <td class="" align="center" th:text="${orderItemHist.address}">
+
+
+    </td>
+
+</tr>
+</tbody></table>
+<!-----------paging start----------
+<div th:with="start=${(orderItemHistList.number/maxPage)*maxPage + 1}, end=(${(orderItemHistList.totalPages == 0) ? 1 : (start + (maxPage - 1) < orderItemHistList.totalPages ? start + (maxPage - 1) : orderItemHistList.totalPages)})" >
+    <ul class="pagination justify-content-center">
+
+        <li class="page-item" th:classappend="${orderItemHistList.first}?'disabled'">
+            <a th:onclick="'javascript:page(' + ${orderItemHistList.number - 1} + ')'" aria-label='Previous' class="page-link">
+                <span aria-hidden='true'>Prev</span>
+            </a>
+        </li>
+
+        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${orderItemHistList.number eq page-1}?'active':''">
+            <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+        </li>
+
+        <li class="page-item" th:classappend="${orderItemHistList.last}?'disabled'">
+            <a th:onclick="'javascript:page(' + ${orderItemHistList.number + 1} + ')'" aria-label='Next' class="page-link">
+                <span aria-hidden='true'>Next</span>
+            </a>
+        </li>
+
+    </ul>
+</div>
+
+-----------paging end---------->
+
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script><!-- jQuery CDN --->
+<script>
+    function cancelPay() {
+        jQuery.ajax({
+            "url": "http://localhost:8080/pay/cancle", // 예: http://www.myservice.com/payments/cancel
+            "type": "POST",
+            "contentType": "application/json",
+            "data": JSON.stringify({
+                "merchant_uid": "", // 예: ORD20180131-0000011
+                "cancel_request_amount": 2000, // 환불금액
+                "reason": "테스트 결제 환불" // 환불사유
+                }),
+            "dataType": "json"
+        });
+    }
+</script>
+</body>
+</html>

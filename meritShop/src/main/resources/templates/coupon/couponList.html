@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+
+<th:block layout:fragment="content">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Script-Type" content="text/javascript" />
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+        <link rel="stylesheet" type="text/css" href="/css/default.css" />
+        <link rel="stylesheet" type="text/css" href="/css/guide.css" />
+        <link rel="stylesheet" type="text/css" href="/css/content.css" />
+        <script type="text/javascript" src="/scripts/jquery-ui/jquery.min.js"></script>
+        <script type="text/javascript" src="/scripts/common/common-ui.js"></script>
+        <style type="text/css">
+        </style>
+    </head>
+
+    <div id="wrap">
+
+        <!-- container -->
+        <div id="container">
+
+            <!-- location -->
+            <div class="location"><a href="/admin/main">Admin</a>&gt; <a href="/admin/couponList"><span class="txt_w">쿠폰 관리</span></a></div>
+            <!-- location -->
+
+            <div class="title">
+                <span class="brd_rtop mgb10">
+					<span class="btn_orange"><a href="/admin/couponForm">쿠폰 추가</a></span>
+                </span>
+            </div>
+
+            <!-- search -->
+            
+            <!-- search -->
+
+            <!-- table -->
+            <div class="title mgt20">
+                <h3>쿠폰 리스트</h3>
+                <span class="brd_rtop">
+					Total List <span class="num" ></span>
+                </span>
+            </div>
+
+            <table class="brd">
+                <caption>상품 리스트</caption>
+                <colgroup>
+                    <col width="10%" />
+                    <col width="20%" />
+                    <col width="*" />
+                    <col width="10%" />
+                    <col width="10%" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>쿠폰이름</th>
+                    <th>할인 금액</th>
+                    <th>할인율</th>
+                    <th>Edit</th>
+                </tr>
+                </thead>
+                <tbody th:each=" coupon:${couponList}">
+                <tr>
+                    <td th:text="${coupon.couponId}"></td>
+                    <td th:text="${coupon.couponName}"></td>
+                    <td th:text="${coupon.discountPrice}"></td>
+                    <td th:text="${coupon.discountRate}"></td>
+                    <td><span class="btn_s_green"><a th:href="'/admin/updateCoupon/'+${coupon.couponId}">Edit</a></span></td>
+                </tr>
+
+                </tbody>
+            </table>
+            <!-- table -->
+            <br>
+
+
+            
+        </div>
+    </div>
+</th:block>
+
+</html>

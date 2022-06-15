@@ -28,7 +28,7 @@ public class MypageUserController {
         else {
             UserViewDto user = userService.getUserDetail(id);
             model.addAttribute("user", user);
-            return "myPage/user";
+            return "myPage/myPage";
         }
     }
 
@@ -47,7 +47,6 @@ public class MypageUserController {
     @PostMapping("/user/modify/{userId}")
     public String userModify(@RequestBody MultiValueMap<String,Object> patchMapDto, @PathVariable Long userId){
         Map<String, Object> patchMap = new HashMap<>();
-        System.out.println("뭐냐고");
         for(Map.Entry<String, List<Object>> entry : patchMapDto.entrySet()){
             patchMap.put(entry.getKey(), entry.getValue().get(0));
         }
