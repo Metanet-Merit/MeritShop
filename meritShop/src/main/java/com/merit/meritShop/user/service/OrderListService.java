@@ -109,6 +109,7 @@ public class OrderListService {
                                 .reviewed(orderItem.isReviewed())
                                 .orderDate(orderItem.getOrders().getOrderDate())
                                 .url(orderItem.getItem().getImgUrl())
+                                .orderItemId(orderItem.getOrderItemId())
                                 .build();
 
                         orderItemsDTOS.add(orderItemsDTO);

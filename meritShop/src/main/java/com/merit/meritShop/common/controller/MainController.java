@@ -31,4 +31,9 @@ public class MainController {
         return "mainPage/index";
     }
 
+    @GetMapping(value = "/err/denied-page")
+    public String accessDenied(){
+        return "err/deniedPage";
+    }
+
 }

@@ -26,9 +26,8 @@ public class SignUpService {
     }
 
     public boolean isExist(String email, String loginType) {
-        boolean emailExist = userRepository.existsByEmail(email);
-        boolean loginExist = userRepository.existsByLoginType(loginType);
-        if (emailExist && loginExist)   return true;
+        boolean Exist = userRepository.existsByEmailAndLoginType(email,loginType);
+        if (Exist) return true;
         return false;
     }
     public UserSignInDto registerGoogle(ResponseEntity<String> googleEntity) {
