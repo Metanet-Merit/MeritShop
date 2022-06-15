@@ -29,7 +29,10 @@ public class CartController {
     @GetMapping("/cart")
     public String cartList(Model model, @CookieValue(name = "userId", required = false) Long userId) {
         List<Cart> cartList = cartService.cartList(userId);
-
+        System.out.println("fuck");
+        for(Cart c : cartList){
+            System.out.println(c);
+        }
         model.addAttribute("list", cartList);
         return "cart/cart";
     }
