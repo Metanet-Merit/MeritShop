@@ -33,4 +33,15 @@ public class Cart {
     private Long itemOptionId;
 
     private int count;//수량
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "cartId=" + cartId +
+                ", user=" + user +
+                ", item=" + item +
+                ", itemOptionId=" + itemOptionId +
+                ", count=" + count +
+                '}';
+    }
 }
