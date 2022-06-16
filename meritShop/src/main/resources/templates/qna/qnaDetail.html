@@ -1,10 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/myPage.css" />
+
 <head>
-    <meta charset="UTF-8">
-    <title>문의사항 상세화면</title>
+    <script type="application/javascript" src="/jss/user/review.js?version='3'"></script>
+    <script type="application/javascript" src="/jss/common/Cookie.js?version='1'"></script>
+    <script type="application/javascript" src="/jss/common/ajax.js"></script>
+    <script type="application/javascript" src="/jss/user/scrap.js"></script>
+    <script type="application/javascript" src="/jss/user/order.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
+    <link rel="stylesheet" href="/css/review.css" type="text/css"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    <title>마이 페이지</title>
+    <style>
+        input:disabled {
+            background: #FFFFFF !important;
+        }
+    </style>
 </head>
 <body>
 
+<div th:replace="~{template/fragment/myPageHeader::header}"></div>
+
+<div class="listContainer">
+    <div class="mainContentBox">
+        <a type="button" th:href="@{/myPage/user}" class="item">
+            <div class="text">내 정보 조회</div>
+        </a>
+        <a type="button" th:href="@{/myPage/user/modify}" class="item">
+            <div class="text">내 정보 수정</div>
+        </a>
+        <a type="button" th:href="@{/myPage/MyOrderItems}" class="item">
+            <div class="text">구매 내역</div>
+        </a>
+        <a type="button" onclick="$review.getReviews()" class="item">
+            <div class="text">리뷰 내역</div>
+        </a>
+        <a type="button" th:href="@{/user/qnas}" class="item">
+            <div class="text">문의사항</div>
+        </a>
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">쿠폰 / 적립금</div>
+        </a>
+        <a type="button" th:href="@{/myPage/myScraps}"class="item">
+            <div class="text">내 찜 내역</div>
+        </a>
+    </div>
+    <div class="mainContent" id="content">
+        <div id="Contents">
+            <table class="board-view-1s mgT40">
+                <colgroup>
+                    <col style="width:80%;">
+                    <col style="width:20%;">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td>
+                        <span class="tit" id="title" name="title" th:text="${qna.title}"></span>
+                    </td>
+                    <td class="data" th:if = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.registerDate,'yyyy-MM-dd')}"></th:if>
+                    </td>
+                    <td class="data" th:unless = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.modifyDate,'yyyy-MM-dd')}"></th:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="textus" colspan="2">
+                        <div class="contEditor" id="content" name="content" th:text="${qna.content}">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="display: flex; flex-direction: row">
+                <div>
+                    <button class="list-btn" th:onclick="|location.href='@{/user/qnas}'|">목록</button>
+                </div>
+                <div style="margin-left: 807px">
+                    <a th:href="@{/qnaModify/{qnaId}(qnaId=${qna.qnaId})}">
+                        <button class="mfy-btn">수정</button>
+                    </a>
+                    <a th:href="@{/qna/delete(noticeId=${qna.qnaId})}">
+                        <button class="del-btn">삭제</button>
+                    </a>
+                </div>
+                <!--
+</a>-->
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">리뷰 내용</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{template/fragment/myPageFooter::footer}"></div>
 </body>
 </html>
+

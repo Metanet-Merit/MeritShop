@@ -40,8 +40,8 @@
                                 </td>
                                 <td th:unless = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.modifyDate,'yyyy-MM-dd')}"></th:if>
                                 </td>
-                                <!--<td scope="row"th:if="${qna.replied == 0}">미답변</td>
-                                <td scope="row"th:unless="${qna.replied == 1}">답변완료</td>-->
+                                <td scope="row"th:if="${qna.replied == false}">미답변</td>
+                                <td scope="row"th:if="${qna.replied == true}">답변완료</td>
                             </tr>
                             </tbody>
                         </table>

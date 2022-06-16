@@ -12,14 +12,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class QnaDto {
 
-    Long userId;
-    Long itemId;
-    Long qnaId;
-    String userName;
-    String title;
-    String reply;
-    String content;
-    LocalDateTime modifyDate;
-    LocalDateTime registerDate;
-
+    private Long userId;
+    private Long itemId;
+    private Long qnaId;
+    private String userName;
+    private String itemName;
+    private String title;
+    private String reply;
+    private String content;
+    private LocalDateTime modifyDate;
+    private LocalDateTime registerDate;
+    private boolean replied;
+    private String role;
 }

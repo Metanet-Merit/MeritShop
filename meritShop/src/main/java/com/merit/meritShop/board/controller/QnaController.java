@@ -95,15 +95,42 @@ public class QnaController {
     }
 
     //문의사항 수정
-    @GetMapping("/qnaModify")
-    public String modifyQna(QnaDto qnaDto) {
-        String result = qnaService.qnaModify(qnaDto);
-        if (result == "success") {
-            return "qna/qnaList";
+    @GetMapping("/qnaModify/{qnaId}")
+    public String modifyQna(@PathVariable Long qnaId, Model model) {
+        QnaDto qna = qnaService.qnaDetail(qnaId);
+        if (qna != null) {
+            model.addAttribute("qna", qnaService.qnaDetail(qnaId));
+            return "qna/qnaModify";
+        }
+        return "redirect:/admin/qnas";
+    }
+
+    @PostMapping("/qna/update")
+    public String noticeUpdate(QnaDto qnaDTO) {
+
+        String result = qnaService.qnaModify(qnaDTO);
+        if (result == "Success") {
+            return "redirect:/admin/notice/list";
         } else {
-            return "qna/qnaList";
+            return "redirect:/notice/update/{noticeId}";
         }
     }
+
+    /*
+
+    @PostMapping("/admin/notice/update/{noticeId}")
+    public String noticeUpdate(@PathVariable("noticeId") Long noticeId,
+                               Notice notice) {
+
+        String result= noticeService.noticeModify(noticeId,notice.getTitle(),notice.getContent());
+        if (result == "Success") {
+            return "redirect:/admin/notice/list";
+        }
+        else {
+            return "redirect:/notice/update/{noticeId}";
+        }
+    }*/
+
 
     //문의사항 삭제
     @GetMapping("/qnaDelete")
@@ -114,5 +141,16 @@ public class QnaController {
         } else {
             return "qna/qnaList";
         }
+    }
+
+    @GetMapping("/qna/detail")
+    public String adminQnaDetail(Model model, @RequestParam Long qnaId) {
+        QnaDto qna = qnaService.qnaDetail(qnaId);
+        if (qna == null) {
+            return "redirect:/admin/qnas";
+        }
+
+        model.addAttribute("qna", qna);
+        return "qna/qnaDetail";
     }
 }

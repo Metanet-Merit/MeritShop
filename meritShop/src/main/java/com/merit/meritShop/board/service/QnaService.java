@@ -1,5 +1,6 @@
 package com.merit.meritShop.board.service;
 
+import com.merit.meritShop.board.domain.Notice;
 import com.merit.meritShop.board.domain.Qna;
 import com.merit.meritShop.board.dto.QnaDto;
 import com.merit.meritShop.board.repository.QnaRepository;
@@ -16,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -36,6 +40,32 @@ public class QnaService {
         Page<Qna> qnaList = qnaRepository.findByUser(user, pageable);
         return qnaList;
     }
+    public QnaDto qnaDetail(Long qnaId) {
+        try {
+            Optional<Qna> optionalQna=qnaRepository.findById(qnaId);
+            if(optionalQna.isPresent()){
+                Qna qna = optionalQna.get();
+                QnaDto qnaDto= QnaDto.builder()
+                        .itemName(qna.getItem().getItemName())
+                        .userName(qna.getUser().getUserName())
+                        .replied(qna.isReplied())
+                        .reply(qna.getReply())
+                        .content(qna.getContent())
+                        .qnaId(qna.getQnaId())
+                        .title(qna.getTitle())
+                        .role(qna.getUser().getRole())
+                        .build();
+
+                return qnaDto;
+            }
+            else {
+                return null;
+            }
+        } catch(Exception e) {
+            return null;
+        }
+    }
+
 
     //문의사항 목록_admin
     public Page<QnaDto> findAllOrOrderByQnaId(Pageable pageable) {
@@ -43,8 +73,8 @@ public class QnaService {
 
         Page<QnaDto> map = qnaPage.map(qna -> new QnaDto(qna.getUser()
                 .getUserId(), qna.getItem().getItemId(), qna.getQnaId(),
-                qna.getUser().getUserName(), qna.getTitle(), qna.getReply(),
-                qna.getContent(), qna.getModifyDate(), qna.getRegisterDate()));
+                qna.getUser().getUserName(),qna.getItem().getItemName(), qna.getTitle(), qna.getReply(),
+                qna.getContent(), qna.getModifyDate(), qna.getRegisterDate(),qna.isReplied(),qna.getUser().getRole()));
         return map;
     }
 

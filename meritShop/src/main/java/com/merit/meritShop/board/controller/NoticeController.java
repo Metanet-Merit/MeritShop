@@ -107,7 +107,6 @@ public class NoticeController {
         else {
             return "redirect:/notice/update/{noticeId}";
         }
-
     }
 
     /*글 삭제*/
