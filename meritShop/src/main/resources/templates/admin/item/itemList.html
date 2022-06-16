@@ -88,7 +88,7 @@
             th:with="start=${T(java.lang.Math).floor(items.number/5)*5 + 1},
                     last=(${start + 4 < items.totalPages ? start + 4 : items.totalPages})">
             <li class="page-item">
-                <a class="page-link" th:href="@{/admin/item/itemList(page=1)}" aria-label="First">
+                <a class="page-link" th:href="@{/admin/itemList(page=1)}" aria-label="First">
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only" aria-hidden="true">First</span>
                 </a>
