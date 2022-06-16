@@ -1,42 +1,18 @@
-
-<header th:fragment="header">
+<header th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
 <body>
 <div class="wrap">
     <div class="greenContainer">
-        <div>
-            <div class="grade">프리미엄 회원</div>
-            <div class="name">홍길동</div>
+        <div class="col-lg-3 d-none d-lg-block" th:onclick="'location.href=' + '\''+'/main'+'\''">
+            <a href="/main" class="text-decoration-none">
+                <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1" style="color:#fff !important; font-size: 55px;">MetaShop</span></h1>
+            </a>
         </div>
-        <div class="modify">i</div>
+        <div class="modify"></div>
     </div>
 
     <div class="shippingStatusContainer">
         <div class="title">
 
-        </div>
-        <div class="status">
-
-            <div class="item">
-                <div>
-                    <div class="green number">6</div>
-                    <div class="text">장바구니</div>
-                </div>
-
-            </div>
-
-            <div class="item">
-                <div>
-                    <div class="green number">1</div>
-                    <div class="text">배송중</div>
-                </div>
-
-            </div>
-            <div class="item">
-                <div>
-                    <div class="green number">3</div>
-                    <div class="text">적립금</div>
-                </div>
-            </div>
         </div>
     </div>
 

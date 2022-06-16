@@ -6187,6 +6187,7 @@ button.bg-dark:focus {
 
 .border-top {
   border-top: 1px solid #EDF1FF !important;
+  border-bottom: 5px solid #EDF1FF !important;
 }
 
 .border-right {
