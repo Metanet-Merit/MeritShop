@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항 상세페이지</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
+</head>
+<th:block layout:fragment="content">
+
+
+            <div id="Contents">
+                <table class="board-view-1s mgT40">
+                    <colgroup>
+                        <col style="width:80%;">
+                        <col style="width:20%;">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <span class="tit" id="title" name="title" th:text="${qna.title}"></span>
+                        </td>
+                        <td class="data" th:if = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.registerDate,'yyyy-MM-dd')}"></th:if>
+                        </td>
+                        <td class="data" th:unless = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.modifyDate,'yyyy-MM-dd')}"></th:if>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="textus" colspan="2">
+                            <div class="contEditor" id="content" name="content" th:text="${qna.content}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="textus" colspan="2" >
+                            <textarea type="text" class="contEditor" name="reply" th:text="${qna.reply}" th:disabled="${qna.role eq 'ROLE_USER' ? true : false}" ></textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="display: flex; flex-direction: row">
+                    <div>
+                        <button class="list-btn" th:onclick="|location.href='@{/admin/qnas}'|">목록</button>
+                    </div>
+                    <div style="margin-left: 807px">
+                        <a th:href="@{/admin/qnaModify/{qnaId}(qnaId=${qna.qnaId})}">
+                            <button class="mfy-btn">수정</button>
+                        </a>
+                        <a th:href="@{/qna/delete(noticeId=${qna.qnaId})}">
+                            <button class="del-btn">삭제</button>
+                        </a>
+                    </div>>
+                </div>
+
+</th:block>
+</html>

@@ -60,61 +60,55 @@
     </div>
     <div class="mainContent" id="content">
         <div id="Contents">
-            <th:block layout:fragment="content" style="width: 65%">
-                <!-- Begin Page Content -->
-                <div class="container" style="width: 65%">
-                    <h2>문의사항 수정</h2>
-                    <form th:action="@{/qna/update}"  method="post">
-                        <input type="hidden" name="qnaId" th:value="${qna.qnaId}">
-                        <table class="table table-hover">
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" class="form-control" name="title" th:value="${qna.title}" maxlength="40"  th:disabled="${role eq 'ROLE_ADMIN' ? true : false}" ></td>
-                                </tr>
-                                <tr>
-                                    <td><textarea type="text" class="form-control" name="content" th:text="${qna.content}" maxlength="1024" style="height: 400px;" th:disabled="${role eq 'ROLE_ADMIN' ? true : false}" ></textarea></td>
-                                </tr>
-                                <span >
-                                    <tr>
-                                        <td><textarea type="text" class="form-control" name="reply" th:text="${qna.reply}" maxlength="1024" style="height: 400px;" th:disabled="${role eq 'ROLE_USER' ? true : false}" ></textarea></td>
-                                    </tr>
-                                </span>
-                            </tbody>
-                        </table>
-                        <button class="list-btn" th:onclick="|location.href='@{/user/qnas}'|" style="margin-top: 0px">목록</button>
-                        <input type="submit" class="btn btn-primary pull-right" style="background-color: white; border: 2px solid; border-color: #2e59d9; color: #2e59d9;" value="수정하기">
-                    </form>
+            <table class="board-view-1s mgT40">
+                <colgroup>
+                    <col style="width:80%;">
+                    <col style="width:20%;">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td>
+                        <span class="tit" id="title" name="title" th:text="${qna.title}"></span>
+                    </td>
+                    <td class="data" th:if = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.registerDate,'yyyy-MM-dd')}"></th:if>
+                    </td>
+                    <td class="data" th:unless = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.modifyDate,'yyyy-MM-dd')}"></th:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="textus" colspan="2">
+                        <div class="contEditor" id="content" name="content" th:text="${qna.content}">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="textus" colspan="2" >
+                        <div class="contEditor" name="reply" th:text="${qna.reply}" th:disabled="${qna.role eq 'ROLE_USER' ? true : false}" ></div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="display: flex; flex-direction: row">
+                <div>
+                    <button class="list-btn" th:onclick="|location.href='@{/user/qnas}'|">목록</button>
                 </div>
-            </th:block>
-        </div>
-    </div>
-</div>
-</div>
+                <div style="margin-left: 807px">
+                    <a th:href="@{/qnaModify/{qnaId}(qnaId=${qna.qnaId})}">
+                        <button class="mfy-btn">수정</button>
+                    </a>
+                    <a th:href="@{/qna/delete(noticeId=${qna.qnaId})}">
+                        <button class="del-btn">삭제</button>
+                    </a>
+                </div>
 
-<div class="container">
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">리뷰 내용</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Some text in the modal.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
+        </div>
     </div>
-
 </div>
+
 
 <div th:replace="~{template/fragment/myPageFooter::footer}"></div>
 </body>
 </html>
+
