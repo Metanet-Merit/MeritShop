@@ -28,11 +28,12 @@ div{
 }
 /* 녹색배경 */
 .greenContainer{
-    height: 132px;
+    height: 130px;
     background-color: #D19C97;
     display: flex;
     align-items: flex-end;
     padding: 16px;
+    padding-bottom: 30px;
 }
 
 .greenContainer .name{
@@ -135,7 +136,7 @@ div{
     align-items: center;
 }
 .listContainer .mainContentBox :hover{
-    background-color: #efc4d0;
+    background-color: #D19C97;
 }
 
 .listContainer .item{

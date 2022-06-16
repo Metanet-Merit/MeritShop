@@ -22,7 +22,7 @@ table {width:100%; border-collapse:collapse;}
 input,textarea,select{font-family:Lato, Arial, tahoma, sans-serif; color:#6a6c6e; font-size:12px; border:solid 1px #d7d7d7; vertical-align:middle;}
 textarea{resize:none; padding:5px;}
 select{height:22px; font-size:12px; vertical-align:middle; padding:0 1px;}
-input{height:20px; border:1px solid #d7d7d7; line-height:20px;vertical-align:middle; padding:0 5px;}
+input{border:1px solid #d7d7d7; line-height:20px;vertical-align:middle; padding:0 5px;}
 input.disabled, input[type="text"]:disabled {border:solid 1px #d7d7d7; background:#f2f4f6; color:#9a9c9e;}
 input[type="checkbox"], input[type="radio"], .search input[type="checkbox"]{margin:2px 5px 2px 0;}
 input[type="radio"]{padding-right:5px;}
