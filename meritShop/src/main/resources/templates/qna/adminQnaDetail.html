@@ -12,6 +12,9 @@
 
 
             <div id="Contents">
+                <div class="sub_title_area customer">
+                    <h1 style="margin-left: 100px; padding: 25px">문의사항</h1>
+                </div>
                 <table class="board-view-1s mgT40">
                     <colgroup>
                         <col style="width:80%;">
@@ -35,7 +38,7 @@
                     </tr>
                     <tr>
                         <td class="textus" colspan="2" >
-                            <textarea type="text" class="contEditor" name="reply" th:text="${qna.reply}" th:disabled="${qna.role eq 'ROLE_USER' ? true : false}" ></textarea>
+                            <div class="contEditor" name="reply" th:text="${qna.reply}" ></div>
                         </td>
                     </tr>
                     </tbody>
@@ -48,11 +51,10 @@
                         <a th:href="@{/admin/qnaModify/{qnaId}(qnaId=${qna.qnaId})}">
                             <button class="mfy-btn">수정</button>
                         </a>
-                        <a th:href="@{/qna/delete(noticeId=${qna.qnaId})}">
+                        <a th:href="@{/qna/delete(qnaId=${qna.qnaId})}">
                             <button class="del-btn">삭제</button>
                         </a>
-                    </div>>
+                    </div>
                 </div>
-
 </th:block>
 </html>

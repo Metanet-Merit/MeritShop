@@ -79,7 +79,8 @@
                                         <a style="color: black" th:text="${qna.title}" th:href="@{/qna/detail(qnaId=${qna.qnaId})}"></a>
                                     </td>
                                     <td th:text="${#temporals.format(qna.modifyDate,'yyyy-MM-dd')}"></td>
-                                    <td scope="row"th:text="${qna.replied}"></td>
+                                    <td scope="row"th:if="${qna.replied}==true" th:text="O"></td>
+                                    <td scope="row"th:unless="${qna.replied}==true" th:text="X"></td>
                                 </tr>
                                 </tbody>
                             </table>

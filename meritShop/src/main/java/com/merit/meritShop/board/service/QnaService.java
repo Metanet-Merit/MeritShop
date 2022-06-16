@@ -40,12 +40,13 @@ public class QnaService {
         Page<Qna> qnaList = qnaRepository.findByUser(user, pageable);
         return qnaList;
     }
+
     public QnaDto qnaDetail(Long qnaId) {
         try {
-            Optional<Qna> optionalQna=qnaRepository.findById(qnaId);
-            if(optionalQna.isPresent()){
+            Optional<Qna> optionalQna = qnaRepository.findById(qnaId);
+            if (optionalQna.isPresent()) {
                 Qna qna = optionalQna.get();
-                QnaDto qnaDto= QnaDto.builder()
+                QnaDto qnaDto = QnaDto.builder()
                         .itemName(qna.getItem().getItemName())
                         .userName(qna.getUser().getUserName())
                         .replied(qna.isReplied())
@@ -57,11 +58,10 @@ public class QnaService {
                         .build();
 
                 return qnaDto;
-            }
-            else {
+            } else {
                 return null;
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -73,8 +73,8 @@ public class QnaService {
 
         Page<QnaDto> map = qnaPage.map(qna -> new QnaDto(qna.getUser()
                 .getUserId(), qna.getItem().getItemId(), qna.getQnaId(),
-                qna.getUser().getUserName(),qna.getItem().getItemName(), qna.getTitle(), qna.getReply(),
-                qna.getContent(), qna.getModifyDate(), qna.getRegisterDate(),qna.isReplied(),qna.getUser().getRole()));
+                qna.getUser().getUserName(), qna.getItem().getItemName(), qna.getTitle(), qna.getReply(),
+                qna.getContent(), qna.getModifyDate(), qna.getRegisterDate(), qna.isReplied(), qna.getUser().getRole()));
         return map;
     }
 
@@ -120,17 +120,20 @@ public class QnaService {
     }
 
     //문의사항 수정
-    public String qnaModify(QnaDto qnaDTO,Long userId) {
+    public String qnaModify(QnaDto qnaDTO, Long userId) {
         try {
             Optional<Qna> optionalQna = qnaRepository.findById(qnaDTO.getQnaId());
-            User user=userRepository.findById(userId).get();
+            User user = userRepository.findById(userId).get();
             if (optionalQna.isPresent()) {
                 Qna qna = optionalQna.get();
+
                 if (user.getRole().equals("ROLE_USER")) {
                     qna.setTitle(qna.getTitle());
                     qna.setContent(qnaDTO.getContent());
                     qna.setModifyDate(LocalDateTime.now());
+
                 } else {
+                    if (!qna.isReplied()) qna.setReplied(true);
                     qna.setReply(qnaDTO.getReply());
                 }
                 qnaRepository.save(qna);
@@ -150,12 +153,8 @@ public class QnaService {
             Optional<Qna> optionalQna = qnaRepository.findById(qnaId);
             if (optionalQna.isPresent()) {
                 Qna qna = optionalQna.get();
-                if (qna.getUser().getRole().equals("ROLE_USER")) {
-                    qnaRepository.delete(qna);
-                } else {
-                    qna.setReply("");
-                    qnaRepository.save(qna);
-                }
+                qnaRepository.delete(qna);
+
                 return "success";
             } else {
                 return "qna_not_exist_err";
@@ -174,7 +173,7 @@ public class QnaService {
             List<Qna> qnaList = qnaRepository.findAllByItem(item);
 
             map.put("qnas", qnaList);
-            map.put("count",qnaList.size());
+            map.put("count", qnaList.size());
             return ResultCode.Success.result(map);
         } catch (Exception e) {
             return ResultCode.DB_ERROR.result();

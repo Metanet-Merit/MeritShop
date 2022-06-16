@@ -82,19 +82,6 @@ public class QnaController {
         }
     }
 
-    //문의사항 답변_admin
-    @PostMapping("/admin/reply")
-    public String reply(QnaDto qnaDto, Model model) {
-        String result = qnaService.reply(qnaDto);
-        if (result == "success") {
-            Long qnaId = qnaDto.getQnaId();
-
-            return "redirect:qna/detail?qnaId=qnaId";
-        } else {
-            model.addAttribute("err", "err");
-            return "qna/qnaList";
-        }
-    }
 
     //문의사항 수정
     @GetMapping("/qnaModify/{qnaId}")
@@ -124,7 +111,7 @@ public class QnaController {
     }
 
     @PostMapping("/qna/update")
-    public String noticeUpdate(@CookieValue Long userId, QnaDto qnaDTO, RedirectAttributes re) {
+    public String qnaUpdate(@CookieValue Long userId, QnaDto qnaDTO, RedirectAttributes re) {
 
         String result = qnaService.qnaModify(qnaDTO, userId);
         if (result == "success") {
@@ -140,14 +127,14 @@ public class QnaController {
         }
     }
 
-    @GetMapping("/qnaDelete")
-    public String qnaDelete(@RequestParam Long qnaId) {
+    @GetMapping("/qna/delete")
+    public String qnaDelete(@RequestParam Long qnaId, @CookieValue Long userId) {
         String result = qnaService.qnaDelete(qnaId);
-        if (result == "success") {
-            return "qna/qnaList";
-        } else {
-            return "qna/qnaList";
-        }
+        User user = userRepository.findById(userId).get();
+
+        if (user.getRole().equals("ROLE_USER")) return "redirect:/user/qnas";
+        else return "redirect:/admin/qnas";
+
     }
 
     @GetMapping("/qna/detail")
