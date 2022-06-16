@@ -96,15 +96,15 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>대표사진</th>
-                    <th>상품이름</th>
-                    <th>카테고리</th>
-                    <th>수정</th>
+                    <th style="background-color: #2e59d9">ID</th>
+                    <th style="background-color: #2e59d9">대표사진</th>
+                    <th style="background-color: #2e59d9">상품이름</th>
+                    <th style="background-color: #2e59d9">카테고리</th>
+                    <th style="background-color: #2e59d9">수정</th>
                 </tr>
                 </thead>
-                <tbody th:each=" item:${items}">
-                <tr>
+                <tbody >
+                <tr th:each=" item:${items}">
                     <td th:text="${item.itemId}"></td>
                     <td><img th:src="${item.imgUrl}" width="100" height="100" alt=""></td>
                     <td th:text="${item.itemName}"></td>

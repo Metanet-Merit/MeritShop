@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<head>
+    <!-- CSS only -->
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/board.css" type="text/css">
+    <meta charset="UTF-8">
+    <title>상품 관리 페이지</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <style>
+        .btn_submit {
+            display: inline-block;
+            outline: none;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 2px 15px;
+            min-width: 60px;
+            border: none;
+            color: #2e59d9;
+            background-color: #fff;
+            border: 2px solid;
+            border-color: #2e59d9;
+            transition: background-color .17s ease,color .17s ease;
+        }
+    </style>
+
+    <!-- Begin Page Content -->
+
+    <div id="commonField">
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-3">
+                    <h2 class="heading-section">상품 관리</h2>
+                </div>
+            </div>
+            <div class="title">
+                <span class="brd_rtop mgb10" style="float:right;">
+					<span class="btn_submit"><a href="/admin/itemForm">상품 추가</a></span>
+                </span>
+            </div>
+            <form th:action="@{/admin/item/search}"  class="input-group" method="get">
+                <input type="text" name="keyword" class="form-control col-md-6 mb-3 bg-white border-0 small" placeholder="찾고자 하는 상품 이름 입력" aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append mb-3">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th style="background-color: #2e59d9">ID</th>
+                                <th style="background-color: #2e59d9">대표사진</th>
+                                <th style="background-color: #2e59d9">상품이름</th>
+                                <th style="background-color: #2e59d9">카테고리</th>
+                                <th style="background-color: #2e59d9">수정</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each=" item:${items}">
+                                <td th:text="${item.itemId}"></td>
+                                <td><img th:src="${item.imgUrl}" width="100" height="100" alt=""></td>
+                                <td th:text="${item.itemName}"></td>
+                                <td th:text="${item.category}"></td>
+                                <td><span class="btn_submit"><a th:href="'/admin/updateItem/'+${item.itemId}">Edit</a></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav style="text-align: center;">
+        <ul class="pagination pagination justify-content-center"
+            th:with="start=${T(java.lang.Math).floor(items.number/5)*5 + 1},
+                    last=(${start + 4 < items.totalPages ? start + 4 : items.totalPages})">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/admin/item/itemList(page=1)}" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only" aria-hidden="true">First</span>
+                </a>
+            </li>
+
+            <li th:class="${items.first} ? 'disabled'" class="page-item">
+                <a class="page-link" th:href="${items.first} ? '#' :@{/admin/itemList(page=${items.number})}" aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == items.number + 1} ? 'active'" class="page-item">
+                <a class="page-link" th:text="${page}" th:href="@{/admin/itemList(page=${page})}"></a>
+            </li>
+
+            <li th:class="${items.last} ? 'disabled'" class="page-item">
+                <a class="page-link" th:href="${items.last} ? '#' : @{/admin/itemList(page=${items.number + 2})}" aria-label="Next">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+
+            <li>
+                <a class="page-link" th:href="@{/admin/itemList(page=${items.totalPages})}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only" aria-hidden="true">Last</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</th:block>
+
+</body>
+</html>

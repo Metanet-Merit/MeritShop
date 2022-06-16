@@ -5,13 +5,16 @@ import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.item.domain.*;
 import com.merit.meritShop.item.repository.ItemImgRepository;
 import com.merit.meritShop.item.repository.ItemOptionRepository;
+import com.merit.meritShop.item.repository.ItemRepository;
 import com.merit.meritShop.item.service.ItemService;
 import com.merit.meritShop.user.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -36,6 +39,7 @@ public class ItemController {
     private final ItemOptionRepository itemOptionRepository;
     private final ReviewService reviewService;
     private final QnaService qnaService;
+    private final ItemRepository itemRepository;
 
     @GetMapping("item/{id}")
     public String getItemDetail(@PathVariable("id") long id, Model model){
@@ -160,16 +164,29 @@ public class ItemController {
     }
 
     @GetMapping("/admin/itemList")
-    String getAdminItemList(Model model){
+    String getAdminItemList(Model model,@PageableDefault Pageable pageable){
 
-        PageRequest pageRequest =  PageRequest.of(0,8, Sort.by(Sort.Direction.DESC,"createdDate"));
-        Page<Item> itemList = itemService.findAllItem(pageRequest);
+      //  PageRequest pageRequest =
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 5);
+        Page<Item> itemList = itemService.findAllItem(pageable);
         model.addAttribute("items",itemList);
-        model.addAttribute("maxPage",10);
-        model.addAttribute("totalCount",itemList.getTotalElements());
-        return "item/adminItemList";
+       // model.addAttribute("maxPage",5);
+      //  model.addAttribute("totalCount",itemList.getTotalElements());
+        return "admin/item/itemList";
     }
 
+    @GetMapping("/admin/item/search")
+    public String search(String keyword, Model model, @PageableDefault(direction = Sort.Direction.DESC) Pageable pageable) {
+     //   PageRequest pageRequest =  PageRequest.of(0,8, Sort.by(Sort.Direction.DESC,"createdDate"));
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 5);
+        Page<Item> itemList = itemRepository.findByItemNameContaining(keyword, pageable);
+        model.addAttribute("items",itemList);
+      //  model.addAttribute("maxPage",5);
+      //  model.addAttribute("totalCount",itemList.getTotalElements());
+        return "admin/item/itemList";
+    }
 
 
 }
