@@ -33,7 +33,7 @@
                             <tr class="alert" role="alert" th:each="qna : ${listPage}">
                                 <th scope="row"th:text="${qna.qnaId}"></th>
                                 <td>
-                                    <a th:text="${qna.title}" th:href="@{/qna/detail(qnaId=${qna.qnaId})}"></a>
+                                    <a th:text="${qna.title}" th:href="@{/admin/qna/detail(qnaId=${qna.qnaId})}"></a>
                                 </td>
                                 <td scope="row"th:text="${qna.userName}"></td>
                                 <td th:if = "${qna.modifyDate == null}" th:text="${#temporals.format(qna.registerDate,'yyyy-MM-dd')}"></th:if>

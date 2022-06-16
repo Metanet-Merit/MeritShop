@@ -120,13 +120,13 @@ public class QnaService {
     }
 
     //문의사항 수정
-    public String qnaModify(QnaDto qnaDTO) {
+    public String qnaModify(QnaDto qnaDTO,Long userId) {
         try {
             Optional<Qna> optionalQna = qnaRepository.findById(qnaDTO.getQnaId());
-
+            User user=userRepository.findById(userId).get();
             if (optionalQna.isPresent()) {
                 Qna qna = optionalQna.get();
-                if (qna.getUser().getRole().equals("ROLE_USER")) {
+                if (user.getRole().equals("ROLE_USER")) {
                     qna.setTitle(qna.getTitle());
                     qna.setContent(qnaDTO.getContent());
                     qna.setModifyDate(LocalDateTime.now());

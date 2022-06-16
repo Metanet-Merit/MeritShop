@@ -4,6 +4,7 @@ import com.merit.meritShop.board.domain.Qna;
 import com.merit.meritShop.board.dto.QnaDto;
 import com.merit.meritShop.board.repository.QnaRepository;
 import com.merit.meritShop.board.service.QnaService;
+import com.merit.meritShop.user.domain.User;
 import com.merit.meritShop.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -96,43 +98,48 @@ public class QnaController {
 
     //문의사항 수정
     @GetMapping("/qnaModify/{qnaId}")
-    public String modifyQna(@PathVariable Long qnaId, Model model) {
+    public String modifyQna(@PathVariable Long qnaId, Model model, @CookieValue Long userId) {
         QnaDto qna = qnaService.qnaDetail(qnaId);
         if (qna != null) {
+            User user = userRepository.findById(userId).get();
+            model.addAttribute("role", user.getRole());
             model.addAttribute("qna", qnaService.qnaDetail(qnaId));
             return "qna/qnaModify";
         }
         return "redirect:/admin/qnas";
     }
 
-    @PostMapping("/qna/update")
-    public String noticeUpdate(QnaDto qnaDTO) {
+    @GetMapping("/admin/qnaModify/{qnaId}")
+    public String adminModifyQna(@PathVariable Long qnaId, Model model, @CookieValue Long userId) {
+        QnaDto qna = qnaService.qnaDetail(qnaId);
+        if (qna != null) {
+            User user = userRepository.findById(userId).get();
 
-        String result = qnaService.qnaModify(qnaDTO);
-        if (result == "Success") {
-            return "redirect:/admin/notice/list";
+            model.addAttribute("qna", qnaService.qnaDetail(qnaId));
+            model.addAttribute("role", user.getRole());
+            model.addAttribute("qna", qnaService.qnaDetail(qnaId));
+            return "qna/adminQnaModify";
+        }
+        return "redirect:/admin/qnas";
+    }
+
+    @PostMapping("/qna/update")
+    public String noticeUpdate(@CookieValue Long userId, QnaDto qnaDTO, RedirectAttributes re) {
+
+        String result = qnaService.qnaModify(qnaDTO, userId);
+        if (result == "success") {
+            User user = userRepository.findById(userId).get();
+            Long qnaId = qnaDTO.getQnaId();
+            re.addAttribute("qnaId", qnaId);
+
+            if (user.getRole().equals("ROLE_USER")) return "redirect:/qna/detail";
+            else return "redirect:/admin/qna/detail";
+
         } else {
-            return "redirect:/notice/update/{noticeId}";
+            return "redirect:/main";
         }
     }
 
-    /*
-
-    @PostMapping("/admin/notice/update/{noticeId}")
-    public String noticeUpdate(@PathVariable("noticeId") Long noticeId,
-                               Notice notice) {
-
-        String result= noticeService.noticeModify(noticeId,notice.getTitle(),notice.getContent());
-        if (result == "Success") {
-            return "redirect:/admin/notice/list";
-        }
-        else {
-            return "redirect:/notice/update/{noticeId}";
-        }
-    }*/
-
-
-    //문의사항 삭제
     @GetMapping("/qnaDelete")
     public String qnaDelete(@RequestParam Long qnaId) {
         String result = qnaService.qnaDelete(qnaId);
@@ -144,7 +151,7 @@ public class QnaController {
     }
 
     @GetMapping("/qna/detail")
-    public String adminQnaDetail(Model model, @RequestParam Long qnaId) {
+    public String QnaDetail(Model model, @RequestParam Long qnaId) {
         QnaDto qna = qnaService.qnaDetail(qnaId);
         if (qna == null) {
             return "redirect:/admin/qnas";
@@ -152,5 +159,16 @@ public class QnaController {
 
         model.addAttribute("qna", qna);
         return "qna/qnaDetail";
+    }
+
+    @GetMapping("/admin/qna/detail")
+    public String adminQnaDetail(Model model, @RequestParam Long qnaId) {
+        QnaDto qna = qnaService.qnaDetail(qnaId);
+        if (qna == null) {
+            return "redirect:/admin/qnas";
+        }
+
+        model.addAttribute("qna", qna);
+        return "qna/adminQnaDetail";
     }
 }
