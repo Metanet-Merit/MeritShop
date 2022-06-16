@@ -71,31 +71,40 @@ public class CartService {
 
     //장바구니 아이템 수량 증가
     @Transactional(rollbackFor = Exception.class)
-    public String plusCartCount(Long cartId) {
+    public int plusCartCount(Long cartId) {
         Cart cart=cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("해당 장바구니 없음"));
         ItemOption itemOption = itemOptionRepository.findById(cart.getItemOptionId()).orElseThrow(() -> new IllegalArgumentException("해당 아이템 옵션 없음"));
         int count = cart.getCount();
         if (count < itemOption.getQuantity()) { // 해당 상품 수량보다 크게 담아선 안된다.
             cart.setCount(cart.getCount()+1);
-            return "Success";
+            return cart.getCount();
         }
         else {
-            return "Err";
+            return -1;
         }
     }
 
     //장바구니 아이템 수량 감소
     @Transactional(rollbackFor = Exception.class)
-    public String minusCartCount(Long cartId) {
+    public int minusCartCount(Long cartId) {
         Cart cart=cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("해당 장바구니 없음"));
         int count = cart.getCount();
         if (count != 1) { // 수량이 0이 되면 안됨
             cart.setCount(cart.getCount()-1);
-            return "Success";
+            return cart.getCount();
         }
         else {
-            return "Err";
+            return -1;
         }
+    }
+
+    public int getTotal(Long userId) {
+        List<Cart> cartList = cartList(userId);
+        int total = 0;
+        for(Cart c : cartList) {
+            total += c.getItem().getPrice();
+        }
+        return total;
     }
 
 }

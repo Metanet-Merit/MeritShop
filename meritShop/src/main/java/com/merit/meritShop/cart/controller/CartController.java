@@ -56,6 +56,7 @@ public class CartController {
         model.addAttribute("list", cartViewList);
         model.addAttribute("total", totalPrice);
         model.addAttribute("shipping", 3000);
+        model.addAttribute("userId", userId);
         //model.addAttribute("list", cartList);
         return "cart/cart";
     }
@@ -94,17 +95,21 @@ public class CartController {
     //장바구니 아이템 수량 증가
 
     @PutMapping("/cart/plus/{cartId}")
-    public ResponseEntity plusCount(@PathVariable Long cartId) {
-        System.out.println("과연");
-        String result=cartService.plusCartCount(cartId);
-        if(result!="Success") System.out.println("증가 실패");
-        return new ResponseEntity<Long>(cartId, HttpStatus.OK);
+    public ResponseEntity plusCount(@RequestBody String userId, @PathVariable Long cartId) {
+        int result=cartService.plusCartCount(cartId);
+        if(result==-1) System.out.println("증가 실패");
+        String id = userId.split("=")[1];
+        //int total = cartService.getTotal(Long.parseLong(userId));
+        System.out.println(cartService.getTotal(Long.parseLong(id)));
+        return new ResponseEntity<>(cartService.getTotal(Long.parseLong(id)), HttpStatus.OK);
     }
     //장바구니 아이템 수량 감소
     @PutMapping("/cart/minus/{cartId}")
-    public ResponseEntity minusCount(@PathVariable Long cartId) {
-        String result=cartService.minusCartCount(cartId);
-        if(result!="Success") System.out.println("감소 실패");
-        return new ResponseEntity<Long>(cartId, HttpStatus.OK);
+    public ResponseEntity minusCount( @PathVariable Long cartId) {
+        int result=cartService.minusCartCount(cartId);
+        if(result!=-1) System.out.println("감소 실패");
+//        String id = userId.split("=")[1];
+//        int total = cartService.getTotal(Long.parseLong(id));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
