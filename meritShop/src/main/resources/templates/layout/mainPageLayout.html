@@ -22,14 +22,17 @@
         </style>
     </head>
     <body>
-        <div class="container-fluid">
             <div>
                 <div th:replace="template/fragment/mainPageHeader::header" id="menu"></div>
 
-                <div layout:fragment="content" id="content-section" ></div>
+                <th:block layout:fragment="content">
+                    <div id="commonField">
+                        <h1>레이아웃을 사용해 페이지 구성하기!</h1>
+
+                    </div>
+                </th:block>
             </div>
 
-           </div>
         <div th:replace="template/fragment/mainPageFooter::footer" id="footer"></div>
 
     </body>
