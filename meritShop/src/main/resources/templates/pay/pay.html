@@ -510,7 +510,11 @@
 
        // count = parseInt(count.substring(2,count.length));
         //buyer_postcode: "01181"
-
+        console.log(buyer_name);
+        if(buyer_name=="" || buyer_tel=="" || buyer_address1=="" || buyer_address2==""){
+            alert("배송 필수 정보는  입력 해주세요!");
+            return false;
+        }
         console.log(couponCaseId);
 
 
