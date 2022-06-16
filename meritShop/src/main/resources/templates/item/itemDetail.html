@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/mainPageLayout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainPageLayout}">
 
 <div layout:fragment="content">
 
@@ -42,7 +43,7 @@
 
 
     <div id="container" style="margin-left:0%;margin-right:10%">
-        <div class="location"><a href="#">Home</a> &gt; <a href="#">대분류</a> &gt;<a href="#">소분류</a> &gt; <a href="#"><span class="txt_w">상품 관리</span></a></div>
+        <div class="location"><a href="/main">Home</a> &gt; <a href="#" th:text="${category}"></a> &gt;<span class="txt_w">상품 조회</span></div>
         <div class="contents">
             <div class="repImgDiv">
                 <img th:src="${itemImgDto[0].imgUrl}" class = "img-fluid rounded repImg" >

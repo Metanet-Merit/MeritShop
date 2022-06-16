@@ -2,7 +2,11 @@ package com.merit.meritShop.cart.controller;
 
 import com.merit.meritShop.cart.domain.Cart;
 import com.merit.meritShop.cart.dto.CartDto;
+import com.merit.meritShop.cart.dto.CartViewDto;
 import com.merit.meritShop.cart.service.CartService;
+import com.merit.meritShop.item.domain.Item;
+import com.merit.meritShop.item.domain.ItemOption;
+import com.merit.meritShop.item.repository.ItemOptionRepository;
 import com.merit.meritShop.item.repository.ItemRepository;
 import com.merit.meritShop.order.domain.OrderItemDto;
 import com.merit.meritShop.user.repository.UserRepository;
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,17 +28,35 @@ public class CartController {
     private final CartService cartService;
     private  final UserRepository userRepository;
     private  final ItemRepository itemRepository;
+    private final ItemOptionRepository itemOptionRepository;
 
 
     //목록
     @GetMapping("/cart")
     public String cartList(Model model, @CookieValue(name = "userId", required = false) Long userId) {
         List<Cart> cartList = cartService.cartList(userId);
-        System.out.println("fuck");
+        List<CartViewDto> cartViewList = new ArrayList<>();
+        int totalPrice = 0;
         for(Cart c : cartList){
-            System.out.println(c);
+            ItemOption itemOption = itemOptionRepository.findById(c.getItemOptionId()).get();
+            CartViewDto dto = CartViewDto.builder()
+                    .itemOptionId(c.getItemOptionId())
+                    .itemId(c.getItem().getItemId())
+                    .count(c.getCount())
+                    .cartId(c.getCartId())
+                    .imgUrl(c.getItem().getImgUrl())
+                    .itemName(c.getItem().getItemName())
+                    .price(c.getItem().getPrice() * c.getCount())
+                    .optionName(itemOption.getOptName())
+                    .optionList(c.getItem().getOpt())
+                    .build();
+            cartViewList.add(dto);
+            totalPrice += dto.getPrice();
         }
-        model.addAttribute("list", cartList);
+        model.addAttribute("list", cartViewList);
+        model.addAttribute("total", totalPrice);
+        model.addAttribute("shipping", 3000);
+        //model.addAttribute("list", cartList);
         return "cart/cart";
     }
     //장바구니 등록
@@ -41,8 +64,12 @@ public class CartController {
     @PostMapping("/cart")
     public ResponseEntity add(@RequestBody CartDto cartDto, @CookieValue("userId") Long userId) {
         // dto : itemId,itemOptionId ,count
-        System.out.println(cartDto);
         cartDto.setUserId(userId);
+        if (cartDto.getItemOptionId() == null) {
+            System.out.println(cartDto.toString());
+            Item item = itemRepository.findById(cartDto.getItemId()).get();
+            cartDto.setItemOptionId(item.getOpt().get(0).getItemOptionId());
+        }
         String result = cartService.add(cartDto, userId);
         Long itemId = cartDto.getItemId();
 //        if(result == "success") {
