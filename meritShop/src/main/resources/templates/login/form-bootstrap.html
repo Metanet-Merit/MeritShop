@@ -16,12 +16,7 @@
   <style>
     body {
       min-height: 100vh;
-
-      background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
-      background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+      background: #e9ecef;
     }
 
     .input-form {
@@ -120,10 +115,10 @@
           </div>
 
           <div class="mb-3">
-            <label for="email">이메일(아이디)</label>
+            <label for="email" style="margin-right: 10px">이메일(아이디)</label>
             <div class="input-group">
             <input name="email" type="email" class="form-control" id="email" placeholder="you@example.com" required>
-            <input type="button" class="input-group-append mb-3 btn btn-primary" value="아이디 체크" onclick="IdCkeck()">
+            <input type="button" class="input-group-append mb-3 btn btn-primary" value="아이디 체크" onclick="IdCkeck()" style="background-color: #D19C97; border-color: #D19C97; margin-left: 25px;">
             <input type="hidden" name="idDuplication" value="idUncheck" id="validId">
             </div>
             <div class="invalid-feedback">
@@ -170,7 +165,7 @@
             <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
           </div>
           <div class="mb-4"></div>
-          <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+          <button class="btn btn-primary btn-lg btn-block" type="submit" style="background-color:  #D19C97; border-color:  #D19C97;">가입 완료</button>
         </form>
       </div>
     </div>
