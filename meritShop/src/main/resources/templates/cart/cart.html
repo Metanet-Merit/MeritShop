@@ -27,6 +27,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -67,7 +68,6 @@
                 <tbody class="align-middle">
 
                 <tr th:each="cart:${list}">
-
                     <td class="align-middle">
                         <input type="hidden" th:name="'orderItemDtoList['+${cartStat.index}+'].itemId'" th:value="${cart.itemId}">
                         <input type="hidden" th:name="'orderItemDtoList['+${cartStat.index}+'].itemOptionId'" th:value="${cart.itemOptionId}">
@@ -76,23 +76,23 @@
                     <td class="align-middle" th:text="${cart.optionName}">
 
                     </td>
-                    <td class="align-middle" th:text="${cart.price}"></td>
-                    <td class="align-middle" >
+                    <td class="align-middle cartPrice" id="cartPrice" th:text="|${#numbers.formatInteger(cart.price, 0, 'COMMA')}원|"></td>
+                    <td class="align-middle" value="여기" >
                         <div class="input-group quantity mx-auto" style="width: 100px;">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-primary btn-minus" th:data-id="${cart.cartId}" onclick="minusCartCount(this)" >
+                            <div class="input-group-btn" >
+                                <button class="btn btn-sm btn-primary btn-minus" th:value="${cartStat.index}" th:data-id="${cart.cartId}" onclick="minusCartCount(this)" >
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control form-control-sm bg-secondary text-center" th:name="'orderItemDtoList['+${cartStat.index}+'].count'" th:value="${cart.count}">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-primary btn-plus" th:data-id="${cart.cartId}" onclick="plusCartCount(this)">
+                            <input type="text" class="form-control form-control-sm bg-secondary text-center" th:name="'orderItemDtoList['+${cartStat.index}+'].count'" th:value="${cart.count}" readonly>
+                            <div class="input-group-btn plz" th:value="plz">
+                                <button class="btn btn-sm btn-primary btn-plus" th:value="${cartStat.index}" th:data-id="${cart.cartId}" onclick="plusCartCount(this)">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
                     </td>
-                    <td class="align-middle" th:text="${cart.price}"></td>
+                    <td class="align-middle cartPrice2" id="cartPrice2" th:text="|${#numbers.formatInteger(cart.price, 0, 'COMMA')}원|"></td>
                     <td class="align-middle" th:onclick="'location.href=/cart/delete/'+ @{${cart.cartId}}">
                         <button type="button" class="btn btn-sm btn-primary" aria-label="Close">
                             <span aria-hidden="true" th:data-id="${cart.cartId}" onclick="deleteCartItem(this)">&times;</span>
@@ -113,17 +113,17 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium">총 판매 금액</h6>
-                        <h6 class="font-weight-medium" id="total" th:text="${total}"></h6>
+                        <h6 class="font-weight-medium" id="total" th:text="|${#numbers.formatInteger(total, 0, 'COMMA')}원|"></h6>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">배송비</h6>
-                        <h6 class="font-weight-medium" th:text="${shipping}"></h6>
+                        <h6 class="font-weight-medium" id="shipment" th:text="|${#numbers.formatInteger(shipping, 0, 'COMMA')}원|"></h6>
                     </div>
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">총 예상 결제 금액</h5>
-                        <h5 class="font-weight-bold" th:text="${total} + ${shipping}"></h5>
+                        <h5 class="font-weight-bold" id="final" th:text="|${#numbers.formatInteger(total+shipping, 0, 'COMMA')}원|"></h5>
                     </div>
                     <div id="orderBtn">
                     <button  class="btn btn-block btn-primary my-3 py-3">주문하기</button>
@@ -161,53 +161,70 @@
             return false;
         };
     };
-    function plusCartCount(obj){
-        var userId = document.getElementsByClassName("userId")[0].value;
-        var cartItemId = obj.dataset.id
-        //  var token = $("meta[name='_csrf']").attr("content");
-        // var header = $("meta[name='_csrf_header']").attr("content");
-        console.log(cartItemId);
+    function AddComma(num) {
+        var regexp = /\B(?=(\d{3})+(?!\d))/g;
+        return num.toString().replace(regexp, ',');
+    }
+    function plusCartCount(obj) {
+            var userId = document.getElementsByClassName("userId")[0].value;
+            var cartItemId = obj.dataset.id
+            var index = obj.value;
 
-        var url = "/cart/plus/" + cartItemId;
-        $.ajax({
-            url      : url,
-            type     : "PUT",
-            data    : {
-                "userId" : userId,
-            },
-            contentType: 'application/json',
-            cache   : false,
-            success  : function(result, status){
-               // alert(result);
-            //    $('#total').text(result);
-              location.href='/cart';
-            },
-            error : function(jqXHR, status, error){
+            var url = "/cart/plus/" + cartItemId;
+            $.ajax({
+                url: url,
+                type: "PUT",
+                data: {
+                    userId: userId,
+                },
+                context: this,
+                contentType: 'application/json',
+                cache: false,
+                success: function (data) {
+                    if (data != null) {
+                        $("#cartPrice2").eq(index).text(AddComma(data.itemPrice)+"원");
+                        $("#cartPrice").eq(index).text(AddComma(data.itemPrice)+"원");
+                        $("#total").text(AddComma(data.totalPrice)+"원");
+                        $("#shipment").text(AddComma(data.shipment)+"원");
+                        $("#final").text(AddComma(data.finalPrice)+"원");
+                    }
+                    // location.href='/cart';
+                },
+                error: function (jqXHR, status, error) {
 
-                if(jqXHR.status == '401'){
-                    alert('로그인 후 이용해주세요');
-                    location.href='/members/login';
-                } else{
-                    alert(jqXHR.responseJSON.message);
+                    if (jqXHR.status == '401') {
+                        alert('로그인 후 이용해주세요');
+                        location.href = '/members/login';
+                    } else {
+                        alert(jqXHR.responseJSON.message);
+                    }
+
                 }
-
-            }
-        });
+            });
     }
     function minusCartCount(obj){
+        var userId = document.getElementsByClassName("userId")[0].value;
         var cartItemId = obj.dataset.id
-        //  var token = $("meta[name='_csrf']").attr("content");
-        // var header = $("meta[name='_csrf_header']").attr("content");
-        console.log(cartItemId);
+        var index = obj.value;
         var url = "/cart/minus/" + cartItemId;
 
         $.ajax({
-            url      : url,
-            type     : "PUT",
-            dataType : "json",
-            cache   : false,
-            success  : function(result, status){
-                location.href='/cart';
+            url: url,
+            type: "PUT",
+            data: {
+                userId: userId,
+            },
+            context: this,
+            contentType: 'application/json',
+            cache: false,
+            success  : function(data){
+                if (data != null) {
+                    $("#cartPrice2").eq(index).text(AddComma(data.itemPrice)+"원");
+                    $("#cartPrice").eq(index).text(AddComma(data.itemPrice)+"원");
+                    $("#total").text(AddComma(data.totalPrice)+"원");
+                    $("#shipment").text(AddComma(data.shipment)+"원");
+                    $("#final").text(AddComma(data.finalPrice)+"원");
+                }
             },
             error : function(jqXHR, status, error){
 
@@ -235,7 +252,11 @@
             dataType : "json",
             cache   : false,
             success  : function(result, status){
-                location.href='/cart';
+                swal('삭제 성공!', "장바구니에서 해당 아이템을 삭제했습니다.",'success')
+                    .then(function(){
+                        location.href='/cart';
+                    })
+
             },
             error : function(jqXHR, status, error){
 

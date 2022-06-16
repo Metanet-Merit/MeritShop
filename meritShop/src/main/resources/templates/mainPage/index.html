@@ -4,6 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/mainPageLayout}">
 <th:block layout:fragment="content">
+    <style>
+        img {
+            width: 300px;
+            height: 150px;
+            object-fit: cover;
+        }
+    </style>
     <div id="commonField" style="width: 1200px; margin-right: auto; margin-left: auto;">
     <!-- Products Start -->
     <div class="container-fluid pt-5">
@@ -16,7 +23,8 @@
                 <div class="card product-item border-0 mb-4">
                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                         <!--/*@thymesVar id="itemUrl" type=""*/-->
-                        <img class="img-fluid w-100" th:src="${item.imgUrl}" alt="">
+<!--                        img class="img-fluid"-->
+                        <img class="personalImg" th:src="${item.imgUrl}" alt="">
                     </div>
                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                         <h6 class="text-truncate mb-3" th:text="${item.itemName}"></h6>

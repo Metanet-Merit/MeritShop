@@ -77,7 +77,7 @@ public class CartService {
         int count = cart.getCount();
         if (count < itemOption.getQuantity()) { // 해당 상품 수량보다 크게 담아선 안된다.
             cart.setCount(cart.getCount()+1);
-            return cart.getCount();
+            return cart.getItem().getPrice() * cart.getCount();
         }
         else {
             return -1;
@@ -89,9 +89,9 @@ public class CartService {
     public int minusCartCount(Long cartId) {
         Cart cart=cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("해당 장바구니 없음"));
         int count = cart.getCount();
-        if (count != 1) { // 수량이 0이 되면 안됨
+        if (count > 1) { // 수량이 0이 되면 안됨
             cart.setCount(cart.getCount()-1);
-            return cart.getCount();
+            return cart.getItem().getPrice() * cart.getCount();
         }
         else {
             return -1;
@@ -102,7 +102,7 @@ public class CartService {
         List<Cart> cartList = cartList(userId);
         int total = 0;
         for(Cart c : cartList) {
-            total += c.getItem().getPrice();
+            total += c.getItem().getPrice() * c.getCount();
         }
         return total;
     }

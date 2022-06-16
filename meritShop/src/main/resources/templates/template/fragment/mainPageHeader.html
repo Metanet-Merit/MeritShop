@@ -3,6 +3,28 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="header" >
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script>
+        var userId = $.cookie('userId');
+        var url = "/cart/count/" + userId;
+        $('document').ready(function(){
+            $.ajax({
+                url      : url,
+                type     : "GET",
+                dataType : "json",
+                cache   : false,
+
+                success  : function(result){
+                    console.log(result);
+                    $("#cartNum").text(result);
+                },
+                error : function(jqXHR, status, error){
+                     console.log("전체 장바구니 개수 조회 오류");
+                }
+            });
+        })
+    </script>
 
     <div class="container-fluid">
         <div class="row bg-secondary py-2 px-xl-5">
@@ -45,7 +67,7 @@
                 </a>
                 <a href="/cart" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="cartNum badge">0</span>
+                    <span id="cartNum" class="cartNum badge" th:text="${cartCount}"></span>
                 </a>
             </div>
         </div>
