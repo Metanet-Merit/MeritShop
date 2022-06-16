@@ -30,6 +30,7 @@ public class CategoryController {
         Page<Item> itemList = categoryService.getItemByCategory(category, pageable);
         model.addAttribute("category",category);
         model.addAttribute("items", itemList);
-        return "item/categoryItem";
+        model.addAttribute("name", category);
+        return "mainPage/categoryIndex";
     }
 }
