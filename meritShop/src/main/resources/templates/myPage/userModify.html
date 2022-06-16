@@ -69,6 +69,35 @@
     input:disabled {
       background: #FFFFFF !important;
     }
+    .btn-primary {
+      color: #fff;
+      background-color: #D19C97 !important;
+      border-color: #D19C97 !important;
+    }
+    .btn {
+      display: inline-block;
+      margin-bottom: 0;
+      font-weight: 400;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      -ms-touch-action: manipulation;
+      touch-action: manipulation;
+      cursor: pointer;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      margin-left: 500px;
+      background-image: none;
+      border: 1px solid transparent;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.42857143;
+      border-radius: 4px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
   </style>
 </head>
 <body>
@@ -100,29 +129,28 @@
     </a>
   </div>
   <div class="mainContent" id="content">
-    <div id="commonField">
+    <div id="commonField" style="border: 1px solid; border-radius: 3px; border-color: #D19C97; width: 600px">
       <div class="container">
         <div class="row justify-content-left">
           <div class="col-md-6 text-center mb-5">
-            <h2 class="heading-section">내 정보 수정</h2>
+            <h2 class="heading-section" style="color: #D19C97">내 정보 수정</h2>
           </div>
         </div>
         <div class="row justify-content-center">
           <form th:action="@{/myPage/user/modify/{userId}(userId = ${user.userId})}" method="post" class="row g-3 justify-content-center validation-form" novalidate th:object="${user}" >
-
             <div class="col-md-4">
               <label for="userName" class="form-label">회원 이름</label>
               <input name="userName" type="text" th:field="*{userName}" class="form-control" id="userName" required />
             </div>
             <div class="col-md-8">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
               <label for="phoneNumber" class="form-label">전화번호</label>
               <input name="phoneNumber" type="text" th:field="*{phoneNumber}" class="form-control" id="phoneNumber" required />
             </div>
             <div class="col-md-2">
               <label for="inputState" class="form-label">성별</label>
-              <select value="sex "name="sex" id="inputState" th:value="${user.sex}" class="form-select">
+              <select value="sex "name="sex" id="inputState" th:value="${user.sex}" class="form-select" style="height: 34px">
                 <option value=""></option>
                 <option value="F" th:selected="${user.sex}=='F'">여자</option>
                 <option value="M" th:selected="${user.sex}=='M'">남자</option>
@@ -131,21 +159,17 @@
                 성별을 선택해주세요.
               </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
               <label for="addr1" class="form-label">주소</label>
               <input name="addr1" type="text" th:field="*{addr1}" class="form-control" id="addr1" onclick="findAddr()" required />
             </div>
-            <div class="col-md-7">
+            <div class="col-md-6">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
               <label for="addr2" class="form-label">상세 주소</label>
               <input name="addr2" type="text" th:field="*{addr2}" class="form-control" placeholder="상세 주소를 입력해주세요." id="addr2"  />
-            </div>
-            <div class="col-md-2">
-              <label for="zipcode" class="form-label">우편번호</label>
-              <input name="zipcode" type="text" class="form-control" id="zipcode" readonly required>
             </div>
             <div class="col-md-6">
             </div>

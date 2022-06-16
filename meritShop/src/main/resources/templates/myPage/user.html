@@ -19,15 +19,43 @@
         input:disabled {
             background: #FFFFFF !important;
         }
+        .btn-primary {
+            color: #fff;
+            background-color: #D19C97;
+            border-color: #D19C97;
+        }
+        .btn {
+            display: inline-block;
+            margin-bottom: 0;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            margin-left: 450px;
+            background-image: none;
+            border: 1px solid transparent;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            border-radius: 4px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
 <th:block layout:fragment="content">
-<div id="commonField">
+<div id="commonField" style="border: 1px solid; border-radius: 3px; border-color: #D19C97; width: 600px">
     <div class="container">
         <div class="row justify-content-center">
             <form method="post" class="row g-3 justify-content-center" th:object="${user}" >
-
                 <div class="col-md-4">
                     <label for="userName" class="form-label">회원 이름</label>
                     <input name="userName" type="text" th:field="*{userName}" class="form-control" id="userName" disabled />
@@ -48,11 +76,11 @@
                     <label for="addr1" class="form-label">주소</label>
                     <input name="addr1" type="text" th:field="*{addr1}" class="form-control" id="addr1" disabled />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-6">
                     <label for="addr2" class="form-label">상세 주소</label>
                     <input name="addr2" type="text" th:field="*{addr2}" class="form-control" id="addr2" disabled />
-                </div>
-                <div class="col-md-2">
                 </div>
                 <div class="col-md-2">
                     <label for="inputState" class="form-label">회원 유형</label>
