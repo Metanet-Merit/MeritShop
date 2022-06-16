@@ -29,8 +29,7 @@ div{
 /* 녹색배경 */
 .greenContainer{
     height: 132px;
-    background-color: #efc4d0;
-
+    background-color: #D19C97;
     display: flex;
     align-items: flex-end;
     padding: 16px;
@@ -61,7 +60,7 @@ div{
 .summaryContainer .number{
     font-size: 19px;
     font-weight: bold;
-    color: #24855b;
+    color: #D19C97;
 }
 /* 텍스트 */
 .summaryContainer .item > div:nth-child(2){
