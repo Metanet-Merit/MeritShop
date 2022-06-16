@@ -1,5 +1,6 @@
 package com.merit.meritShop.order.controller;
 
+import com.merit.meritShop.coupon.domain.CouponCase;
 import com.merit.meritShop.coupon.repository.CouponCaseRepository;
 import com.merit.meritShop.item.domain.Item;
 import com.merit.meritShop.item.domain.ItemOption;
@@ -100,11 +101,19 @@ public class OrderController {
         for (PayItemDto p : payList) {
             totalPrice += (p.getPrice() * p.getCount());
         }
+        List<CouponCase> couponCases = couponCaseRepository.findAllByUserUserIdAndUsedIsFalse(userId);
+
         model.addAttribute("transactionCode", LocalDateTime.now().toString()+ UUID.randomUUID().toString());
         model.addAttribute("payList",payList);
         model.addAttribute("totalPrice",totalPrice);
-        model.addAttribute("couponList",couponCaseRepository.findAllByUserUserIdAndUsedIsFalse(userId));
+        if(couponCases.isEmpty()) {
+            model.addAttribute("couponList",couponCases );
+            model.addAttribute("couponStat","empty" );
 
+        }else{
+            model.addAttribute("couponList",couponCases );
+            model.addAttribute("couponStat","" );
+        }
 
 
         return "pay/pay";
