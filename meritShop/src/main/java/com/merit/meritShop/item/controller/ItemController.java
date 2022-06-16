@@ -63,6 +63,7 @@ public class ItemController {
         model.addAttribute("result", result);
         model.addAttribute("itemFormDto",itemFormDto);
         model.addAttribute("itemImgDto",itemImgDto);
+        model.addAttribute("category",item.getCategory());
 
         return "item/itemDetail";
     }

@@ -11,11 +11,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>공지사항 수정</title>
 </head>
-<th:block layout:fragment="content" style="width: 65%">
+<th:block layout:fragment="content" >
     <!-- Begin Page Content -->
-    <div class="container" style="width: 65%">
+    <div class="container" >
         <h2>공지사항 수정</h2>
-        <form th:action="@{/admin/notice/update/{noticeId}(noticeId = ${notice.noticeId})}" method="post">
+        <form th:action="@{/admin/notice/update/{noticeId}(noticeId = ${notice.noticeId})}" method="post" id="notice_form">
             <table class="table table-hover">
                 <tbody>
                 <tr>
@@ -26,9 +26,19 @@
                 </tr>
                 </tbody>
             </table>
-            <button class="list-btn" th:onclick="|location.href='@{/admin/notice/list}'|" style="margin-top: 0px">목록</button>
-            <input type="submit" class="btn btn-primary pull-right" style="background-color: white; border: 2px solid; border-color: #2e59d9; color: #2e59d9;" value="수정하기">
-        </form>
+          </form>
+        <button class="list-btn" th:onclick="|location.href='@{/admin/notice/list}'|" style="margin-top: 0px">목록</button>
+        <button class="btn btn-primary pull-right" style="background-color: white; border: 2px solid; border-color: #2e59d9; color: #2e59d9;" id="submit_btn" >수정하기</button>
+
     </div>
+
+    <script>
+        window.onload = function() {
+            document.getElementById('submit_btn').onclick = function() {
+                document.getElementById('notice_form').submit();
+                return false;
+            };
+        };
+    </script>
 </th:block>
 </html>

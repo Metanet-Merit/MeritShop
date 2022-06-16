@@ -1,27 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/mainPageLayout}">
 
-<head>
-    <meta charset="utf-8">
-    <title>meta-shopping mall</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
-
-    <!-- Favicon -->
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="/mainPage/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="/mainPage/css/style.css" rel="stylesheet">
+<div layout:fragment="content">
 
 
     <style>
@@ -50,138 +31,6 @@
             right: 10px;
         }
     </style>
-</head>
-
-<body>
-<!-- Topbar Start -->
-<div class="container-fluid">
-    <div class="row bg-secondary py-2 px-xl-5">
-        <div class="col-lg-6 d-none d-lg-block">
-            <div class="d-inline-flex align-items-center">
-                <a class="text-dark" href="">FAQs</a>
-                <span class="text-muted px-2">|</span>
-                <a class="text-dark" href="">Help</a>
-                <span class="text-muted px-2">|</span>
-                <a class="text-dark" href="">Support</a>
-                <span class="text-muted px-2">|</span>
-                <a class="text-dark" href="/admin" sec:authorize="hasRole('ROLE_ADMIN')">관리자 페이지</a>
-            </div>
-        </div>
-        <div class="col-lg-6 text-center text-lg-right">
-            <div class="d-inline-flex align-items-center">
-                <a class="text-dark px-2" href="">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a class="text-dark px-2" href="">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a class="text-dark px-2" href="">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a class="text-dark px-2" href="">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a class="text-dark pl-2" href="">
-                    <i class="fab fa-youtube"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="row align-items-center py-3 px-xl-5">
-        <div class="col-lg-3 d-none d-lg-block" th:onclick="'location.href=' + '\''+'/main'+'\''">
-            <a href="/main" class="text-decoration-none">
-                <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">Meta</span>Shop</h1>
-            </a>
-        </div>
-        <div class="col-lg-6 col-6 text-left">
-            <form action="">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for products">
-                    <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="col-lg-3 col-6 text-right">
-            <a href="" class="btn border">
-                <i class="fas fa-heart text-primary"></i>
-                <span class="badge">0</span>
-            </a>
-            <a href="" class="btn border">
-                <i class="fas fa-shopping-cart text-primary"></i>
-                <span class="badge">0</span>
-            </a>
-        </div>
-    </div>
-</div>
-<!-- Topbar End -->
-
-
-<!-- Navbar Start -->
-<div class="container-fluid">
-    <div class="row border-top px-xl-5">
-        <div class="col-lg-3 d-none d-lg-block">
-            <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                <h6 class="m-0">Categories</h6>
-                <i class="fa fa-angle-down text-dark"></i>
-            </a>
-            <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
-                <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link" data-toggle="dropdown">Dresses <i class="fa fa-angle-down float-right mt-1"></i></a>
-                        <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                            <a href="" class="dropdown-item">Men's Dresses</a>
-                            <a href="" class="dropdown-item">Women's Dresses</a>
-                            <a href="" class="dropdown-item">Baby's Dresses</a>
-                        </div>
-                    </div>
-                    <a href="" class="nav-item nav-link">Shirts</a>
-                    <a href="" class="nav-item nav-link">Jeans</a>
-                    <a href="" class="nav-item nav-link">Swimwear</a>
-                    <a href="" class="nav-item nav-link">Sleepwear</a>
-                    <a href="" class="nav-item nav-link">Sportswear</a>
-                    <a href="" class="nav-item nav-link">Jumpsuits</a>
-                    <a href="" class="nav-item nav-link">Blazers</a>
-                    <a href="" class="nav-item nav-link">Jackets</a>
-                    <a href="" class="nav-item nav-link">Shoes</a>
-                </div>
-            </nav>
-        </div>
-        <div class="col-lg-9">
-            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-                <a href="/main" class="text-decoration-none d-block d-lg-none">
-                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">Meta</span>Shop</h1>
-                </a>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <div class="navbar-nav mr-auto py-0">
-                        <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="shop.html" class="nav-item nav-link">Shop</a>
-                        <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                <a href="checkout.html" class="dropdown-item">Checkout</a>
-                            </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link">공지사항</a>
-                    </div>
-                    <div class="navbar-nav ml-auto py-0">
-                        <a href="/user/login" class="nav-item nav-link">Login</a>
-                        <a href="/user/login" class="nav-item nav-link">Register</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-</div>
-<!-- Navbar End -->
 
 
 <!-- Page Header Start -->
@@ -208,23 +57,23 @@
 
                     <div class="col-md-6 form-group">
                         <label>주문자 이름</label>
-                        <input id="buyer_name"class="form-control" type="text" placeholder="고길동">
+                        <input id="buyer_name"class="form-control" type="text" placeholder="고길동" th:value="${user.userName}">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>E-mail</label>
-                        <input id="buyer_email"class="form-control" type="text" placeholder="example@email.com">
+                        <input id="buyer_email"class="form-control" type="text" placeholder="example@email.com" th:value="${user.email}">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>휴대전화 번호</label>
-                        <input id="buyer_tel"class="form-control" type="text" placeholder="010 1234 5678">
+                        <input id="buyer_tel"class="form-control" type="text" placeholder="010 1234 5678" th:value="${user.phoneNumber}">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>주   소</label>
-                        <input name="addr1" type="text" class="form-control" id="buyer_address1" placeholder="서울특별시 강남구" required readonly onclick="findAddr1()">
+                        <input name="addr1" type="text" class="form-control" id="buyer_address1" th:value="${user.addr1}" placeholder="서울특별시 강남구" required readonly onclick="findAddr1()">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>상세 주소</label>
-                        <input id="buyer_address2"class="form-control" type="text" placeholder="ex) 101동-1004호">
+                        <input id="buyer_address2"class="form-control" type="text" th:value="${user.addr2}" placeholder="ex) 101동-1004호">
                     </div>
 
 
@@ -284,11 +133,15 @@
                     <hr class="mt-0">
                     <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium">Subtotal</h6>
-                        <h6 class="font-weight-medium" th:text="'￦'+ ${totalPrice}"></h6>
+                        <h6 class="font-weight-medium" id="subTotalPrice" th:text="'￦'+ ${totalPrice}"></h6>
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div th:if="${totalPrice>=50000}" class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Shipping</h6>
                         <h6 class="font-weight-medium">￦0</h6>
+                    </div>
+                    <div th:if="${totalPrice<50000}" class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Shipping</h6>
+                        <h6 class="font-weight-medium">￦3000</h6>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Discount</h6>
@@ -299,7 +152,7 @@
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
-                        <h5 class="font-weight-bold" id="totalPrice" th:text="'￦'+${totalPrice}"></h5>
+                        <h5 class="font-weight-bold" id="totalPrice" th:value="${totalPrice}" th:text="'￦'+${totalPrice}"></h5>
                     </div>
                 </div>
             </div>
@@ -310,7 +163,8 @@
             <input type="hidden" id="couponCaseId">
 
             <div id="my_modal">
-
+                <h1 th:if="${couponStat=='empty'}" >텅! 비었습니다</h1>
+                <img th:if="${couponStat=='empty'}" src="data:image/jpeg;base64,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" alt="">
                 <div class="coupon_content" th:each="coupon:${couponList}">
                     <input type="hidden" class="couponId" th:value="${coupon.couponCaseId}">
                     <h5 th:text="${coupon.coupon.couponName}"></h5>
@@ -349,86 +203,6 @@
 <!-- Checkout End -->
 
 
-<!-- Footer Start -->
-<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-    <div class="row px-xl-5 pt-5">
-        <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-            <a href="" class="text-decoration-none">
-                <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper</h1>
-            </a>
-            <p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-            <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-            <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-            <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
-        </div>
-        <div class="col-lg-8 col-md-12">
-            <div class="row">
-                <div class="col-md-4 mb-5">
-                    <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                        <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                        <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                        <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                        <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                        <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-5">
-                    <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                        <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                        <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                        <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                        <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                        <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-5">
-                    <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-                    <form action="">
-                        <div class="form-group">
-                            <input type="text" class="form-control border-0 py-4" placeholder="Your Name" required="required" />
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control border-0 py-4" placeholder="Your Email"
-                                   required="required" />
-                        </div>
-                        <div>
-                            <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe Now</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row border-top border-light mx-xl-5 py-4">
-        <div class="col-md-6 px-xl-0">
-            <p class="mb-md-0 text-center text-md-left text-dark">
-                &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
-                by
-                <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
-                Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-            </p>
-        </div>
-        <div class="col-md-6 px-xl-0 text-center text-md-right">
-            <img class="img-fluid" src="img/payments.png" alt="">
-        </div>
-    </div>
-</div>
-<!-- Footer End -->
-
-
-<!-- Back to Top -->
-<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="/mainPage/lib/easing/easing.min.js"></script>
-<script src="/mainPage/lib/owlcarousel/owl.carousel.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- Contact Javascript File -->
@@ -439,6 +213,15 @@
 <script src="/mainPage/js/main.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script>
+
+    var subTotalP = document.querySelector("#subTotalPrice").textContent;
+    subTotalP= parseInt(subTotalP.substring(1,subTotalP.length));
+    if(subTotalP<50000){
+        var total_price =document.querySelector("#totalPrice");
+        total_price.textContent = '￦'+(subTotalP+3000);
+
+    }
+
     function findAddr1(){
         new daum.Postcode({
             oncomplete: function(data) {
@@ -510,13 +293,14 @@
 
        // count = parseInt(count.substring(2,count.length));
         //buyer_postcode: "01181"
-
+        console.log(buyer_name);
+        if(buyer_name=="" || buyer_tel=="" || buyer_address1=="" || buyer_address2==""){
+            alert("배송 필수 정보는  입력 해주세요!");
+            return false;
+        }
         console.log(couponCaseId);
 
 
-        if(total_price<50000){
-            total_price += 3000;
-        }
         IMP.request_pay({ // param
             pg: "kakaopay.TC0ONETIME",
             pay_method: "card",
@@ -650,6 +434,6 @@
         modal('my_modal');
     });
 </script>
-</body>
+</div>
 
 </html>

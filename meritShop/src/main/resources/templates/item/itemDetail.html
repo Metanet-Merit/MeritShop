@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/mainPageLayout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainPageLayout}">
 
 <div layout:fragment="content">
 
@@ -42,7 +43,7 @@
 
 
     <div id="container" style="margin-left:0%;margin-right:10%">
-        <div class="location"><a href="#">Home</a> &gt; <a href="#">대분류</a> &gt;<a href="#">소분류</a> &gt; <a href="#"><span class="txt_w">상품 관리</span></a></div>
+        <div class="location"><a href="/main">Home</a> &gt; <a href="#" th:text="${category}"></a> &gt;<span class="txt_w">상품 조회</span></div>
         <div class="contents">
             <div class="repImgDiv">
                 <img th:src="${itemImgDto[0].imgUrl}" class = "img-fluid rounded repImg" >
@@ -65,7 +66,7 @@
                 <hr class="my-4">
 
                 <div class="text-right">
-                    <div class="h4 text-danger text-left">
+                    <div class="h4 text-left">
                         <span id="itemPrice" th:text="${itemFormDto.price}">10000</span>원
                     </div>
                     <div class="delivery_info"><strong>배송비 3,000원</strong><span class="text_info">(50,000원 이상 무료)</span></div>
@@ -155,7 +156,7 @@
                     </div>
                     <ul class="prd_qna_list" id="prd_qna_list" th:each="qna:${qnaResult['rtnObj']['qnas']}">
                         <li>
-                            <span th:text="'리뷰 작성 날짜:  '+ ${#temporals.format(qna['registerDate'],'yyyy-MM-dd')}">문의사항 작성 날짜</span>
+                            <span th:text="'문의사항 작성 날짜:  '+ ${#temporals.format(qna['registerDate'],'yyyy-MM-dd')}">문의사항 작성 날짜</span>
                              <span th:if="${qna['replied']} == true">
                                  <input type="hidden" th:value="${qna['reply']}"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="changeModalContent(this)">답변보기</button><br></td></tr>
                              </span>
@@ -170,6 +171,12 @@
 <script>
     window.onload = function() {
         document.getElementById('order_btn').onclick = function() {
+            var itemOptionId = document.getElementById("itemOptionId").value;
+            if(itemOptionId=="Select option"){
+                alert("옵션을 선택 해주세요!");
+                return false;
+            }
+
             document.getElementById('frm').submit();
             return false;
         };

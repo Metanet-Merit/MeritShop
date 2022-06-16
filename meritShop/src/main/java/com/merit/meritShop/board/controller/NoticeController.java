@@ -6,6 +6,7 @@ import com.merit.meritShop.board.service.NoticeService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -24,15 +25,18 @@ public class NoticeController {
     NoticeRepository noticeRepository;
 
     /*목록*/
-    @RequestMapping("/admin/notice/list")
-    public String adminNoticeList(Model model, @PageableDefault(size = 5) Pageable pageable) {
+    @GetMapping("/admin/notice/list")
+    public String adminNoticeList(Model model, @PageableDefault Pageable pageable) {
+
+//        int startPage= Math.max(1,listPage.getPageable().getPageNumber()-4);
+//        int endPage=Math.min(listPage.getTotalPages(),listPage.getPageable().getPageNumber()+4);
+
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 5);
         Page<Notice> listPage = noticeRepository.findAll(pageable);
 
-        int startPage= Math.max(1,listPage.getPageable().getPageNumber()-4);
-        int endPage=Math.min(listPage.getTotalPages(),listPage.getPageable().getPageNumber()+4);
-
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
         model.addAttribute("listPage", listPage);
 
         return "notice/noticeList";
