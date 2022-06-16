@@ -1,34 +1,120 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/adminLayout}">
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/myPage.css" />
+
 <head>
-    <meta charset="UTF-8">
+    <script type="application/javascript" src="/jss/user/review.js?version='3'"></script>
+    <script type="application/javascript" src="/jss/common/Cookie.js?version='1'"></script>
+    <script type="application/javascript" src="/jss/common/ajax.js"></script>
+    <script type="application/javascript" src="/jss/user/scrap.js"></script>
+    <script type="application/javascript" src="/jss/user/order.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>공지사항 수정</title>
+    <link rel="stylesheet" href="/css/review.css" type="text/css"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    <title>마이 페이지</title>
+    <style>
+        input:disabled {
+            background: #FFFFFF !important;
+        }
+    </style>
 </head>
-<th:block layout:fragment="content" style="width: 65%">
-    <!-- Begin Page Content -->
-    <div class="container" style="width: 65%">
-        <h2>공지사항 수정</h2>
-        <form th:action="@{/qna/update}" method="post">
-            <table class="table table-hover">
-                <tbody>
-                <tr>
-                    <td><input type="text" class="form-control" name="title" th:value="${qna.title}" maxlength="40"></td>
-                </tr>
-                <tr>
-                    <td><textarea type="text" class="form-control" name="content" th:text="${qna.content}" maxlength="1024" style="height: 400px;"></textarea></td>
-                </tr>
-                </tbody>
-            </table>
-            <button class="list-btn" th:onclick="|location.href='@{/qna/list}'|" style="margin-top: 0px">목록</button>
-            <input type="submit" class="btn btn-primary pull-right" style="background-color: white; border: 2px solid; border-color: #2e59d9; color: #2e59d9;" value="수정하기">
-        </form>
+<body>
+
+<div th:replace="~{template/fragment/myPageHeader::header}"></div>
+
+<div class="listContainer">
+    <div class="mainContentBox">
+        <a type="button" th:href="@{/myPage/user}" class="item">
+            <div class="text">내 정보 조회</div>
+        </a>
+        <a type="button" th:href="@{/myPage/user/modify}" class="item">
+            <div class="text">내 정보 수정</div>
+        </a>
+        <a type="button" th:href="@{/myPage/MyOrderItems}" class="item">
+            <div class="text">구매 내역</div>
+        </a>
+        <a type="button" onclick="$review.getReviews()" class="item">
+            <div class="text">리뷰 내역</div>
+        </a>
+        <a type="button" th:href="@{/user/qnas}" class="item">
+            <div class="text">문의사항</div>
+        </a>
+        <a type="button" onclick="$exam.exam()" class="item">
+            <div class="text">쿠폰 / 적립금</div>
+        </a>
+        <a type="button" th:href="@{/myPage/myScraps}"class="item">
+            <div class="text">내 찜 내역</div>
+        </a>
     </div>
-</th:block>
+    <div class="mainContent" id="content">
+        <div id="Contents">
+            <th:block layout:fragment="content" style="width: 65%">
+                <!-- Begin Page Content -->
+                <div class="container" style="width: 65%">
+                    <h2>문의사항 수정</h2>
+                    <form th:action="@{/qna/update}"  method="post">
+                        <input type="hidden" name="qnaId" th:value="${qna.qnaId}">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="form-control" name="title" th:value="${qna.title}" maxlength="40"></td>
+                                </tr>
+                                <tr>
+                                    <td><textarea type="text" class="form-control" name="content" th:text="${qna.content}" maxlength="1024" style="height: 400px;" th:disabled="${qna.role eq 'ROLE_ADMIN' ? true : false}" ></textarea></td>
+                                </tr>
+                                <span >
+                                    <tr>
+                                        <td><textarea type="text" class="form-control" name="reply" th:text="${qna.reply}" maxlength="1024" style="height: 400px;" th:disabled="${qna.role eq 'ROLE_USER' ? true : false}" ></textarea></td>
+                                    </tr>
+                                </span>
+                            </tbody>
+                        </table>
+                        <button class="list-btn" th:onclick="|location.href='@{/user/qnas}'|" style="margin-top: 0px">목록</button>
+                        <input type="submit" class="btn btn-primary pull-right" style="background-color: white; border: 2px solid; border-color: #2e59d9; color: #2e59d9;" value="수정하기">
+                    </form>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="container">
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">리뷰 내용</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{template/fragment/myPageFooter::footer}"></div>
+</body>
 </html>

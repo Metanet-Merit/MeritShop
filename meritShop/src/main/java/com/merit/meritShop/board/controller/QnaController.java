@@ -13,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -106,33 +107,18 @@ public class QnaController {
     }
 
     @PostMapping("/qna/update")
-    public String noticeUpdate(QnaDto qnaDTO) {
+    public String noticeUpdate(QnaDto qnaDTO, RedirectAttributes re) {
 
         String result = qnaService.qnaModify(qnaDTO);
-        if (result == "Success") {
-            return "redirect:/admin/notice/list";
+        if (result == "success") {
+            Long qnaId=qnaDTO.getQnaId();
+            re.addAttribute("qnaId",qnaId);
+            return "redirect:/qna/detail";
         } else {
-            return "redirect:/notice/update/{noticeId}";
+            return "redirect:/user/qnas";
         }
     }
 
-    /*
-
-    @PostMapping("/admin/notice/update/{noticeId}")
-    public String noticeUpdate(@PathVariable("noticeId") Long noticeId,
-                               Notice notice) {
-
-        String result= noticeService.noticeModify(noticeId,notice.getTitle(),notice.getContent());
-        if (result == "Success") {
-            return "redirect:/admin/notice/list";
-        }
-        else {
-            return "redirect:/notice/update/{noticeId}";
-        }
-    }*/
-
-
-    //문의사항 삭제
     @GetMapping("/qnaDelete")
     public String qnaDelete(@RequestParam Long qnaId) {
         String result = qnaService.qnaDelete(qnaId);

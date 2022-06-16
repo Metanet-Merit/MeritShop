@@ -81,6 +81,11 @@
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td class="textus" colspan="2" >
+                        <textarea type="text" class="contEditor" name="reply" th:text="${qna.reply}" th:disabled="${qna.role eq 'ROLE_USER' ? true : false}" ></textarea>
+                    </td>
+                </tr>
                 </tbody>
             </table>
             <div style="display: flex; flex-direction: row">
