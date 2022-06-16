@@ -208,23 +208,23 @@
 
                     <div class="col-md-6 form-group">
                         <label>주문자 이름</label>
-                        <input id="buyer_name"class="form-control" type="text" placeholder="고길동">
+                        <input id="buyer_name"class="form-control" type="text" placeholder="고길동" th:value="${user.userName}">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>E-mail</label>
-                        <input id="buyer_email"class="form-control" type="text" placeholder="example@email.com">
+                        <input id="buyer_email"class="form-control" type="text" placeholder="example@email.com" th:value="${user.email}">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>휴대전화 번호</label>
-                        <input id="buyer_tel"class="form-control" type="text" placeholder="010 1234 5678">
+                        <input id="buyer_tel"class="form-control" type="text" placeholder="010 1234 5678" th:value="${user.phoneNumber}">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>주   소</label>
-                        <input name="addr1" type="text" class="form-control" id="buyer_address1" placeholder="서울특별시 강남구" required readonly onclick="findAddr1()">
+                        <input name="addr1" type="text" class="form-control" id="buyer_address1" th:value="${user.addr1}" placeholder="서울특별시 강남구" required readonly onclick="findAddr1()">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>상세 주소</label>
-                        <input id="buyer_address2"class="form-control" type="text" placeholder="ex) 101동-1004호">
+                        <input id="buyer_address2"class="form-control" type="text" th:value="${user.addr2}" placeholder="ex) 101동-1004호">
                     </div>
 
 
