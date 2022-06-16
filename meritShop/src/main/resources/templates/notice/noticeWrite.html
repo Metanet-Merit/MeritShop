@@ -14,9 +14,9 @@
 </head>
 <th:block layout:fragment="content">
     <!-- Begin Page Content -->
-    <div class="container" style="width: 65%">
+    <div class="container" >
         <h2>공지사항 등록</h2>
-        <form action="writepro" method="post">
+        <form action="writepro" method="post" id="notice_form">
             <table class="table table-hover">
                 <tbody>
                 <tr>
@@ -27,9 +27,19 @@
                 </tr>
                 </tbody>
             </table>
-            <button class="list-btn" th:onclick="|location.href='@{/admin/notice/list}'|" style="margin-top: 0px">목록</button>
-            <input type="submit" class="btn btn-primary pull-right" style="background-color: white; border: 2px solid; border-color: #2e59d9; color: #2e59d9;" value="글쓰기">
+
         </form>
-    </div>
+        <button class="list-btn" th:onclick="|location.href='@{/admin/notice/list}'|" style="margin-top: 0px">목록</button>
+        <button class="btn btn-primary pull-right" style="background-color: white; border: 2px solid; border-color: #2e59d9; color: #2e59d9;" id="submit_btn" >글쓰기</button>
+        </div>
+    <script>
+        window.onload = function() {
+            document.getElementById('submit_btn').onclick = function() {
+                document.getElementById('notice_form').submit();
+                return false;
+            };
+        };
+    </script>
 </th:block>
+
 </html>
