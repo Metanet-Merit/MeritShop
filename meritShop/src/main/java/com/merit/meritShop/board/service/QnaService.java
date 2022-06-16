@@ -170,9 +170,27 @@ public class QnaService {
         try {
             Map<String, Object> map = new HashMap<>();
             Item item = itemRepository.findById(itemId).get();
+            List<QnaDto> qnaDtos=new ArrayList<>();
             List<Qna> qnaList = qnaRepository.findAllByItem(item);
 
-            map.put("qnas", qnaList);
+            for(Qna qna:qnaList){
+                QnaDto qnaDto=QnaDto.builder()
+                        .qnaId(qna.getQnaId())
+                        .content(qna.getContent())
+                        .itemId(qna.getItem().getItemId())
+                        .itemName(qna.getItem().getItemName())
+                        .replied(qna.isReplied())
+                        .title(qna.getTitle())
+                        .modifyDate(qna.getModifyDate())
+                        .registerDate(qna.getRegisterDate())
+                        .userName(qna.getUser().getUserName())
+                        .reply(qna.getReply())
+                        .userId(qna.getUser().getUserId()).build();
+
+                qnaDtos.add(qnaDto);
+            }
+
+            map.put("qnas", qnaDtos);
             map.put("count", qnaList.size());
             return ResultCode.Success.result(map);
         } catch (Exception e) {
