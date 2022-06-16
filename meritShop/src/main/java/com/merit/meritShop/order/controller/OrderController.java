@@ -45,10 +45,10 @@ public class OrderController {
            // System.out.println(dto);
         User user = userRepository.findById(getIdFromCookies(request.getCookies())).get();
 
-           Long orderId= orderService.order(user,dto);
+           Long code= orderService.order(user,dto);
 
 
-        return new ResponseEntity<Long>(orderId, HttpStatus.OK);
+        return new ResponseEntity<Long>(code, HttpStatus.OK);
     }
 
     @GetMapping("/orderHistory")

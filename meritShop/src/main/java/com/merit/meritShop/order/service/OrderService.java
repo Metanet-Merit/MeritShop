@@ -35,9 +35,7 @@ public class OrderService {
     private final CouponCaseRepository couponCaseRepository;
     private final CouponRepository couponRepository;
 
-    public long getOrderId(){
-        return orderRepository.countAllBy()+1;
-    }
+
     public Orders findById(Long id){
         return orderRepository.findById(id).get();
     }
@@ -67,7 +65,8 @@ public class OrderService {
         List<OrderItem> list = new ArrayList<>();
         Orders orders = new Orders();
         orders.setTransactionCode(formDto.getTransactionCode());
-        System.out.println(formDto.getCouponCaseId());
+        Long code = 0L;
+        //System.out.println(formDto.getCouponCaseId());
         int discountP =0;
         if(formDto.getCouponCaseId()!=null) {
             CouponCase couponCase = couponCaseRepository.findById(formDto.getCouponCaseId()).get();
@@ -118,7 +117,7 @@ public class OrderService {
         orders.setCouponCaseId(formDto.getCouponCaseId());
         orders =orderRepository.save(orders);
 
-        return orders.getOrderId();
+        return code=200L;
 
     }
 
