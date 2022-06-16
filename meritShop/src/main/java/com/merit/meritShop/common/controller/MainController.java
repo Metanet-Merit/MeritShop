@@ -67,7 +67,7 @@ public class MainController {
         PageRequest pageRequest =  PageRequest.of(0,8, Sort.by(Sort.Direction.DESC,"createdDate"));
         Page<Item> itemList = itemRepository.findByItemNameContaining(keyword, pageRequest);
         model.addAttribute("items",itemList);
-        return "mainPage/index";
+        return "mainPage/searchIndex";
     }
 
     @GetMapping(value = "/err/denied-page")
