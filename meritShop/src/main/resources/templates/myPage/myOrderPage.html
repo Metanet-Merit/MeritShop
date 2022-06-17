@@ -122,7 +122,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td th:if = "${orderItems['reviewed'] == false}" >
+                                <td th:if = "${orderItems['reviewed'] == false}" style="border-top: 1px solid #e6e6e6;">
                                     <a type="button" class="btn-review--small"  data-write-yn="Y" th:href="@{|/reviewForm/${orderItems['orderItemId']}|}">리뷰쓰러가기</a><br>
                                 </td>
                             </tr>
