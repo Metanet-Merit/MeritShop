@@ -35,8 +35,12 @@ public class Item extends BaseEntity {
 
     private double rate;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<ItemOption> opt = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<ItemImg> imgList = new ArrayList<>();
 
 
     public Item of(ItemFormDto dto){
