@@ -73,62 +73,21 @@
                         <div class="title-area linezero">
 
                         </div>
-                        <table class="board-list-2s mgT20 new">
+                        <h1 th:if="${stat=='empty'}">사용 가능한 쿠폰이 업소용 </h1>
+                        <div class="couponList" th:each="coupon:${couponList}">
 
-                            <colgroup>
-                                <col style="width:49%;">
-                                <col style="width:39%;">
-                                <col style="width:12%;">
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th scope="col">상품</th>
-                                <th scope="col" colspan="2">구매일자</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-
-                            <span th:each="orderItems:${result['rtnObj']['orderItems']}">
-                            <tr>
-                                <td class="subject">
-                                    <div class="area">
-                                        <div class="area">
-                                            <a class="thum" href="#">
-                                                <img style="width: 15px; height: 15px" th:src="${orderItems['url']}" alt="[승관 Pick] 라네즈 네오 쿠션 매트 15g 5종 택1">
-                                            </a>
-                                            <div class="textus">
-                                                <a class="" href="" data-attr="리뷰^리뷰상품^상품클릭">
-                                                    <span class="tit" th:text="${orderItems['category']}">아이템 종류(카테고리)넣으세요</span>
-                                                    <span class="txt oneline" th:text="${orderItems['orderItemName']}">아이템 이름 넣으세요</span>
-                                                    <p class="txt_option" th:text="${orderItems['orderItemOptionName']}">옵션 이름 넣으세요</p>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="subject">
-                                    <div class="area">
-                                        <div class="textus" style="width:90%;">
-                                            <dl class="data review-data">
-                                                <dt>구매일자</dt>
-                                                <dd th:text="${orderItems['orderDate']}">리뷰 작성 일자 넣으세요</dd>
-                                            </dl>
-                                            <div class="rating">
-
-                                                <span class="txt"></span>
-                                                <span class="point pt5"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td th:if = "${orderItems['reviewed'] == false}" >
-                                    <a type="button" class="btn-review--small"  data-write-yn="Y" th:href="@{|/reviewForm/${orderItems['orderItemId']}|}">리뷰쓰러가기</a><br>
-                                </td>
-                            </tr>
-                            </span>
-                            </tbody>
-                        </table>
+                            <div class="coupon_content">
+                                <input type="hidden" class="couponId" th:value="${coupon.couponCaseId}">
+                                <h5 th:text="${coupon.coupon.couponName}"></h5>
+                                <p th:if="${coupon.coupon.discountPrice!=0}" class="couponPrice" th:text="${coupon.coupon.discountPrice}"></p>
+                                <p th:if="${coupon.coupon.discountRate!=0.0}" th:text="${coupon.coupon.discountRate}"></p>
+                                <p th:text="${coupon.coupon.description}"></p>
+                                <div>
+                                    <p th:text="'사용가능일: '+${coupon.startDate}"></p>
+                                    <p th:text="'만료일: '+${coupon.endDate}"></p>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- 공통 딤처리 -->
                         <div class="dim"></div>
