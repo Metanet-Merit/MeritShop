@@ -128,7 +128,7 @@ public class QnaService {
                 Qna qna = optionalQna.get();
 
                 if (user.getRole().equals("ROLE_USER")) {
-                    qna.setTitle(qna.getTitle());
+                    qna.setTitle(qnaDTO.getTitle());
                     qna.setContent(qnaDTO.getContent());
                     qna.setModifyDate(LocalDateTime.now());
 
