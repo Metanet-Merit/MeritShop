@@ -4,11 +4,18 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/mainPageLayout}">
 <th:block layout:fragment="content">
-  <div id="commonField">
+  <style>
+    img {
+      width: 300px;
+      height: 150px;
+      object-fit: cover;
+    }
+  </style>
+  <div id="commonField" style="width: 1200px; margin-right: auto; margin-left: auto;">
     <!-- Products Start -->
     <div class="container-fluid pt-5">
       <div class="text-center mb-4">
-        <h2 class="section-title px-5"><span class="px-2" th:text="${name}" ></span></h2>
+        <h2 class="section-title px-5"><span class="px-2">인기 상품들</span></h2>
       </div>
 
       <div class="row px-xl-5 pb-3" >
@@ -16,17 +23,18 @@
           <div class="card product-item border-0 mb-4">
             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
               <!--/*@thymesVar id="itemUrl" type=""*/-->
-              <img class="img-fluid w-100" th:src="${item.imgUrl}" alt="">
+              <img height="600" class="img-fluid w-100" th:src="${item.imgUrl}" alt="">
             </div>
             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
               <h6 class="text-truncate mb-3" th:text="${item.itemName}"></h6>
               <div class="d-flex justify-content-center">
-                <h6 th:text="${item.price}"></h6><h6 class="text-muted ml-2"><del th:text="${item.price}"></del></h6>
+                <h6 th:text="|${#numbers.formatInteger(item.price, 0, 'COMMA')}원|"></h6></h6>
               </div>
             </div>
             <div class="card-footer d-flex justify-content-between bg-light border">
               <a th:href="'/item/'+${item.itemId}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-              <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+              <!--  <a onclick="cart()" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1" onclick="cart()"></i>Add To Cart</a>-->
+              <div class="itemId btn btn-sm text-dark p-0"><input type="hidden" class="item_id" th:value="${item.itemId}"><i class="fas fa-eye text-primary mr-1"></i> Add To Cart</div>
             </div>
           </div>
         </div>
@@ -34,5 +42,88 @@
     </div>
     <!-- Products End -->
   </div>
+  <script>
+    document.querySelectorAll(".itemId").forEach(n=>n.addEventListener("click",function (){
+      var url = "/cart";
+      var paramData = {
+        itemId : n.getElementsByClassName("item_id")[0].value,
+
+        count :1
+
+      };
+      console.log(paramData)
+      var param = JSON.stringify(paramData);
+
+      $.ajax({
+        url      : url,
+        type     : "POST",
+        contentType : "application/json",
+        data     : param,
+        dataType : "json",
+        cache   : false,
+
+        success  : function(result, status){
+
+          console.log(result);
+          alert("장바구니 추가!!");
+          location.href='/cart';
+        },
+        error : function(jqXHR, status, error){
+
+          if(jqXHR.status == '401'){
+            alert('로그인 후 이용해주세요');
+            location.href='/user/login';
+          } else{
+            //alert(jqXHR.responseText);
+            console.log("현재는 이것만 뜬다네 ㅎㅎ");
+          }
+
+        }
+      });
+
+    }));
+
+    function cart(){
+
+      var url = "/cart";
+      alert(itemid);
+      var paramData = {
+        itemId : itemid.v,
+        itemOptionId : $("#itemOptionId").val(),
+        count : $("#count").val()
+
+      };
+      console.log(paramData)
+      var param = JSON.stringify(paramData);
+
+      $.ajax({
+        url      : url,
+        type     : "POST",
+        contentType : "application/json",
+        data     : param,
+        dataType : "json",
+        cache   : false,
+
+        success  : function(result, status){
+
+          console.log(result);
+          alert("장바구니 추가!!");
+          location.href='/cart';
+        },
+        error : function(jqXHR, status, error){
+
+          if(jqXHR.status == '401'){
+            alert('로그인 후 이용해주세요');
+            location.href='/user/login';
+          } else{
+            //alert(jqXHR.responseText);
+            console.log("현재는 이것만 뜬다네 ㅎㅎ");
+          }
+
+        }
+      });
+    }
+  </script>
+
 </th:block>
 </html>

@@ -2,6 +2,7 @@ package com.merit.meritShop.cart.controller;
 
 import com.merit.meritShop.cart.domain.Cart;
 import com.merit.meritShop.cart.dto.CartDto;
+import com.merit.meritShop.cart.dto.CartPriceDto;
 import com.merit.meritShop.cart.dto.CartViewDto;
 import com.merit.meritShop.cart.service.CartService;
 import com.merit.meritShop.item.domain.Item;
@@ -55,7 +56,7 @@ public class CartController {
         }
         model.addAttribute("list", cartViewList);
         model.addAttribute("total", totalPrice);
-        model.addAttribute("shipping", 3000);
+        model.addAttribute("shipping", totalPrice >= 50000 ? 0 :3000);
         model.addAttribute("userId", userId);
         //model.addAttribute("list", cartList);
         return "cart/cart";
@@ -93,23 +94,42 @@ public class CartController {
     }
 
     //장바구니 아이템 수량 증가
-
+    @ResponseBody
     @PutMapping("/cart/plus/{cartId}")
-    public ResponseEntity plusCount(@RequestBody String userId, @PathVariable Long cartId) {
-        int result=cartService.plusCartCount(cartId);
-        if(result==-1) System.out.println("증가 실패");
+    public CartPriceDto plusCount(@RequestBody String userId, @PathVariable Long cartId) {
+        int itemPrice=cartService.plusCartCount(cartId); // 증가한 장바구니 아이템 가격
+        if(itemPrice==-1) {
+            System.out.println("증가 실패");
+            return null;
+        }
         String id = userId.split("=")[1];
-        //int total = cartService.getTotal(Long.parseLong(userId));
-        System.out.println(cartService.getTotal(Long.parseLong(id)));
-        return new ResponseEntity<>(cartService.getTotal(Long.parseLong(id)), HttpStatus.OK);
+        int total = cartService.getTotal(Long.parseLong(id)); // 총 장바구니 상품 가격
+        int shipment = total >= 50000? 0 : 3000;
+        CartPriceDto cartPriceDto = new CartPriceDto(total, itemPrice, shipment, total+shipment);
+        return cartPriceDto;
     }
     //장바구니 아이템 수량 감소
+    @ResponseBody
     @PutMapping("/cart/minus/{cartId}")
-    public ResponseEntity minusCount( @PathVariable Long cartId) {
-        int result=cartService.minusCartCount(cartId);
-        if(result!=-1) System.out.println("감소 실패");
-//        String id = userId.split("=")[1];
-//        int total = cartService.getTotal(Long.parseLong(id));
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public CartPriceDto minusCount(@RequestBody String userId, @PathVariable Long cartId) {
+        int itemPrice = cartService.minusCartCount(cartId);
+        if(itemPrice==-1) {
+            System.out.println("감소 실패");
+            return null;
+        }
+        String id = userId.split("=")[1];
+        int total = cartService.getTotal(Long.parseLong(id)); // 총 장바구니 상품 가격
+        int shipment = total >= 50000? 0 : 3000;
+        System.out.println(total+" "+itemPrice);
+        CartPriceDto cartPriceDto = new CartPriceDto(total, itemPrice, shipment, total+shipment);
+        return cartPriceDto;
+    }
+
+    // 사용자 장바구니 개수 출력
+    @ResponseBody
+    @GetMapping("/cart/count/{userId}")
+    public String countCart(@PathVariable Long userId) {
+        List<Cart> itemPrice = cartService.cartList(userId);
+        return Integer.toString(itemPrice.size());
     }
 }
