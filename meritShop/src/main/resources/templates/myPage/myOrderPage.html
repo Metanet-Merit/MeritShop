@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
     <link rel="stylesheet" href="/css/review.css" type="text/css"/>
@@ -59,49 +60,42 @@
         </a>
     </div>
     <div class="mainContent" id="content">
-        <div id="commonField">
-            <div class="row justify-content-left">
-                <div class="col-md-6 text-center mb-5">
 
-                </div>
+        <div style="text-align: center" class="mypage-conts">
+            <div class="title-area linezero">
             </div>
-            <div class="container">
-                <div class="row justify-content-center">
+            <table class="board-list-2s mgT20 new">
+                <colgroup>
+                    <col style="width:49%;">
+                    <col style="width:39%;">
+                    <col style="width:12%;">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th style="text-align:center" scope="col">상품</th>
+                    <th style="text-align:center" scope="col" colspan="2">구매일자</th>
+                </tr>
+                </thead>
+                <tbody>
 
 
-                    <div style="text-align: center" class="mypage-conts">
-                        <div class="title-area linezero">
-
-                        </div>
-                        <table class="board-list-2s mgT20 new">
-
-                            <colgroup>
-                                <col style="width:49%;">
-                                <col style="width:39%;">
-                                <col style="width:12%;">
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th scope="col">상품</th>
-                                <th scope="col" colspan="2">구매일자</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-
-                            <span th:each="orderItems:${result['rtnObj']['orderItems']}">
+                <span th:each="orderItems:${result['rtnObj']['orderItems']}">
                             <tr>
                                 <td class="subject">
                                     <div class="area">
                                         <div class="area">
-                                            <a class="thum" href="#">
-                                                <img style="width: 15px; height: 15px" th:src="${orderItems['url']}" alt="[승관 Pick] 라네즈 네오 쿠션 매트 15g 5종 택1">
+                                            <a class="thum" th:href="@{/item/{itemId}(itemId = ${orderItems['itemId']})}">
+                                                <img style="width: 15px; height: 15px" th:src="${orderItems['url']}"
+                                                     alt="아이템이미지">
                                             </a>
                                             <div class="textus">
-                                                <a class="" href="" data-attr="리뷰^리뷰상품^상품클릭">
-                                                    <span class="tit" th:text="${orderItems['category']}">아이템 종류(카테고리)넣으세요</span>
-                                                    <span class="txt oneline" th:text="${orderItems['orderItemName']}" style="color: #666;">아이템 이름 넣으세요</span>
-                                                    <p class="txt_option" th:text="${orderItems['orderItemOptionName']}">옵션 이름 넣으세요</p>
+                                                <a class="" th:href="@{/item/{itemId}(itemId = ${orderItems['itemId']})}" data-attr="리뷰^리뷰상품^상품클릭">
+                                                    <span class="tit"
+                                                          th:text="${orderItems['category']}">아이템 종류(카테고리)넣으세요</span>
+                                                    <span class="txt oneline" th:text="${orderItems['orderItemName']}"
+                                                          style="color: #666;">아이템 이름 넣으세요</span>
+                                                    <p class="txt_option"
+                                                       th:text="${orderItems['orderItemOptionName']}">옵션 이름 넣으세요</p>
                                                 </a>
                                             </div>
                                         </div>
@@ -122,22 +116,20 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td th:if = "${orderItems['reviewed'] == false}" style="border-top: 1px solid #e6e6e6;">
+                                <td th:if = "${orderItems['reviewed'] == false}" >
                                     <a type="button" class="btn-review--small"  data-write-yn="Y" th:href="@{|/reviewForm/${orderItems['orderItemId']}|}">리뷰쓰러가기</a><br>
                                 </td>
                             </tr>
                             </span>
-                            </tbody>
-                        </table>
+                </tbody>
+            </table>
 
-                        <!-- 공통 딤처리 -->
-                        <div class="dim"></div>
-                        <!-- //공통 딤처리 -->
+            <!-- 공통 딤처리 -->
+            <div class="dim"></div>
+            <!-- //공통 딤처리 -->
 
-                    </div>
-                </div>
-            </div>
         </div>
+
     </div>
 </div>
 
