@@ -121,6 +121,7 @@ public class OrderListService {
                                 .url(item.getImgUrl())
                                 .orderItemId(orderItem.getOrderItemId())
                                 .orderId(orders.getOrderId())
+                                .itemId(item.getItemId())
                                 .category(item.getCategory())
                                 .orderItemOptionName(itemOption.getOptName())
                                 .build();

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="/css/myPage.css" />
+<link rel="stylesheet" href="/css/myPage.css"/>
 
 <head>
     <script type="application/javascript" src="/jss/user/review.js?version='3'"></script>
@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
     <link rel="stylesheet" href="/css/review.css" type="text/css"/>
@@ -33,11 +34,13 @@
         input:disabled {
             background: #FFFFFF !important;
         }
+
         .btn-primary {
             color: #fff;
             background-color: #D19C97 !important;
             border-color: #D19C97 !important;
         }
+
         .btn {
             display: inline-block;
             margin-bottom: 0;
@@ -88,48 +91,36 @@
         <a type="button" th:href="@{/myPage/myCoupon}" class="item">
             <div class="text">쿠폰</div>
         </a>
-        <a type="button" th:href="@{/myPage/myScraps}"class="item">
+        <a type="button" th:href="@{/myPage/myScraps}" class="item">
             <div class="text">내 찜 내역</div>
         </a>
     </div>
     <div class="mainContent" id="content">
-        <div id="commonField">
-            <div class="row justify-content-left">
-                <div class="col-md-6 text-center mb-5">
+        <div style="text-align: center" class="mypage-conts">
+            <div class="title-area linezero">
 
-                </div>
             </div>
-            <div class="container">
-                <div class="row justify-content-center">
+            <h1 th:if="${stat=='empty'}">사용 가능한 쿠폰이 업소용 </h1>
+            <div class="couponList" th:each="coupon:${couponList}">
 
-
-                    <div style="text-align: center" class="mypage-conts">
-                        <div class="title-area linezero">
-
-                        </div>
-                        <h1 th:if="${stat=='empty'}">사용 가능한 쿠폰이 업소용 </h1>
-                        <div class="couponList" th:each="coupon:${couponList}">
-
-                            <div class="coupon_content">
-                                <input type="hidden" class="couponId" th:value="${coupon.couponCaseId}">
-                                <h5 th:text="${coupon.coupon.couponName}"></h5>
-                                <p th:if="${coupon.coupon.discountPrice!=0}" class="couponPrice" th:text="${coupon.coupon.discountPrice}"></p>
-                                <p th:if="${coupon.coupon.discountRate!=0.0}" th:text="${coupon.coupon.discountRate}"></p>
-                                <p th:text="${coupon.coupon.description}"></p>
-                                <div>
-                                    <p th:text="'사용가능일: '+${coupon.startDate}"></p>
-                                    <p th:text="'만료일: '+${coupon.endDate}"></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 공통 딤처리 -->
-                        <div class="dim"></div>
-                        <!-- //공통 딤처리 -->
-
+                <div class="coupon_content">
+                    <input type="hidden" class="couponId" th:value="${coupon.couponCaseId}">
+                    <h5 th:text="${coupon.coupon.couponName}"></h5>
+                    <p th:if="${coupon.coupon.discountPrice!=0}" class="couponPrice"
+                       th:text="${coupon.coupon.discountPrice}"></p>
+                    <p th:if="${coupon.coupon.discountRate!=0.0}" th:text="${coupon.coupon.discountRate}"></p>
+                    <p th:text="${coupon.coupon.description}"></p>
+                    <div>
+                        <p th:text="'사용가능일: '+${coupon.startDate}"></p>
+                        <p th:text="'만료일: '+${coupon.endDate}"></p>
                     </div>
                 </div>
             </div>
+
+            <!-- 공통 딤처리 -->
+            <div class="dim"></div>
+            <!-- //공통 딤처리 -->
+
         </div>
     </div>
 </div>
