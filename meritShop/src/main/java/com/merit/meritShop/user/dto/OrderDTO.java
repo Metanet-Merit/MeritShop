@@ -15,6 +15,7 @@ public class OrderDTO {
 
     private String userName;
     private String itemName;
+    private Long itemId;
     private Long userId;
     private Long orderId;
     private Integer count;

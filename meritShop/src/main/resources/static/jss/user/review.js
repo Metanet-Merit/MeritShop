@@ -198,7 +198,7 @@ $review= {
                 '                <div class="area">\n' +
                 '                    <div class="textus" style="width:90%;">\n' +
                 '                        <dl class="data review-data">\n' +
-                '                            <dt style="text-align: center">작성일자</dt>\n' +
+                '                            <dt>작성일자</dt>\n' +
                 '                            <dd></dd>' ;
 
             const btn=
@@ -248,7 +248,7 @@ $review= {
 
                     content +=  middle+img+middle2+'<dt>'+order_date+'</dt>'+html_categoryNitem+'<span class="tit">'+category+'</span>' +
                     '   <span class="txt oneline">'+orderItemName+'</span>' +html_review_date+
-                    '<dd style="text-align: center">'+review_date+'</dd>'+btn+button;
+                    '<dd>'+review_date+'</dd>'+btn+button;
 
                 });
 
