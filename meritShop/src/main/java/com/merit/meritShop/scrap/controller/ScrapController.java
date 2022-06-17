@@ -1,9 +1,8 @@
-package com.merit.meritShop.user.controller;
+package com.merit.meritShop.scrap.controller;
 
 import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.user.dto.ScrapDTO;
-import com.merit.meritShop.user.service.ScrapService;
-import org.json.simple.JSONObject;
+import com.merit.meritShop.scrap.service.ScrapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +33,11 @@ public class ScrapController {
 
         return scrapService.addScrap(scrapDTO);
 
+    }
+    @ResponseBody
+    @GetMapping("/scrap/count/{userId}")
+    public String getScrapCount(@PathVariable Long userId){
+        return scrapService.count(userId).toString();
     }
 
 }

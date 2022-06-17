@@ -1,4 +1,4 @@
-package com.merit.meritShop.user.repository;
+package com.merit.meritShop.scrap.repository;
 
 import com.merit.meritShop.scrap.domain.Scrap;
 import com.merit.meritShop.user.domain.User;
@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ScrapRepository extends JpaRepository<Scrap,Long> {
     List<Scrap> findScrapByUser(User user);
+    Long countByUser(User user);
 }

@@ -47,8 +47,8 @@ $review= {
             '        <tr>\n' +
             '            <td class="subject">\n' +
             '                <div class="area">\n' +
-            '                    <div class="area">\n' +
-            '                            <img style="width: 15px; height: 15px" src="/images/item/36040b2a-e46c-40a4-a535-b27c12562f8f.jpg" alt="[승관 Pick] 라네즈 네오 쿠션 매트 15g 5종 택1" >\n' +
+            '                    <div class="area">\n' ;
+        const middle2=
             '                        </a>\n' +
             '                        <div class="textus">\n' +
             '                            <dl class="data review-data">\n' +
@@ -118,7 +118,9 @@ $review= {
                 const url=review['uuidName'];
 
                 const button='<input type="hidden" value="'+review_content+'"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="$review.changeModalContent(this)">리뷰보기</button><br></td></tr>'
-                content +=  middle+'<dd>'+order_date+'</dd>'+html_categoryNitem+'<span class="tit">'+category+'</span>' +
+                const img= '<img style="width: 15px; height: 15px" src='+url+'" alt="[승관 Pick] 라네즈 네오 쿠션 매트 15g 5종 택1" >\n' ;
+
+                content +=  middle+img+middle2+'<dd>'+order_date+'</dd>'+html_categoryNitem+'<span class="tit">'+category+'</span>' +
                     '   <span class="txt oneline">'+orderItemName+'</span>' +html_review_date+
                     '<dd>'+review_date+'</dd>'+ '<dd>'+userName+'</dd>'+btn+button;
 
@@ -162,29 +164,29 @@ $review= {
                 '        </colgroup>\n' +
                 '        <thead>\n' +
                 '        <tr>\n' +
-                '            <th scope="col">상품</th>\n' +
-                '            <th scope="col" colspan="2">리뷰</th>\n' +
+                '            <th scope="col" style="text-align: center">상품</th>\n' +
+                '            <th scope="col" colspan="2" style="text-align: center">리뷰</th>\n' +
                 '        </tr>\n' +
                 '        </thead>';
             const middle=
-                ' <tbody>\n' +
+                ' <tbody style="align-content: center">\n' +
                 '        <tr>\n' +
                 '            <td class="subject">\n' +
                 '                <div class="area">\n' +
                 '                    <div class="area">\n' +
-                '                        <a class="thum" href="#" data-attr="리뷰^리뷰상품^상품클릭">\n' +
-                '                            <img style="width: 15px; height: 15px" src="/images/item/36040b2a-e46c-40a4-a535-b27c12562f8f.jpg"  alt="[승관 Pick] 라네즈 네오 쿠션 매트 15g 5종 택1" onerror="common.errorImg(this);">\n' +
+                '                        <a class="thum" href="#" data-attr="리뷰^리뷰상품^상품클릭">\n' ;
+            const middle2=
                 '                        </a>\n' +
                 '                        <div class="textus">\n' +
                 '                            <dl class="data review-data">\n' +
                 '                                <dt>구매일자</dt>\n' +
-                '                              <!--  <dd></dd>-->'
+                '                              <!--  <dd></dd>-->';
             const html_categoryNitem=' </dl>\n' +
                 '                            <a class="" href="javascript:mypage.gdasList.moveGoodsDetailReview(\'A000000149383\',\'리뷰_리뷰상품\');" data-attr="리뷰^리뷰상품^상품클릭">\n' +
                 '                                <!--<span class="tit"></span>\n' +
                 '                                <span class="txt oneline"></span>-->\n' +
                 '\n' +
-                '                                <p class="txt_option"><em></em></p>\n';
+                '                               <!-- <p class="txt_option"><em></em></p>-->\n';
 
             const html_review_date=
                 '  </a>\n' +
@@ -196,7 +198,7 @@ $review= {
                 '                <div class="area">\n' +
                 '                    <div class="textus" style="width:90%;">\n' +
                 '                        <dl class="data review-data">\n' +
-                '                            <dt>작성일자</dt>\n' +
+                '                            <dt style="text-align: center">작성일자</dt>\n' +
                 '                            <dd></dd>' ;
 
             const btn=
@@ -239,10 +241,14 @@ $review= {
                     const review_date=review['reviewDate'];
                     const order_date=review['orderDate'];
                     const category=review['category'];
+                    const url=review['uuidName'];
                     const button='<input type="hidden" value="'+review_content+'"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="$review.changeModalContent(this)">리뷰보기</button><br></td></tr>'
-                    content +=  middle+'<dd>'+order_date+'</dd>'+html_categoryNitem+'<span class="tit">'+category+'</span>' +
+                    const img=
+                        '<img style="width: 25px; height: 25px" src='+url+' alt="아이템이미지" >\n' ;
+
+                    content +=  middle+img+middle2+'<dt>'+order_date+'</dt>'+html_categoryNitem+'<span class="tit">'+category+'</span>' +
                     '   <span class="txt oneline">'+orderItemName+'</span>' +html_review_date+
-                    '<dd>'+review_date+'</dd>'+btn+button;
+                    '<dd style="text-align: center">'+review_date+'</dd>'+btn+button;
 
                 });
 
