@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="/css/myPage.css"/>
+<link rel="stylesheet" href="/css/myPage.css" />
 
 <head>
     <script type="application/javascript" src="/jss/user/review.js?version='3'"></script>
@@ -55,7 +55,7 @@
         <a type="button" th:href="@{/myPage/myCoupon}" class="item">
             <div class="text">쿠폰</div>
         </a>
-        <a type="button" th:href="@{/myPage/myScraps}" class="item">
+        <a type="button" th:href="@{/myPage/myScraps}"class="item">
             <div class="text">내 찜 내역</div>
         </a>
     </div>
@@ -81,7 +81,7 @@
 
                 <span th:each="orderItems:${result['rtnObj']['orderItems']}">
                             <tr>
-                                <td class="subject" >
+                                <td class="subject">
                                     <div class="area">
                                         <div class="area">
                                             <a class="thum" th:href="@{/item/{itemId}(itemId = ${orderItems['itemId']})}">
@@ -116,9 +116,8 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td th:if="${orderItems['reviewed'] == false}">
-                                    <a type="button" class="btn-review--small" data-write-yn="Y"
-                                       th:href="@{|/reviewForm/${orderItems['orderItemId']}|}">리뷰쓰러가기</a><br>
+                                <td th:if = "${orderItems['reviewed'] == false}" >
+                                    <a type="button" class="btn-review--small"  data-write-yn="Y" th:href="@{|/reviewForm/${orderItems['orderItemId']}|}">리뷰쓰러가기</a><br>
                                 </td>
                             </tr>
                             </span>

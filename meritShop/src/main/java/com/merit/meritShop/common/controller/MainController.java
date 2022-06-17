@@ -66,14 +66,24 @@ public class MainController {
     }
 
     @GetMapping("/main/search")
-    public String search(String keyword, Model model, @PageableDefault(direction = Sort.Direction.DESC) Pageable pageable) {
-        PageRequest pageRequest =  PageRequest.of(0,8, Sort.by(Sort.Direction.DESC,"createdDate"));
-        Page<Item> itemList = itemRepository.findByItemNameContaining(keyword, pageRequest);
+    public String search(String keyword, Model model, @PageableDefault Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 8);
+        Page<Item> itemList = itemRepository.findByItemNameContaining(keyword, pageable);
         model.addAttribute("items",itemList);
         model.addAttribute("name", keyword);
         return "mainPage/searchIndex";
     }
 
+    @GetMapping("items/all")
+    public String userList(Model model, @PageableDefault Pageable pageable){
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 8);
+        Page<Item> itemList = itemRepository.findAll(pageable);
+        model.addAttribute("items", itemList);
+        model.addAttribute("name", "all");
+        return "mainPage/categoryIndex";
+    }
     @GetMapping(value = "/err/denied-page")
     public String accessDenied(){
         return "err/deniedPage";
