@@ -2941,21 +2941,21 @@ textarea.form-control-lg {
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #e0bdba;
-    border-color: #e0bdba
+    background-color: #D19C97;
+    border-color: #D19C97;
 }
 
 .btn-check:focus + .btn-primary, .btn-primary:focus {
     color: #fff;
-    background-color: #e0bdba;
-    border-color: #e0bdba;
+    background-color: #D19C97;
+    border-color: #D19C97;
     box-shadow: 0 0 0 .25rem rgba(224, 189, 186, 1)
 }
 
 .btn-check:active + .btn-primary, .btn-check:checked + .btn-primary, .btn-primary.active, .btn-primary:active, .show > .btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #0a58ca;
-    border-color: #e0bdba
+    background-color: #D19C97;
+    border-color: #D19C97
 }
 
 .btn-check:active + .btn-primary:focus, .btn-check:checked + .btn-primary:focus, .btn-primary.active:focus, .btn-primary:active:focus, .show > .btn-primary.dropdown-toggle:focus {
@@ -3215,13 +3215,13 @@ textarea.form-control-lg {
 
 .btn-outline-primary {
     color: #D19C97;
-    border-color: #0d6efd
+    border-color: #D19C97
 }
 
 .btn-outline-primary:hover {
     color: #fff;
     background-color: #D19C97;
-    border-color: #0d6efd
+    border-color: #D19C97
 }
 
 .btn-check:focus + .btn-outline-primary, .btn-outline-primary:focus {
@@ -3231,7 +3231,7 @@ textarea.form-control-lg {
 .btn-check:active + .btn-outline-primary, .btn-check:checked + .btn-outline-primary, .btn-outline-primary.active, .btn-outline-primary.dropdown-toggle.show, .btn-outline-primary:active {
     color: #fff;
     background-color: #D19C97;
-    border-color: #0d6efd
+    border-color: #D19C97
 }
 
 .btn-check:active + .btn-outline-primary:focus, .btn-check:checked + .btn-outline-primary:focus, .btn-outline-primary.active:focus, .btn-outline-primary.dropdown-toggle.show:focus, .btn-outline-primary:active:focus {
@@ -3788,7 +3788,7 @@ textarea.form-control-lg {
 .dropdown-item.active, .dropdown-item:active {
     color: #fff;
     text-decoration: none;
-    background-color: #0d6efd
+    background-color: #D19C97
 }
 
 .dropdown-item.disabled, .dropdown-item:disabled {
@@ -3833,7 +3833,7 @@ textarea.form-control-lg {
 
 .dropdown-menu-dark .dropdown-item.active, .dropdown-menu-dark .dropdown-item:active {
     color: #fff;
-    background-color: #0d6efd
+    background-color: #D19C97
 }
 
 .dropdown-menu-dark .dropdown-item.disabled, .dropdown-menu-dark .dropdown-item:disabled {
@@ -4013,7 +4013,7 @@ textarea.form-control-lg {
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
-    background-color: #0d6efd
+    background-color: #D19C97
 }
 
 .nav-fill .nav-item, .nav-fill > .nav-link {

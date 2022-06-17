@@ -89,17 +89,17 @@
                     </select>
                 </div>
                 <hr class="my-4">
-                <div class="text-right mgt-50">
-                    <h5>결제 금액</h5>
-                    <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
-                </div>
                 <div th:if="${itemFormDto.status != T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
+                    <button type="button" class="btn btn-primary btn-lg"  id="scrap_btn">찜하기</button>
                     <button type="button" class="btn btn-light border border-primary btn-lg" onclick="cart()">장바구니 담기</button>
                     <button type="button" class="btn btn-primary btn-lg"  id="order_btn">주문하기</button>
                 </div>
                 <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
                     <button type="button" class="btn btn-danger btn-lg">품절</button>
                 </div>
+                    <div>
+                        <button onclick="$scrap.addScrap()"></button>
+                    </div>
 
                 </form>
             </div>
@@ -140,25 +140,34 @@
 
                     <ul class="prd_qna_list" id="prd_qna_list" th:each="reviews:${result['rtnObj']['reviews']}">
                         <li>
-                            <span th:text="'리뷰 작성 날짜:  '+ ${#temporals.format(reviews['reviewDate'],'yyyy-MM-dd')}">리뷰 작성 날짜</span>
-                            <input type="hidden" th:value="${reviews['content']}"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="changeModalContent(this)">리뷰보기</button><br></td></tr>
+                            <span th:text=" ${#temporals.format(reviews['reviewDate'],'yyyy-MM-dd')}+'  '+${reviews['userName']}">리뷰 작성 날짜</span>
+                        </li>
+                        <li>
+                            <span th:text=" ${reviews['content']}">리뷰 내용</span>
                         </li>
                     </ul>
-
 
                 </div>
                 <div style="display: none">
                     <div class="prd_qna_tit" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
-                        <button class="btnInquiry goods_qna_inquiry" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
+                        <button class="btn btn-light border border-primary btn-lg" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
                             <a th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">상품문의</a>
                         </button>
                     </div>
                     <ul class="prd_qna_list" id="prd_qna_list" th:each="qna:${qnaResult['rtnObj']['qnas']}">
                         <li>
-                            <span th:text="'문의사항 작성 날짜:  '+ ${#temporals.format(qna['registerDate'],'yyyy-MM-dd')}">문의사항 작성 날짜</span>
-                             <span th:if="${qna['replied']} == true">
-                                 <input type="hidden" th:value="${qna['reply']}"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="changeModalContent(this)">답변보기</button><br></td></tr>
-                             </span>
+                           <span th:text="'작성자: '+ ${qna['userName']} ">이름</br></span></br>
+                            <span th:text="'제목: '+${qna['title']}">제목</span>
+
+                        </li>
+                       <li>
+                           <span th:text="${qna['content']}">문의사항 내용</span>
+                       </li>
+                        <span th:if="${qna['replied']} == true">
+                                <li>
+                                    <span th:text="'re:'+${qna['reply']}"></span>
+                                </li>
+                            </span>
                         </li>
 
                     </ul>

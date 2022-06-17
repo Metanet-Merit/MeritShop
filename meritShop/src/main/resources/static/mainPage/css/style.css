@@ -6186,7 +6186,6 @@ button.bg-dark:focus {
 }
 
 .border-top {
-  border-top: 1px solid #EDF1FF !important;
   border-bottom: 5px solid #EDF1FF !important;
 }
 
@@ -7440,11 +7439,6 @@ button.bg-dark:focus {
 
 .m-5 {
   margin: 3rem !important;
-}
-
-.mt-5,
-.my-5 {
-  margin-top: 3rem !important;
 }
 
 .mr-5,

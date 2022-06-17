@@ -12,12 +12,14 @@
         }
     </style>
     <div id="commonField" style="width: 1200px; margin-right: auto; margin-left: auto;">
+        <span class="px-2">
+            <strong th:text="${name}" style="color: #D19C97; font-size: 35px; margin-left: 60px;"></strong>
+        <span>검색 결과</span>
+        </span>
         <!-- Products Start -->
         <div class="container-fluid pt-5">
             <div class="text-center mb-4">
-                <h2 class="section-title px-5"><span class="px-2">인기 상품들</span></h2>
             </div>
-
             <div class="row px-xl-5 pb-3" >
                 <div class="col-lg-3 col-md-6 col-sm-12 pb-1" th:each=" item:${items}" th:onclick=" 'location.href='+'\''+@{'/item/'+${item.itemId}}+'\''" >
                     <div class="card product-item border-0 mb-4">
