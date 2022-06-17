@@ -43,6 +43,41 @@
             </div>
         </div>
         <!-- Products End -->
+        <nav style="text-align: center;">
+            <ul class="pagination pagination justify-content-center"
+                th:with="start=${T(java.lang.Math).floor(items.number/8)*8 + 1},
+                    last=(${start + 7 < items.totalPages ? start + 7 : items.totalPages})">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/main/search(keyword=${name},page=1)}" aria-label="First">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only" aria-hidden="true">First</span>
+                    </a>
+                </li>
+
+                <li th:class="${items.first} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="${items.first} ? '#' :@{/main/search(page=${keyword=${name},items.number})}" aria-label="Previous">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+
+                <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == items.number + 1} ? 'active'" class="page-item">
+                    <a class="page-link" th:text="${page}" th:href="@{/main/search(keyword=${name},page=${page})}"></a>
+                </li>
+
+                <li th:class="${items.last} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="${items.last} ? '#' : @{/main/search(keyword=${name},page=${items.number + 2})}" aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a class="page-link" th:href="@{/main/search(keyword=${name},page=${items.totalPages})}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only" aria-hidden="true">Last</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
     <script>
         document.querySelectorAll(".itemId").forEach(n=>n.addEventListener("click",function (){
