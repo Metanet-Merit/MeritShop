@@ -2,11 +2,13 @@ package com.merit.meritShop.item.controller;
 
 import com.merit.meritShop.board.service.QnaService;
 import com.merit.meritShop.common.domain.Result;
+import com.merit.meritShop.coupon.domain.Coupon;
 import com.merit.meritShop.item.domain.*;
 import com.merit.meritShop.item.repository.ItemImgRepository;
 import com.merit.meritShop.item.repository.ItemOptionRepository;
 import com.merit.meritShop.item.repository.ItemRepository;
 import com.merit.meritShop.item.service.ItemService;
+import com.merit.meritShop.user.domain.User;
 import com.merit.meritShop.user.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor

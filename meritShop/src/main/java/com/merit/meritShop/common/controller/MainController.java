@@ -59,6 +59,9 @@ public class MainController {
         Page<Item> itemList = itemRepository.findAll(pageRequest);
         model.addAttribute("items",itemList);
 
+        PageRequest pageRequest2 =  PageRequest.of(0,8, Sort.by(Sort.Direction.DESC,"rate"));
+        Page<Item> hotItemList = itemRepository.findAll(pageRequest2);
+        model.addAttribute("hotItems",hotItemList);
         return "mainPage/index";
     }
 

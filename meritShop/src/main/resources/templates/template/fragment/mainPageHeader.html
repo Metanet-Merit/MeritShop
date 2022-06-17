@@ -3,26 +3,35 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="header" >
+    <style>
+        .img-profile{
+            width: 25px;
+            height: 25px;
+        }
+    </style>
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script>
+
         var userId = $.cookie('userId');
         var url = "/cart/count/" + userId;
         $('document').ready(function(){
-            $.ajax({
-                url      : url,
-                type     : "GET",
-                dataType : "json",
-                cache   : false,
+            if(typeof userId != "undefined") {
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    cache: false,
 
-                success  : function(result){
-                    console.log(result);
-                    $("#cartNum").text(result);
-                },
-                error : function(jqXHR, status, error){
-                     console.log("전체 장바구니 개수 조회 오류");
-                }
-            });
+                    success: function (result) {
+                        console.log(result);
+                        $("#cartNum").text(result);
+                    },
+                    error: function (jqXHR, status, error) {
+                        console.log("전체 장바구니 개수 조회 오류");
+                    }
+                });
+            }
         })
     </script>
 
@@ -36,16 +45,18 @@
                 </div>
             </div>
             <div class="col-lg-6 text-center text-lg-right">
-                <div class="d-inline-flex align-items-center">
-                    <a href="/user/login" class="text-dark" sec:authorize="isAnonymous()">로그인</a>
-                    <a href="/user/logout" class="text-dark" sec:authorize="isAuthenticated()">로그아웃</a>
+                <div class="d-inline-flex align-items-center justify-content-between">
+                    <a href="/user/login" style="margin-right: 10px;" class="nav-item text-dark" sec:authorize="isAnonymous()">로그인</a>
+                    <a href="/signup"  class="nav-item text-dark" sec:authorize="isAnonymous()">회원가입</a>
+                    <img class="img-profile rounded-circle" src="/bootstrap/img/undraw_profile.svg" sec:authorize="isAuthenticated()">
+                    <a href="/user/logout"  class="nav-item text-dark" sec:authorize="isAuthenticated()">로그아웃</a>
                 </div>
             </div>
         </div>
         <div class="row align-items-center py-3 px-xl-5" style="border-bottom: 1px solid #EDF1FF !important;">
             <div class="col-lg-3 d-none d-lg-block" th:onclick="'location.href=' + '\''+'/main'+'\''">
                 <a href="/main" class="text-decoration-none">
-                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">Meta</span>Shop</h1>
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold mr-1">Meta</span>Shop</h1>
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
@@ -60,7 +71,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-3 col-6 text-right">
+            <div class="col-lg-3 col-6 text-right" sec:authorize="isAuthenticated()">
                 <a href="/myPage/myScraps" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">0</span>
@@ -88,10 +99,11 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a th:href="@{/items/페이스}" class="nav-item nav-link">페이스</a>
-                            <a th:href="@{/items/립}" class="nav-item nav-link">립</a>
-                            <a th:href="@{/items/아이}" class="nav-item nav-link">아이</a>
-                            <a th:href="@{/items/치크}" class="nav-item nav-link">치크</a>
+                            <a th:href="@{/items/all}" class="nav-item nav-link font-weight-semi-bold">전체</a>
+                            <a th:href="@{/items/페이스}" class="nav-item nav-link font-weight-semi-bold">페이스</a>
+                            <a th:href="@{/items/립}" class="nav-item nav-link font-weight-semi-bold">립</a>
+                            <a th:href="@{/items/아이}" class="nav-item nav-link font-weight-semi-bold">아이</a>
+                            <a th:href="@{/items/치크}" class="nav-item nav-link font-weight-semi-bold">치크</a>
                         </div>
                     </div>
                 </nav>

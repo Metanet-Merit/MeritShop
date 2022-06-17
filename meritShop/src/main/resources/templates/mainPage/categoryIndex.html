@@ -32,9 +32,9 @@
               </div>
             </div>
             <div class="card-footer d-flex justify-content-between bg-light border">
-              <a th:href="'/item/'+${item.itemId}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+              <a th:href="'/item/'+${item.itemId}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View</a>
               <!--  <a onclick="cart()" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1" onclick="cart()"></i>Add To Cart</a>-->
-              <div class="itemId btn btn-sm text-dark p-0"><input type="hidden" class="item_id" th:value="${item.itemId}"><i class="fas fa-eye text-primary mr-1"></i> Add To Cart</div>
+              <div class="itemId btn btn-sm text-dark p-0"><input type="hidden" class="item_id" th:value="${item.itemId}"><i class="fas fa-shopping-cart text-primary mr-1"></i> Add To Cart</div>
             </div>
           </div>
         </div>
