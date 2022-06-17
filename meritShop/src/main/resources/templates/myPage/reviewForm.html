@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <title>리뷰 작성</title>
     <link rel="stylesheet" href="/css/qna.css" type="text/css"/>
-
+    <style>
+        li {
+            list-style: none;
+        }
+        form {
+            width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
 <body>
 
@@ -14,7 +23,6 @@
         <!-- [s] 2021.04.19 modify -->
         <div class="mypage-qna-write disabled">
             <div class="optionSec">
-                <h3>itemName의 리뷰를 작성해 주세요.</h3>
             </div>
             <label><input type="radio" name="rate" value="5.0"> 5</label>
             <label><input type="radio" name="rate" value="4.0"> 4</label>
@@ -27,12 +35,12 @@
             <!-- 등록제한이 없는 한줄상품평 작성 -->
             <div class="reviews-write">
                 <textarea cols="5" rows="1" id="gdasCont" name="gdasCont" th:field="*{content}" placeholder="리뷰를 작성해 주세요."></textarea>
-                <p><span id="curTxtLength">0</span>자/250자</p>
+                <p><li>파일<input type="file" th:field="*{img}" ></li></p>
             </div>
             <!-- 등록제한이 없는 한줄상품평 작성 -->
-            <li>파일<input type="file" th:field="*{img}" ></li>
+
             <div class="btnGroup">
-                <button type="submit" class="btnGreen" >등록</button>
+                <button type="submit" class="btnGray" >등록</button>
             </div>
             <div class="usage-guide">
                 <h2 class="stit">이용안내</h2>
@@ -41,13 +49,7 @@
                 </ul>
             </div>
         </div>
-        <!-- [e] 2021.04.19 modify -->
-        <!-- [s] 2021.04.19 add -->
-        <div class="alertPop">
-            <p class="txt">해당 상품의 배송/교환/반품 문의를 위해<br>1:1문의 게시판을 이용해주세요.</p>
-        </div>
     </form>
-    <!-- [e] 2021.04.19 add -->
 </div>
 </body>
 </html>
