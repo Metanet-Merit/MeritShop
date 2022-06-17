@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>내 정보 보기</title>
+    <title>내 정보 조회</title>
     <style>
         input:disabled {
             background: #FFFFFF !important;
@@ -68,7 +68,9 @@
                 </div>
                 <div class="col-md-2">
                     <label for="sex" class="form-label">성별</label>
-                    <input name="sex" type="text" th:field="*{sex}" class="form-control" id="sex" disabled />
+                    <input class="form-control" th:if="${user.sex} == 'M'" th:text="남자" />
+                    <input class="form-control" th:unless="${user.sex} == 'M'" th:text="여자" />
+                    <!--<input name="sex" type="text" th:field="*{sex}" class="form-control" id="sex" disabled />-->
                 </div>
                 <div class="col-md-6">
                 </div>
@@ -88,7 +90,7 @@
                 </div>
                 <div class="col-md-2">
                     <label for="point" class="form-label">적립금</label>
-                    <input name="point" type="text" th:field="*{point}" class="form-control" id="point">
+                    <input name="point" type="text" th:field="*{point}" class="form-control" id="point" disabled>
                 </div>
                 <div class="col-md-2">
                     <label for="expire" class="form-label">구독 만료일</label>
