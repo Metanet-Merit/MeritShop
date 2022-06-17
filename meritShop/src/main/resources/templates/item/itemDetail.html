@@ -101,6 +101,9 @@
                 <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
                     <button type="button" class="btn btn-danger btn-lg">품절</button>
                 </div>
+                    <div>
+                        <button onclick="$scrap.addScrap()"></button>
+                    </div>
 
                 </form>
             </div>
