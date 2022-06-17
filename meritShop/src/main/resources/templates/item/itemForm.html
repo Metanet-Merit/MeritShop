@@ -138,12 +138,12 @@
 </div>
 <script>
 	const add_textbox = () => {
-   const box = document.getElementById("box");
+   const box = document.getElementById("imgbox");
     const newP = document.createElement("tr");
 
     newP.innerHTML = "<th>옵션 별 수량 추가</th><td><input type='text' name='optionName' class='optName'><input type='text' name='quantity' class='quantity'> <input type='button' value='삭제' onclick='opt_remove(this)'></td>";
-    box.parentElement.appendChild(newP);
-    
+    //box.parentElement.appendChild(newP);
+		box.parentNode.insertBefore(newP, box.previousSibling);
 }
 const add_imgbox = () => {
    const box = document.getElementById("imgbox");

@@ -108,19 +108,19 @@
 					<input type="button" value="추가" onclick="add_textbox()">
 				  	</td>
 					</tr>
+				<tr th:each="option:${itemFormDto.options}">
+					<th>옵션 별 수량 추가</th>
+					<td><input type="hidden" name="itemOptionId" th:value="${option?.itemOptionId}" >
+						<input type='text' name='optionName' th:value="${option?.optionName}" class='optionName'>
+						<input type='text' name='quantity' th:value="${option?.quantity}" class='quantity'>
+						<input type='button' value='삭제' onclick='opt_remove(this)'>
+					</td>
+				</tr>
 					<tr id="imgbox">
 						<th>사진</th>
 						<td>
 							<input name="fileUpload" type="file" class="" style="width:200px;"/>
 							<input type="button" value="추가" onclick="add_imgbox()" style="height: 28px;">
-						</td>
-					</tr>
-					<tr th:each="option:${itemFormDto.options}">
-						<th>옵션 별 수량 추가</th>
-						<td><input type="hidden" name="itemOptionId" th:value="${option?.itemOptionId}" >
-							<input type='text' name='optionName' th:value="${option?.optionName}" class='optionName'>
-							<input type='text' name='quantity' th:value="${option?.quantity}" class='quantity'>
-							<input type='button' value='삭제' onclick='opt_remove(this)'>
 						</td>
 					</tr>
 					<tr th:each="itemImg : ${itemImgDto}">
@@ -160,11 +160,11 @@
 </body>
 <script>
 	const add_textbox = () => {
-   const box = document.getElementById("box");
+   const box = document.getElementById("imgbox");
     const newP = document.createElement("tr");
 
     newP.innerHTML = "<th>옵션 별 수량 추가</th><td><input type='text' name='optionName' class='optionName'><input type='text' name='quantity' class='quantity'> <input type='button' value='삭제' onclick='opt_remove(this)'></td>";
-    box.parentElement.appendChild(newP);
+		box.parentNode.insertBefore(newP, box.previousSibling);
     
 }
 const add_imgbox = () => {
