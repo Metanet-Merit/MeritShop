@@ -89,11 +89,8 @@
                     </select>
                 </div>
                 <hr class="my-4">
-                <div class="text-right mgt-50">
-                    <h5>결제 금액</h5>
-                    <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
-                </div>
                 <div th:if="${itemFormDto.status != T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
+                    <button type="button" class="btn btn-primary btn-lg"  id="scrap_btn">찜하기</button>
                     <button type="button" class="btn btn-light border border-primary btn-lg" onclick="cart()">장바구니 담기</button>
                     <button type="button" class="btn btn-primary btn-lg"  id="order_btn">주문하기</button>
                 </div>
@@ -149,7 +146,7 @@
                 </div>
                 <div style="display: none">
                     <div class="prd_qna_tit" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
-                        <button class="btnInquiry goods_qna_inquiry" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
+                        <button class="btn btn-light border border-primary btn-lg" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
                             <a th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">상품문의</a>
                         </button>
                     </div>
