@@ -76,7 +76,7 @@
                     <td class="align-middle" th:text="${cart.optionName}">
 
                     </td>
-                    <td class="align-middle cartPrice" id="cartPrice" th:text="|${#numbers.formatInteger(cart.price, 0, 'COMMA')}원|"></td>
+                    <td class="align-middle " th:text="|${#numbers.formatInteger(cart.price, 0, 'COMMA')}원|"></td>
                     <td class="align-middle" value="여기" >
                         <div class="input-group quantity mx-auto" style="width: 100px;">
                             <div class="input-group-btn" >
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                     </td>
-                    <td class="align-middle cartPrice2" id="cartPrice2" th:text="|${#numbers.formatInteger(cart.price, 0, 'COMMA')}원|"></td>
+                    <td class="align-middle cartPrice" id="cartPrice" th:text="|${#numbers.formatInteger(cart.price, 0, 'COMMA')}원|"></td>
                     <td class="align-middle" th:onclick="'location.href=/cart/delete/'+ @{${cart.cartId}}">
                         <button type="button" class="btn btn-sm btn-primary" aria-label="Close">
                             <span aria-hidden="true" th:data-id="${cart.cartId}" onclick="deleteCartItem(this)">&times;</span>
@@ -182,8 +182,7 @@
                 cache: false,
                 success: function (data) {
                     if (data != null) {
-                        $("#cartPrice2").eq(index).text(AddComma(data.itemPrice)+"원");
-                        $("#cartPrice").eq(index).text(AddComma(data.itemPrice)+"원");
+                        $(".cartPrice").eq(index).text(AddComma(data.itemPrice)+"원");
                         $("#total").text(AddComma(data.totalPrice)+"원");
                         $("#shipment").text(AddComma(data.shipment)+"원");
                         $("#final").text(AddComma(data.finalPrice)+"원");

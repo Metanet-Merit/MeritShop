@@ -7,23 +7,23 @@
   <style>
     img {
       width: 300px;
-      height: 150px;
+      height: 200px;
       object-fit: cover;
     }
   </style>
   <div id="commonField" style="width: 1200px; margin-right: auto; margin-left: auto;">
+    <span class="px-2">
+            <strong th:text="${name}" style="color: #D19C97; font-size: 35px; margin-left: 60px;"></strong>
+      <span></span>
+        </span>
     <!-- Products Start -->
     <div class="container-fluid pt-5">
-      <div class="text-center mb-4">
-        <h2 class="section-title px-5"><span class="px-2">인기 상품들</span></h2>
-      </div>
-
       <div class="row px-xl-5 pb-3" >
         <div class="col-lg-3 col-md-6 col-sm-12 pb-1" th:each=" item:${items}" th:onclick=" 'location.href='+'\''+@{'/item/'+${item.itemId}}+'\''" >
           <div class="card product-item border-0 mb-4">
             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
               <!--/*@thymesVar id="itemUrl" type=""*/-->
-              <img height="600" class="img-fluid w-100" th:src="${item.imgUrl}" alt="">
+              <img height="600" class="" th:src="${item.imgUrl}" alt="">
             </div>
             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
               <h6 class="text-truncate mb-3" th:text="${item.itemName}"></h6>

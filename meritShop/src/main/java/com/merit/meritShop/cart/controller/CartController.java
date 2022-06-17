@@ -120,7 +120,6 @@ public class CartController {
         String id = userId.split("=")[1];
         int total = cartService.getTotal(Long.parseLong(id)); // 총 장바구니 상품 가격
         int shipment = total >= 50000? 0 : 3000;
-        System.out.println(total+" "+itemPrice);
         CartPriceDto cartPriceDto = new CartPriceDto(total, itemPrice, shipment, total+shipment);
         return cartPriceDto;
     }

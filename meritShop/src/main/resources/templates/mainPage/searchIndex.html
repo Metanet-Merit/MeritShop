@@ -7,7 +7,7 @@
     <style>
         img {
             width: 300px;
-            height: 150px;
+            height: 200px;
             object-fit: cover;
         }
     </style>
@@ -25,7 +25,7 @@
                     <div class="card product-item border-0 mb-4">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                             <!--/*@thymesVar id="itemUrl" type=""*/-->
-                            <img height="600" class="img-fluid w-100" th:src="${item.imgUrl}" alt="">
+                            <img height="600" class="" th:src="${item.imgUrl}" alt="">
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3" th:text="${item.itemName}"></h6>
