@@ -56,8 +56,8 @@
         <a type="button" onclick="$exam.exam()" class="item">
             <div class="text">문의사항</div>
         </a>
-        <a type="button" onclick="$exam.exam()" class="item">
-            <div class="text">쿠폰 / 적립금</div>
+        <a type="button" th:href="@{/myPage/myScraps}" class="item">
+            <div class="text">내 찜 내역</div>
         </a>
     </div>
     <div class="mainContent" id="content" style="margin: 50px 0px 0px 0px">
@@ -108,9 +108,7 @@
                 </div>
 </div>
     <br>
-
     <div class="container">
-
         <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
@@ -130,10 +128,8 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-
+</div>
     <div th:replace="~{template/fragment/myPageFooter::footer}"></div>
 </body>
 </html>

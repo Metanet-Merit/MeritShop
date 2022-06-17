@@ -60,12 +60,21 @@
                         <input id="buyer_name"class="form-control" type="text" placeholder="고길동" th:value="${user.userName}">
                     </div>
                     <div class="col-md-6 form-group">
+                        <label></label>
+                    </div>
+                    <div class="col-md-6 form-group">
                         <label>E-mail</label>
                         <input id="buyer_email"class="form-control" type="text" placeholder="example@email.com" th:value="${user.email}">
                     </div>
                     <div class="col-md-6 form-group">
+                        <label></label>
+                    </div>
+                    <div class="col-md-6 form-group">
                         <label>휴대전화 번호</label>
                         <input id="buyer_tel"class="form-control" type="text" placeholder="010 1234 5678" th:value="${user.phoneNumber}">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label></label>
                     </div>
                     <div class="col-md-6 form-group">
                         <label>주   소</label>
@@ -80,7 +89,7 @@
                     <div class="col-md-12 form-group">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="shipto">
-                            <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">다른 사람이 받을꺼에요!</label>
+                            <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">수령인 변경</label>
                         </div>
                     </div>
                 </div>
@@ -94,12 +103,21 @@
                         <input class="form-control" id="recipient_name" type="text" placeholder="홍길동">
                     </div>
                     <div class="col-md-6 form-group">
+                        <label></label>
+                    </div>
+                    <div class="col-md-6 form-group">
                         <label>E-mail</label>
                         <input class="form-control" type="text" placeholder="example@email.com">
                     </div>
                     <div class="col-md-6 form-group">
+                        <label></label>
+                    </div>
+                    <div class="col-md-6 form-group">
                         <label>휴대전화 번호</label>
                         <input class="form-control" type="text" placeholder="010 1234 5678">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label></label>
                     </div>
                     <div class="col-md-6 form-group">
                         <label>주   소</label>
@@ -116,7 +134,7 @@
         <div class="col-lg-4">
             <div class="card border-secondary mb-5">
                 <div class="card-header bg-secondary border-0">
-                    <h4 class="font-weight-semi-bold m-0">Order Total</h4>
+                    <h4 class="font-weight-semi-bold m-0" style="font-size: 20px; text-align: center">전체 주문 정보</h4>
                 </div>
                 <div class="card-body">
                     <input type="hidden" id="transactionCode" th:value="${transactionCode}">
@@ -132,26 +150,26 @@
 
                     <hr class="mt-0">
                     <div class="d-flex justify-content-between mb-3 pt-1">
-                        <h6 class="font-weight-medium">Subtotal</h6>
+                        <h6 class="font-weight-medium">총 구매금액</h6>
                         <h6 class="font-weight-medium" id="subTotalPrice" th:text="'￦'+ ${totalPrice}"></h6>
                     </div>
                     <div th:if="${totalPrice>=50000}" class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Shipping</h6>
+                        <h6 class="font-weight-medium">배송비</h6>
                         <h6 class="font-weight-medium">￦0</h6>
                     </div>
                     <div th:if="${totalPrice<50000}" class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Shipping</h6>
+                        <h6 class="font-weight-medium">배송비</h6>
                         <h6 class="font-weight-medium">￦3000</h6>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Discount</h6>
+                        <h6 class="font-weight-medium">할인금액</h6>
                         <h6 class="font-weight-medium" id="couponPrice">￦0</h6>
                     </div>
                 </div>
 
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
-                        <h5 class="font-weight-bold">Total</h5>
+                        <h5 class="font-weight-bold">총 결제금액</h5>
                         <h5 class="font-weight-bold" id="totalPrice" th:value="${totalPrice}" th:text="'￦'+${totalPrice}"></h5>
                     </div>
                 </div>
@@ -159,7 +177,7 @@
 
                 사용 가능한  쿠폰 보기<br>
 
-            <button id="popup_open_btn">쿠폰 사용</button>
+            <button id="popup_open_btn" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">쿠폰 사용</button>
             <input type="hidden" id="couponCaseId">
 
             <div id="my_modal">
@@ -177,7 +195,7 @@
 
             <div class="card border-secondary mb-5">
                 <div class="card-header bg-secondary border-0">
-                    <h4 class="font-weight-semi-bold m-0">Payment</h4>
+                    <h4 class="font-weight-semi-bold m-0" style="font-size: 20px; text-align: center">결제수단</h4>
                 </div>
                 <div class="card-body">
                     <div class="form-group">

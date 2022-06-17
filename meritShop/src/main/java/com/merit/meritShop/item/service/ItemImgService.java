@@ -23,7 +23,7 @@ public class ItemImgService {
     private  final ItemImgRepository itemImgRepository;
     private  final FileService fileService;
 
-    public String saveItemImg(ItemImg itemImg, MultipartFile itemImgFile) throws IOException {
+    public ItemImg saveItemImg(ItemImg itemImg, MultipartFile itemImgFile) throws IOException {
         String originName = itemImgFile.getOriginalFilename();
         String imgName ="";
         String imgUrl = "";
@@ -34,9 +34,8 @@ public class ItemImgService {
             imgUrl = "/images/item/"+imgName;
         }
         itemImg.updateItemImg(originName,imgName,imgUrl);
-        itemImgRepository.save(itemImg);
-        System.out.println("1"+imgUrl);
-        return imgUrl;
+
+        return itemImgRepository.save(itemImg);
     }
 
     public void updateItemImg(Long itemImgId,MultipartFile itemImgFile) throws IOException {

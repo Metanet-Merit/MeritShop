@@ -30,6 +30,25 @@
             border-color: #2e59d9;
             transition: background-color .17s ease,color .17s ease;
         }
+        .btn_delete{
+            display: inline-block;
+            outline: none;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 2px 15px;
+            min-width: 60px;
+            border: none;
+            color: red;
+            background-color: #fff;
+            border: 2px solid;
+            border-color: red;
+            transition: background-color .17s ease,color .17s ease;
+        }
+        .btn_delete a{
+            color : red;
+        }
     </style>
 
     <!-- Begin Page Content -->
@@ -65,7 +84,7 @@
                                 <th style="background-color: #2e59d9">대표사진</th>
                                 <th style="background-color: #2e59d9">상품이름</th>
                                 <th style="background-color: #2e59d9">카테고리</th>
-                                <th style="background-color: #2e59d9">수정</th>
+                                <th style="background-color: #2e59d9">정보조회</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -74,7 +93,10 @@
                                 <td><img th:src="${item.imgUrl}" width="100" height="100" alt=""></td>
                                 <td th:text="${item.itemName}"></td>
                                 <td th:text="${item.category}"></td>
-                                <td><span class="btn_submit"><a th:href="'/admin/updateItem/'+${item.itemId}">Edit</a></span></td>
+                                <td>
+                                    <span class="btn_submit"><a th:href="'/admin/updateItem/'+${item.itemId}">조회</a></span>
+                                    <span class="btn_delete"><a th:href="'/admin/deleteItem/'+${item.itemId}">삭제</a></span>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,8 @@ public class ItemController {
     private final ReviewService reviewService;
     private final QnaService qnaService;
     private final ItemRepository itemRepository;
+
+
 
     @GetMapping("item/{id}")
     public String getItemDetail(@PathVariable("id") long id, Model model){
@@ -96,7 +99,7 @@ public class ItemController {
         itemService.save(dto,fileUpload);
 
 
-        return "item/itemForm";
+        return "redirect:/admin/itemList";
     }
 
     @GetMapping("/admin/updateItem/{id}")
@@ -153,9 +156,11 @@ public class ItemController {
 
         List<Long> itemImgIdList = new ArrayList<>();
         List<Long> optIdList =  new ArrayList<>();
+        if(itemImgId!=null){
         for(String id : itemImgId){
             itemImgIdList.add(Long.parseLong(id));
-        }
+        }}
+
         for(String id:itemOptionId){
             optIdList.add(Long.parseLong(id));
         }
@@ -164,7 +169,17 @@ public class ItemController {
         itemService.updateItem(dto,fileUpload,itemImgIdList,optIdList);
 
 
-        return "redirect:/admin";
+        return "redirect:/admin/itemList";
+    }
+
+
+    @GetMapping("/admin/deleteItem/{id}")
+    @Transactional
+    String deleteItem(@PathVariable("id") Long itemId){
+
+        itemRepository.deleteById(itemId);
+        itemImgRepository.deleteAllByItemItemId(itemId);
+        return "redirect:/admin/itemList";
     }
 
     @GetMapping("/admin/itemList")

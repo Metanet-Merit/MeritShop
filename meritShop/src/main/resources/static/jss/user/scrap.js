@@ -1,7 +1,5 @@
 $scrap = {
 
-    //itemId: document.getElementById("itemId").value(),
-
     addScrap: function () {
         var itemId_=document.getElementById("itemId").value;
         userId = $Cookie.getCookie();

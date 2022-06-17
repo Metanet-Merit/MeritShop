@@ -1,4 +1,4 @@
-package com.merit.meritShop.user.service;
+package com.merit.meritShop.scrap.service;
 
 import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.common.domain.ResultCode;
@@ -9,10 +9,11 @@ import com.merit.meritShop.item.repository.ItemRepository;
 import com.merit.meritShop.scrap.domain.Scrap;
 import com.merit.meritShop.user.domain.User;
 import com.merit.meritShop.user.dto.ScrapDTO;
-import com.merit.meritShop.user.repository.ScrapRepository;
+import com.merit.meritShop.scrap.repository.ScrapRepository;
 import com.merit.meritShop.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CookieValue;
 
 import java.util.*;
 
@@ -94,4 +95,9 @@ public class ScrapService {
 
     }
 
+    public Long count(Long userId){
+        if(userId==null) return 0L;
+        User user=userRepository.findById(userId).get();
+        return scrapRepository.countByUser(user);
+    }
 }
