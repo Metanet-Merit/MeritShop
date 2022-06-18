@@ -70,6 +70,7 @@
                     <col style="width:39%;">
                     <col style="width:12%;">
                 </colgroup>
+
                 <thead>
                 <tr>
                     <th scope="col"></th>
@@ -80,6 +81,7 @@
 
 
                 <span th:each="scraps:${result['rtnObj']['scraps']}">
+                    <input type="hidden" id="scrapId" th:value="${scraps['scrapId']}">
                             <tr>
                                 <td class="subject">
                                     <div class="area">
@@ -98,7 +100,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </td>
+                                   </td>
+                                <td>  <a type="button" onclick="$scrap.deleteScrap()" >삭제</a>
+                               </td>
                                 <td class="subject">
                                     <div class="area">
                                         <div class="textus" style="width:90%;">
