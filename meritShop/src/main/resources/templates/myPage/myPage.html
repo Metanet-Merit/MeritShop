@@ -90,7 +90,7 @@
             <div class="container">
             <div class="row justify-content-left">
                 <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section" style="color: #D19C97">내 정보 보기</h2>
+                    <h2 class="heading-section" style="color: #D19C97">내 정보 조회</h2>
                 </div>
             </div>
                 <div class="row justify-content-center">
@@ -107,7 +107,9 @@
                         </div>
                         <div class="col-md-2">
                             <label for="sex" class="form-label">성별</label>
-                            <input name="sex" type="text" th:field="*{sex}" class="form-control" id="sex" disabled />
+                            <input class="form-control" type="text" th:if="${user.sex} == 'M'" th:value="남자" />
+                            <input class="form-control" type="text" th:unless="${user.sex} == 'M'" th:value="여자" />
+                     <!--       <input name="sex" type="text" th:field="*{sex}" class="form-control" id="sex" disabled />-->
                         </div>
                         <div class="col-md-6">
                         </div>
@@ -129,7 +131,7 @@
                         </div>
                         <div class="col-md-2">
                             <label for="point" class="form-label">적립금</label>
-                            <input name="point" type="text" th:field="*{point}" class="form-control" id="point">
+                            <input name="point" type="text" th:field="*{point}" class="form-control" id="point" disabled />
                         </div>
                         <div class="col-md-2">
                             <label for="expire" class="form-label">구독 만료일</label>

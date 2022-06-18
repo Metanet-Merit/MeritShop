@@ -8,6 +8,33 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/boardDetail.css" type="text/css">
+
+    <style>
+        .coupon_content {
+            border: solid #1c294e 1px ;
+            width: 350px;
+            hight: 150px;
+            text-align: center;
+            margin-top: 30px;
+
+        }
+        #my_modal {
+            display: none;
+            width: 500px;
+            height: 400px;
+            padding: 20px 60px;
+            background-color: #fefefe;
+            border: 1px solid #888;
+            border-radius: 3px;
+        }
+
+        #my_modal .modal_close_btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+
 </head>
 <th:block layout:fragment="content">
     <div class="mainContent" id="content">
@@ -66,13 +93,140 @@
                 </div>
                 <div class="col-md-4">
                 </div>
+                <button type="button" id="popup_open_btn" class="btn">쿠폰 추가</button>
+                <div id="my_modal">
+                     <div class="coupon_content" th:each="coupon:${couponList}">
+                        <input type="hidden" class="couponId" th:value="${coupon.couponId}">
+                        <h5 class="couponName" th:text="${coupon.couponName}"></h5>
+                        <p th:if="${coupon.discountPrice!=0}" class="couponPrice" th:text="${coupon.discountPrice}"></p>
+                    </div>
+                    <a class="modal_close_btn">닫기</a>
+                </div>
+
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th style="background-color: #2e59d9">쿠폰번호</th>
+                        <th style="background-color: #2e59d9">쿠폰이름</th>
+                        <th style="background-color: #2e59d9">쿠폰 가격</th>
+                        <th style="background-color: #2e59d9">삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody id="cc">
+                    <tr th:each="coupon:${couponCaseList}">
+                        <td th:text="${coupon.coupon.couponId}"><input type="hidden" name="couponCaseId" th:value="${coupon.couponCaseId}"></td>
+                        <td th:text="${coupon.coupon.couponName}"></td>
+                        <td th:text="${coupon.coupon.discountPrice}"></td>
+                        <td>
+                              <button type="button" class="btn_delete">삭제</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary" style="margin-right: 14rem; margin-bottom: 3rem; float: right">수정</button>
                 </div>
             </form>
+
             </div>
         </div>
     </div>
     </div>
+
+
+
+
+    <script>
+        function remove(obj){
+            cc = document.getElementById("cc");
+            cc.removeChild(obj.parentElement.parentElement)
+        }
+        swch =0;
+
+        function modal(id) {
+            var zIndex = 9999;
+            var modal = document.getElementById(id);
+
+
+            // 모달 div 뒤에 희끄무레한 레이어
+            var bg = document.createElement('div');
+            bg.setStyle({
+                position: 'fixed',
+                zIndex: zIndex,
+                left: '0px',
+                top: '0px',
+                width: '100%',
+                height: '100%',
+                overflow: 'auto',
+                // 레이어 색갈은 여기서 바꾸면 됨
+                backgroundColor: 'rgba(0,0,0,0.4)'
+            });
+            document.body.append(bg);
+
+            // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+            modal.querySelector('.modal_close_btn').addEventListener('click', function() {
+                bg.remove();
+                modal.style.display = 'none';
+            });
+            if(swch==0){
+            modal.querySelectorAll('.coupon_content').forEach(n=>n.addEventListener('click', function() {
+                bg.remove();
+                modal.style.display = 'none';
+                console.log(n);
+                const newP = document.createElement("tr");
+
+                couponName = n.getElementsByClassName("couponName")[0].textContent;
+                couponId = n.getElementsByClassName("couponId")[0].value;
+                couponPrice = parseInt(n.getElementsByClassName("couponPrice")[0].textContent);
+
+                cc = document.getElementById("cc");
+                newP.innerHTML = "<td>"+couponId+"<input type=\"hidden\" name='couponId' value='"+couponId+"'></td>\n" +
+                    "                        <td>"+couponName+"</td>\n" +
+                    "                        <td >"+couponPrice+"</td>\n" +
+                    "                        <td>\n" +
+                    "                              <button type=\"button\" class=\"btn_delete\" onclick='remove(this)'>삭제</button>\n" +
+                    "                        </td>";
+                cc.appendChild(newP);
+                //box.parentNode.insertBefore(newP, box.previousSibling);
+                swch=1;
+
+            }));
+            }else{
+                bg.remove();
+                modal.style.display = 'none';
+
+            }
+
+            modal.setStyle({
+                position: 'fixed',
+                display: 'block',
+                boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+                // 시꺼먼 레이어 보다 한칸 위에 보이기
+                zIndex: zIndex + 1,
+
+                // div center 정렬
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                msTransform: 'translate(-50%, -50%)',
+                webkitTransform: 'translate(-50%, -50%)'
+            });
+        }
+
+        // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
+        Element.prototype.setStyle = function(styles) {
+            for (var k in styles) this.style[k] = styles[k];
+            return this;
+        };
+
+        document.getElementById('popup_open_btn').addEventListener('click', function() {
+            // 모달창 띄우기
+            modal('my_modal');
+        });
+    </script>
 </th:block>
+
+
 </html>

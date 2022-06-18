@@ -1,6 +1,13 @@
 package com.merit.meritShop.user.controller;
 
+import com.merit.meritShop.coupon.domain.Coupon;
+import com.merit.meritShop.coupon.domain.CouponCase;
+import com.merit.meritShop.coupon.repository.CouponCaseRepository;
+import com.merit.meritShop.coupon.repository.CouponRepository;
+import com.merit.meritShop.coupon.service.CouponService;
+import com.merit.meritShop.user.domain.User;
 import com.merit.meritShop.user.dto.UserViewDto;
+import com.merit.meritShop.user.repository.UserRepository;
 import com.merit.meritShop.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +29,11 @@ import java.util.Map;
 @RequestMapping(value = "/admin")
 @Controller
 public class adminUserController {
-
+    private final UserRepository userRepository;
     private final UserService userService;
+    private final CouponCaseRepository couponCaseRepository;
+    private final CouponRepository couponRepository;
+    private final CouponService couponService;
 
     @GetMapping("/user/list")
     public String userList(Model model, @PageableDefault Pageable pageable){
@@ -47,13 +57,18 @@ public class adminUserController {
     @GetMapping("/user/detail")
     public String userDetail(Model model, @RequestParam Long userId){
         UserViewDto user = userService.getUserDetail(userId);
+        List<CouponCase> couponCaseList = couponCaseRepository.findAllByUserUserIdAndUsedIsFalse(userId);
+        List<Coupon> couponList = couponRepository.findAll();
         model.addAttribute("user", user);
+        model.addAttribute("couponList",couponList);
+        model.addAttribute("couponCaseList",couponCaseList);
         return "admin/user/userDetail";
     }
 
     @PostMapping("/user/detail/{userId}")
     public String userModify(@RequestBody MultiValueMap<String,Object> patchMapDto, @PathVariable Long userId){
         String role;
+        
         switch (patchMapDto.getFirst("role").toString()) {
             case "프리미엄 회원":
                 role = "ROLE_PREMIUM";
@@ -71,6 +86,15 @@ public class adminUserController {
         patchMap.put("role", role);
         patchMap.put("point", patchMapDto.getFirst("point"));
         userService.updateUser(patchMap, userId);
+
+        User user = userRepository.findById(userId).get();
+
+        for (Object couponId: patchMapDto.get("couponId") ) {
+
+            couponService.publishCouponToUser(user,Long.parseLong((String)couponId));
+            
+        }
+
         return "redirect:/admin/user/list";
     }
 }
