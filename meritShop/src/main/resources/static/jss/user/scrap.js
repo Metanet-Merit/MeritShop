@@ -1,34 +1,5 @@
 $scrap = {
 
-    deleteScrap:function (){
-        var scrapId=document.getElementById("scrapId").value;
-        userId = $Cookie.getCookie();
-        url = '/myPage/scrap/delete/'+scrapId;
-        param = {
-            scrapId: scrapId
-        }
-
-        $ajax.post(url, param, $scrap.deleteScrapCallback, $scrap.deleteScrapErrCallback);
-    },
-    deleteScrapCallback:function (response){
-        var rtnCd = JSON.parse(response).rtnCd;
-
-        if (rtnCd == 0){
-            location.href = "/myPage/myScraps";
-            return;
-        }
-
-        var errMsg=JSON.parse(response).rtnMsg;
-        alert(errMsg);
-        location.href = "/myPage/myScraps";
-        return;
-
-    },
-    deleteScrapErrCallback:function(response){
-        var errMsg=JSON.parse(response).rtnMsg;
-        alert(errMsg);
-        location.href = "/myPage/myScraps";
-    },
     addScrap: function () {
         var itemId_=document.getElementById("itemId").value;
         userId = $Cookie.getCookie();

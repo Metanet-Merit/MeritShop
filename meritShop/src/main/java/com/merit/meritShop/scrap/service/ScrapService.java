@@ -8,11 +8,12 @@ import com.merit.meritShop.item.repository.ItemOptionRepository;
 import com.merit.meritShop.item.repository.ItemRepository;
 import com.merit.meritShop.scrap.domain.Scrap;
 import com.merit.meritShop.user.domain.User;
-import com.merit.meritShop.scrap.domain.ScrapDTO;
+import com.merit.meritShop.user.dto.ScrapDTO;
 import com.merit.meritShop.scrap.repository.ScrapRepository;
 import com.merit.meritShop.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CookieValue;
 
 import java.util.*;
 
@@ -41,7 +42,7 @@ public class ScrapService {
 
                 Item item = scrap.getItem();
 
-                ItemOption itemOption = itemOptionRepository.findItemOptionByItem(item).get();
+                ItemOption itemOption= itemOptionRepository.findItemOptionByItem(item).get();
                 ScrapDTO scrapDTO = ScrapDTO.builder()
                         .itemName(item.getItemName())
                         .itemId(item.getItemId())
@@ -50,7 +51,6 @@ public class ScrapService {
                         .category(item.getCategory())
                         .url(item.getImgUrl())
                         .itemPrice(item.getPrice())
-                        .scrapId(scrap.getScrapId())
                         .build();
 
                 scrapDTOList.add(scrapDTO);
@@ -95,23 +95,9 @@ public class ScrapService {
 
     }
 
-    public Long count(Long userId) {
-        if (userId == null) return 0L;
-        User user = userRepository.findById(userId).get();
+    public Long count(Long userId){
+        if(userId==null) return 0L;
+        User user=userRepository.findById(userId).get();
         return scrapRepository.countByUser(user);
-    }
-
-    public Result<Scrap> deleteScrap(Long scrapId) {
-        try {
-            Scrap scrap = scrapRepository.findById(scrapId).get();
-            if (scrap == null) {
-                return ResultCode.SCRAP_ALREADY_DELETE.result();
-            }
-            scrapRepository.delete(scrap);
-            return ResultCode.Success.result();
-        } catch (Exception e) {
-            return ResultCode.DB_ERROR.result();
-        }
-
     }
 }

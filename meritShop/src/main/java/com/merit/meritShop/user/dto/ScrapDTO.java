@@ -1,4 +1,4 @@
-package com.merit.meritShop.scrap.domain;
+package com.merit.meritShop.user.dto;
 
 import lombok.*;
 
@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ScrapDTO {
 
-    private Long scrapId;
     private Long itemId;
     private Long itemOptionId;
     private String itemName;
