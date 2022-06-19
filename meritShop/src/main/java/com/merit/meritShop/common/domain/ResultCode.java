@@ -14,6 +14,7 @@ public enum ResultCode {
     ORDER_NOT_EXISTS(300, "존재하지 않는 주문입니다."),
     //
     SCRAP_ALREADY_EXISTS(400,"이미 찜한 상품입니다."),
+    SCRAP_ALREADY_DELETE(401,"이미 삭제된 찜입니다."),
     //기타 에러
     DB_ERROR(9998, "DB 오류입니다."),
     ETC_ERROR(9999, "시스템 오류입니다.");
