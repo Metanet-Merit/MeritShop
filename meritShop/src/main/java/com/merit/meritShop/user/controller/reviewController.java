@@ -1,13 +1,13 @@
 package com.merit.meritShop.user.controller;
 
-import com.merit.meritShop.common.controller.AbstractController;
 import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.user.domain.Review;
 import com.merit.meritShop.user.dto.ReviewFormDTO;
 import com.merit.meritShop.user.service.ReviewService;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +21,14 @@ public class reviewController {
 
     @Autowired
     ReviewService reviewService;
+
+    @ResponseBody
+    @GetMapping("/reviewPages")
+    public Result reviewPages(@RequestParam Long userId, @PageableDefault(size = 5) Pageable pageable) {
+        return reviewService.getReviewPages(userId, pageable);
+
+    }
+
 
     @ResponseBody
     @GetMapping("/reviews")
