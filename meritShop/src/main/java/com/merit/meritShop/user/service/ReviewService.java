@@ -79,34 +79,28 @@ public class ReviewService {
 
     }
 
-    public Result<Map<String, Object>> getReviews(Long userId) {
+    public  Result<Page<ReviewFormDTO>> getReviews(Long userId,Pageable pageable) {
 
         try {
-            Map<String, Object> map = new HashMap<>();
+
             Optional<User> optionalUser = userRepository.findById(userId);
-            User user = optionalUser.get();
-            List<Review> reviewList = reviewRepository.findReviewByUser(user);
-            List<ReviewFormDTO> reviewFormDTOList = new ArrayList<>();
-
-            for (Review review : reviewList) {
-                OrderItem orderItem = review.getOrderItem();
-                Item item = orderItem.getItem();
-
-                ReviewFormDTO reviewFormDTO = ReviewFormDTO.builder()
-                        .content(review.getContent())
-                        .rate(review.getRate())
-                        .reviewDate(review.getCreatedDate())
-                        .orderDate(orderItem.getOrders().getOrderDate())
-                        .orderItemName(item.getItemName())
-                        .userName(user.getUserName())
-                        .uuidName(item.getImgUrl())
-                        .category(item.getCategory())
-                        .build();
-                log.info(review.getContent());
-                reviewFormDTOList.add(reviewFormDTO);
-
+            if (optionalUser.isEmpty()) {
+                return ResultCode.USER_NOT_EXISTS.result();
             }
-            map.put("reviews", reviewFormDTOList);
+            User user = optionalUser.get();
+            Page<Review> reviewList = reviewRepository.findReviewByUser(user, pageable);
+
+            Page<ReviewFormDTO> map = reviewList.map(review -> ReviewFormDTO.builder()
+                    .content(review.getContent())
+                    .rate(review.getRate())
+                    .reviewDate(review.getCreatedDate())
+                    .orderDate(review.getOrderItem().getOrders().getOrderDate())
+                    .orderItemName(review.getOrderItem().getItem().getItemName())
+                    .userName(user.getUserName())
+                    .uuidName(review.getOrderItem().getItem().getImgUrl())
+                    .category(review.getOrderItem().getItem().getCategory())
+                    .build());
+
             return ResultCode.Success.result(map);
         } catch (Exception e) {
             return ResultCode.DB_ERROR.result();

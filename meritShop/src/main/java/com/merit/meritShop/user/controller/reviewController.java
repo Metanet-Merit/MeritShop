@@ -32,9 +32,9 @@ public class reviewController {
 
     @ResponseBody
     @GetMapping("/reviews")
-    public Result getReviews(@RequestParam Long userId) {
+    public Result getReviews(@RequestParam Long userId, @PageableDefault(size = 5) Pageable pageable) {
         //  , @CookieValue(name = "userId", required = false) Long useId) { //userId는 쿠키에서 가져오기
-        return reviewService.getReviews(userId);
+        return reviewService.getReviews(userId, pageable);
     }
 /*
     @PostMapping("review")
