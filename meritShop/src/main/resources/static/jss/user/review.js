@@ -221,12 +221,10 @@ $review = {
         const suffix =
 
             '</tbody>\n' +
-            '    </table>\n' ;
-
+            '    </table>\n';
 
 
         if (result.rtnCd == 0) {
-
 
 
             var content = '';
@@ -250,39 +248,39 @@ $review = {
 
             });
 
-            var numbers=
+            var numbers =
                 '<nav aria-label="Page navigation example">\n' +
                 '<ul class="pagination justify-content-center">';
 
-            if(1==rtnObj.pageable.pageNumber+1){
-                numbers+= '<li class="page-item disabled">';
-            }else{
-                numbers+='<li class="page-item">';
+            if (1 == rtnObj.pageable.pageNumber + 1) {
+                numbers += '<li class="page-item disabled">';
+            } else {
+                numbers += '<li class="page-item">';
             }
-            numbers+='<a class="page-link" onclick="$review.getReviews('+(rtnObj.pageable.pageNumber-1)+')">Pre</a></li>' ;
+            numbers += '<a class="page-link" onclick="$review.getReviews(' + (rtnObj.pageable.pageNumber - 1) + ')">Pre</a></li>';
 
-            for(var i =startPage; i<=endPage;i++){
+            for (var i = startPage; i <= endPage; i++) {
 
-                if(i==rtnObj.pageable.pageNumber+1){
-                    numbers+='<li class="page-item disabled">'
-                }else{
-                    numbers+='<li class="page-item">'
+                if (i == rtnObj.pageable.pageNumber + 1) {
+                    numbers += '<li class="page-item disabled">'
+                } else {
+                    numbers += '<li class="page-item">'
                 }
 
-                numbers+=
-                    '<a class="page-link" onclick="$review.getReviews('+(i-1)+')">'+i+'</a></li>';
+                numbers +=
+                    '<a class="page-link" onclick="$review.getReviews(' + (i - 1) + ')">' + i + '</a></li>';
             }
 
-            if(rtnObj.totalPages==rtnObj.pageable.pageNumber+1){
-                numbers+='<li class="page-item disabled">\n' ;
-            }else{
-                numbers+='<li class="page-item">\n' ;
+            if (rtnObj.totalPages == rtnObj.pageable.pageNumber + 1) {
+                numbers += '<li class="page-item disabled">\n';
+            } else {
+                numbers += '<li class="page-item">\n';
             }
 
-            numbers+=   '  <a class="page-link" onclick="$review.getReviews('+rtnObj.pageable.pageNumber+1+')" >Next</a>\n' +
+            numbers += '  <a class="page-link" onclick="$review.getReviews(' + rtnObj.pageable.pageNumber + 1 + ')" >Next</a>\n' +
                 '   </li>\n' +
                 '   </ul>\n' +
-                '   </nav>'+
+                '   </nav>' +
                 '\n' +
                 '\n' +
                 '\n' +
@@ -294,7 +292,7 @@ $review = {
                 '</body>';
 
 
-            document.getElementById('content').innerHTML = prefix + content + suffix+numbers;
+            document.getElementById('content').innerHTML = prefix + content + suffix + numbers;
 
         } else {
             var msg = JSON.parse(response).rtnMsg;
