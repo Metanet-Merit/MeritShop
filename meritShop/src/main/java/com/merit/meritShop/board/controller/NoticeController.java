@@ -3,6 +3,7 @@ package com.merit.meritShop.board.controller;
 import com.merit.meritShop.board.domain.Notice;
 import com.merit.meritShop.board.repository.NoticeRepository;
 import com.merit.meritShop.board.service.NoticeService;
+import com.merit.meritShop.item.domain.Item;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,18 +44,24 @@ public class NoticeController {
     }
 
     @RequestMapping("/main/notice")
-    public String userNoticeList(Model model, @PageableDefault(size = 5) Pageable pageable) {
+    public String userNoticeList(Model model, @PageableDefault Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
         Page<Notice> listPage = noticeRepository.findAll(pageable);
-
-        int startPage = Math.max(1,listPage.getPageable().getPageNumber()-4);
-        int endPage=Math.min(listPage.getTotalPages(),listPage.getPageable().getPageNumber()+4);
-
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("listPage", listPage);
-        return "notice/userNoticeList";
+        model.addAttribute("list", listPage);
+        return "mainPage/mainNotice";
     }
-
+    @GetMapping("/main/notice/detail")
+    public String userNoticeDetail(Model model, @RequestParam Long noticeId) {
+        Notice notice = noticeService.noticeDetail(noticeId);
+        noticeService.updateView(noticeId);
+        if(notice == null) {
+            return "redirect:list";
+        }
+        //log.info(notice.toString());
+        model.addAttribute("notice",notice);
+        return "mainPage/mainNoticeDetail";
+    }
     /*글 작성*/
     @GetMapping("/admin/notice/write")
     public String noticeWrite() {
@@ -80,17 +87,7 @@ public class NoticeController {
         model.addAttribute("notice",notice);
         return "notice/noticeDetail";
     }
-    @GetMapping("/main/notice/detail")
-    public String userNoticeDetail(Model model, @RequestParam Long noticeId) {
-        Notice notice = noticeService.noticeDetail(noticeId);
-        noticeService.updateView(noticeId);
-        if(notice == null) {
-            return "redirect:list";
-        }
-        //log.info(notice.toString());
-        model.addAttribute("notice",notice);
-        return "notice/noticeDetail";
-    }
+
     /*글 수정*/
     @GetMapping("/admin/notice/modify/{noticeId}")
     public String noticeModify(@PathVariable("noticeId") Long noticeId,

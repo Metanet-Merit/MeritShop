@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter   {
             //    .antMatchers( "/user/login").anonymous()
                 .antMatchers( "/user/logout").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                // .antMatchers(HttpMethod.GET,"/api/posts/**").anonymous()
-                .antMatchers(HttpMethod.POST,"/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+              //  .antMatchers(HttpMethod.POST,"/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/myPage/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/cart/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
