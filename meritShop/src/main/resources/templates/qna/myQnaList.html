@@ -36,69 +36,68 @@
     </style>
 </head>
 <body>
-<div th:fragment="header">
+<div th:replace="~{template/fragment/myPageHeader::header}"></div>
 
+<div class="listContainer">
+    <div class="mainContentBox">
+        <a type="button" th:href="@{/myPage/user}" class="item">
+            <div class="text">내 정보 조회</div>
+        </a>
+        <a type="button" th:href="@{/myPage/user/modify}" class="item">
+            <div class="text">내 정보 수정</div>
+        </a>
+        <a type="button" th:href="@{/myPage/MyOrderItems}" class="item">
+            <div class="text">구매 내역</div>
+        </a>
+        <a type="button" onclick="$review.getReviews()" class="item">
+            <div class="text">리뷰 내역</div>
+        </a>
+        <a type="button" th:href="@{/user/qnas}" class="item">
+            <div class="text">문의사항</div>
+        </a>
+        <a type="button" th:href="@{/myPage/myCoupon}" class="item">
+            <div class="text">쿠폰</div>
+        </a>
+        <a type="button" th:href="@{/myPage/myScraps}" class="item">
+            <div class="text">내 찜 내역</div>
+        </a>
+    </div>
 
-    <div th:replace="~{template/fragment/myPageHeader::header}"></div>
-
-    <div class="listContainer">
-        <div class="mainContentBox">
-            <a type="button" th:href="@{/myPage/user}" class="item">
-                <div class="text">내 정보 조회</div>
-            </a>
-            <a type="button" th:href="@{/myPage/user/modify}" class="item">
-                <div class="text">내 정보 수정</div>
-            </a>
-            <a type="button" th:href="@{/myPage/MyOrderItems}" class="item">
-                <div class="text">구매 내역</div>
-            </a>
-            <a type="button" onclick="$review.getReviews()" class="item">
-                <div class="text">리뷰 내역</div>
-            </a>
-            <a type="button" th:href="@{/user/qnas}" class="item">
-                <div class="text">문의사항</div>
-            </a>
-            <a type="button" th:href="@{/myPage/myCoupon}" class="item">
-                <div class="text">쿠폰</div>
-            </a>
-            <a type="button" th:href="@{/myPage/myScraps}" class="item">
-                <div class="text">내 찜 내역</div>
-            </a>
-        </div>
-        <div class="mainContent" id="content" style="margin: 50px 0px 0px 0px">
-            <div style="text-align: center" class="mypage-conts">
-                <div class="col-md-12" style="padding: 0px">
-                    <div class="table-wrap">
-                        <table class="table" style="width: 500px;">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th style="background-color: #fff; color: #D19C97">번호</th>
-                                <th style="background-color: #fff; color: #D19C97">제목</th>
-                                <th style="background-color: #fff; color: #D19C97">작성일</th>
-                                <th style="background-color: #fff; color: #D19C97">답변여부</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="alert" role="alert" th:each="qna : ${myQnaList}">
-                                <th scope="row" th:text="${qna.qnaId}"></th>
-                                <td>
-                                    <a style="color: black" th:text="${qna.title}"
-                                       th:href="@{/qna/detail(qnaId=${qna.qnaId})}"></a>
-                                </td>
-
-                                <td th:if="${qna.modifyDate == null}"
-                                    th:text="${#temporals.format(qna.registerDate,'yyyy-MM-dd')}"></th:if>
-                                </td>
-                                <td th:unless="${qna.modifyDate == null}"
-                                    th:text="${#temporals.format(qna.modifyDate,'yyyy-MM-dd')}"></th:if>
-                                </td>
-
-                                <!--<td th:text="${#temporals.format(qna.registerDate,'yyyy-MM-dd')}"></td>-->
-                                <td scope="row" th:if="${qna.replied}==true" th:text="O"></td>
-                                <td scope="row" th:unless="${qna.replied}==true" th:text="X"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+        <div style="text-align: center" class="mypage-conts">
+            <div class="title-area linezero">
+                <h2 class="tit">문의사항</h2>
+            </div>
+            <table class="board-list-2s mgT20 new">
+                <caption></caption>
+                <colgroup>
+                    <col style="width:49%;">
+                    <col style="width:39%;">
+                    <col style="width:12%;">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th style="padding-left: 20px; color:#D19C97" scope="col">제목</th>
+                    <th style="padding-left: 20px; color:#D19C97" scope="col">작성일</th>
+                    <th style="padding-left: 20px; color:#D19C97" scope="col">답변여부</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="alert" role="alert" th:each="qna : ${myQnaList}">
+                    <td class="subject">
+                        <a style="color: black" th:text="${qna.title}"
+                           th:href="@{/qna/detail(qnaId=${qna.qnaId})}"></a>
+                    </td>
+                    <td class="subject" th:if="${qna.modifyDate == null}"
+                        th:text="${#temporals.format(qna.registerDate,'yyyy-MM-dd')}"></th:if>
+                    </td>
+                    <td class="subject" th:unless="${qna.modifyDate == null}"
+                        th:text="${#temporals.format(qna.modifyDate,'yyyy-MM-dd')}"></th:if>
+                    </td>
+                    <td class="subject" scope="row" th:if="${qna.replied}==true" th:text="O"></td>
+                    <td class="subject" scope="row" th:unless="${qna.replied}==true" th:text="X"></td>
+                 </tr>
+                </tbody>
+            </table>
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item"

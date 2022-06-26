@@ -13,8 +13,24 @@
         <link rel="stylesheet" type="text/css" href="/css/content.css" />
         <script type="text/javascript" src="/scripts/jquery-ui/jquery.min.js"></script>
         <script type="text/javascript" src="/scripts/common/common-ui.js"></script>
-        <style type="text/css">
-        </style>
+<style>
+    .btn_submit {
+        display: inline-block;
+        outline: none;
+        cursor: pointer;
+        border-radius: 3px;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 2px 15px;
+        min-width: 60px;
+        border: none;
+        color: #2e59d9;
+        background-color: #fff;
+        border: 2px solid;
+        border-color: #2e59d9;
+        transition: background-color .17s ease,color .17s ease;
+    }
+</style>
     </head>
 
     <div id="wrap">
@@ -28,19 +44,15 @@
             <!-- contents -->
             <div class="contents">
 
-                <!-- location -->
-                <div class="location"><a href="/admin">Admin</a> &gt; <a href="/admin/itemList">쿠폰관리</a> &gt; <a href="#"><span class="txt_w">쿠폰추가</span></a></div>
-                <!-- location -->
-
                 <!-- table -->
                 <div class="title">
                 <span class="brd_rtop mgb10">
-					<span class="btn_orange"><a href="#">List</a></span>
+					<span class=btn_submit"><a href="/admin/couponList" style="color:#2e59d9;">쿠폰 목록</a></span>
                 </span>
                 </div>
 
                 <!-- table_detail -->
-                <form action="/admin/newCoupon" method="post" >
+                <form action="/admin/newCoupon" method="post" enctype="multipart/form-data">
 
                     <table class="brd_detail">
                         <caption></caption>
@@ -52,31 +64,31 @@
 
                         <tr>
                             <th>쿠폰 이름 <img src="/images/mone/star.gif" alt=""/></th>
-                            <td><input name="couponName" type="text" class="" style="width:188px;"/></td>
+                            <td><input name="couponName" type="text" class="" style="width:200px;"/></td>
                         </tr>
                         <tr>
                             <th>할인 금액</th>
-                            <td><input name="discountPrice" type="number" class="" style="width:188px;"/></td>
+                            <td><input name="discountPrice" type="number" class="" style="width:200px;"/></td>
                         </tr>
                         <tr>
                             <th>할인율</th>
-                            <td><input name="discountRate" type="number" class="" style="width:188px;"/></td>
+                            <td><input name="discountRate" type="number" class="" style="width:200px;"/></td>
                         </tr>
                         <tr>
-                            <th>Description</th>
+                            <th>쿠폰 설명</th>
                             <td><textarea name="description" cols="50" rows="10"></textarea></td>
                         </tr>
                         <tr>
-                            <th>쿠폰 사용 시작 가능 날짜(day)</th>
-                            <td><input name="startNum" type="number" class="" style="width:188px;"/></td>
+                            <th>쿠폰 사용 가능일</th>
+                            <td><input name="startNum" type="number" class="" style="width:200px;"/></td>
                         </tr>
                         <tr>
-                            <th>쿠폰 만료일(day)</th>
-                            <td><input name="endNum" type="number" class="" style="width:188px;"/></td>
+                            <th>쿠폰 만료일</th>
+                            <td><input name="endNum" type="number" class="" style="width:200px;"/></td>
                         </tr>
                         <tr>
                             <th>사용 최소 금액</th>
-                            <td><input name="minBound" type="number" class="" style="width:188px;"/></td>
+                            <td><input name="minBound" type="number" class="" style="width:200px;"/></td>
                         </tr>
 
                         </tbody>
@@ -87,9 +99,12 @@
 
                     <div class="brd_btn">
 				<span class="right">
-					<span class="btn_orange"><input type="submit"></span>
+					<span class="btn_orange">
+                        <input type="submit" class="btn_submit" value="등록" style="height: 30px">
+                    </span>
 				</span>
                     </div>
+
                 </form>
                 <!-- table_detail -->
 

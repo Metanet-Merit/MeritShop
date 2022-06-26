@@ -38,44 +38,34 @@
 </head>
 <th:block layout:fragment="content">
     <div class="mainContent" id="content">
-    <div id="commonField" style="border: 1px solid #4e73df; border-radius: 3px; width: 700px; margin-left: 100px;">
+    <div id="commonField" style="border: 1px solid #4e73df; border-radius: 3px; width: 700px; margin-left: 500px;">
         <div class="container" >
             <div class="row justify-content-center" >
                 <div class="col-md-6 text-center mb-5">
                     <h2 class="heading-section" style="color: #4e73df">회원 정보 조회</h2>
                 </div>
             <form th:action="@{/admin/user/detail/{userId}(userId = ${user.userId})}" method="post" class="row g-3 justify-content-center" th:object="${user}" >
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <label for="inputEmail4" class="form-label">아이디</label>
                     <input name="email" type="email" th:field="*{email}" class="form-control" id="inputEmail4" disabled />
                 </div>
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <label for="userName" class="form-label">회원 이름</label>
                     <input name="userName" type="text" th:field="*{userName}" class="form-control" id="userName" disabled />
                 </div>
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <label for="phoneNumber" class="form-label">전화번호</label>
                     <input name="phoneNumber" type="text" th:field="*{phoneNumber}" class="form-control" id="phoneNumber" disabled />
                 </div>
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <label for="addr1" class="form-label">주소</label>
                     <input name="addr1" type="text" th:field="*{addr1}" class="form-control" id="addr1" disabled />
                 </div>
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <label for="addr2" class="form-label">상세 주소</label>
                     <input name="addr2" type="text" th:field="*{addr2}" class="form-control" id="addr2" disabled />
                 </div>
                 <div class="col-md-4">
-                </div>
-                <div class="col-md-3">
                     <label for="inputState" class="form-label">회원 유형</label>
                     <select name="role" id="inputState" th:value="${user.role}"  class="form-select">
                         <option th:selected="${user.role}=='일반 회원'">일반 회원</option>
@@ -83,17 +73,17 @@
                         <option th:selected="${user.role}=='블랙 회원'">블랙 회원</option>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="point" class="form-label">적립금</label>
                     <input name="point" type="text" th:field="*{point}" class="form-control" id="point">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="expire" class="form-label">구독 만료일</label>
                     <input name="expireDate" type="text" th:field="*{expireDate}" class="form-control" id="expire" disabled />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-10">
                 </div>
-                <button type="button" id="popup_open_btn" class="btn">쿠폰 추가</button>
+                <button type="button" id="popup_open_btn" class="btn" style="width: 100px;">쿠폰 추가</button>
                 <div id="my_modal">
                      <div class="coupon_content" th:each="coupon:${couponList}">
                         <input type="hidden" class="couponId" th:value="${coupon.couponId}">
@@ -118,15 +108,15 @@
                         <td th:text="${coupon.coupon.couponName}"></td>
                         <td th:text="${coupon.coupon.discountPrice}"></td>
                         <td>
-                              <button type="button" class="btn_delete">삭제</button>
+                              <button type="button" class="del-btn">삭제</button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
 
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary" style="margin-right: 14rem; margin-bottom: 3rem; float: right">수정</button>
+                <div class="col-md-10">
                 </div>
+                <button type="submit" class="btn btn-primary" style="width: 100px; margin-bottom: 3rem; float: right">수정</button>
             </form>
 
             </div>

@@ -8223,3 +8223,22 @@ h1, h2, h3, h4, h5,
     border-color: #2e59d9;
     transition: background-color .17s ease,color .17s ease;
   }
+.del-btn {
+  margin-top: 10px;
+  outline: none;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 2px 16px;
+  height: 32px;
+  min-width: 60px;
+  min-height: 32px;
+  border: none;
+  color: red;
+  background-color: #fff;
+  border: 2px solid;
+  border-color: red;
+  transition: background-color .17s ease,color .17s ease;
+}

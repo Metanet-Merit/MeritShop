@@ -5,298 +5,420 @@
 
 <div layout:fragment="content">
 
-<!-- 사용자 스크립트 추가 -->
+    <!-- 사용자 스크립트 추가 -->
     <style>
 
-       .contents{
+        .contents {
             display: flex;
         }
-        .mgb-15{
-            margin-bottom:15px;
+
+        .mgb-15 {
+            margin-bottom: 15px;
         }
-        .mgt-30{
-            margin-top:30px;
+
+        .mgt-30 {
+            margin-top: 30px;
         }
-        .mgt-50{
-            margin-top:50px;
+
+        .mgt-50 {
+            margin-top: 50px;
         }
-        .repImgDiv{
-            margin-right:15px;
-            height:auto;
-            width:50%;
+
+        .repImgDiv {
+            margin-right: 15px;
+            height: auto;
+            width: 50%;
         }
-        .repImg{
-            width:100%;
-            height:500px;
+
+        .repImg {
+            width: 100%;
+            height: 500px;
         }
-        .wd50{
-            height:auto;
-            width:50%;
+
+        .wd50 {
+            height: auto;
+            width: 50%;
         }
-        .delivery_info{
+
+        .delivery_info {
             padding-top: 10px;
             padding-bottom: 13px;
         }
+
+        .info {
+            word-spacing: -1px;
+            color: #666;
+            font-size: 14px;
+            line-height: 20px;
+            font-family: Montserrat, -apple-system, NotoSansCJKkr, AppleSDGothicNeo, Roboto, dotum, '돋움', sans-serif;
+            letter-spacing: -.04em;
+            -webkit-font-smoothing: antialiased;
+            list-style: none;
+            box-sizing: border-box;
+            margin: 0;
+            border: 0;
+            float: left;
+            width: 255px;
+            padding: 30px 0;
+            border-bottom: 1px solid #D19C97;
+        }
+
+        .info_user {
+            word-spacing: -1px;
+            color: #666;
+            font-size: 16px;
+            line-height: 20px;
+            font-family: Montserrat, -apple-system, NotoSansCJKkr, AppleSDGothicNeo, Roboto, dotum, '돋움', sans-serif;
+            letter-spacing: -.04em;
+            -webkit-font-smoothing: antialiased;
+            list-style: none;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            margin-left: 12px !important;
+            position: absolute;
+            left: 60px;
+            top: 0;
+            height: 60px;
+            display: flex;
+            align-items: flex-start;
+            -webkit-box-pack: center;
+            justify-content: center;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            flex-direction: column;
+        }
+
+        .badge {
+            margin-top: 9px;
+        }
+
+        .review_cont {
+            word-spacing: -1px;
+            color: #666;
+            font-size: 16px;
+            line-height: 20px;
+            font-family: Montserrat, -apple-system, NotoSansCJKkr, AppleSDGothicNeo, Roboto, dotum, '돋움', sans-serif;
+            letter-spacing: -.04em;
+            -webkit-font-smoothing: antialiased;
+            list-style: none;
+            box-sizing: border-box;
+            margin: 0;
+            border: 0;
+            position: relative;
+            margin-left: 255px;
+            padding: 30px 0 30px 0;
+        }
+
+        .score_area {
+            word-spacing: -1px;
+            color: #666;
+            font-size: 14px;
+            line-height: 20px;
+            font-family: Montserrat, -apple-system, NotoSansCJKkr, AppleSDGothicNeo, Roboto, dotum, '돋움', sans-serif;
+            letter-spacing: -.04em;
+            -webkit-font-smoothing: antialiased;
+            list-style: none;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            position: relative;
+            height: auto;
+            min-height: 20px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid #D19C97;
+        }
+
+        .txt_inner {
+            word-spacing: -1px;
+            font-family: Montserrat, -apple-system, NotoSansCJKkr, AppleSDGothicNeo, Roboto, dotum, '돋움', sans-serif;
+            letter-spacing: -.04em;
+            -webkit-font-smoothing: antialiased;
+            list-style: none;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            margin-bottom: 16px;
+            font-size: 16px;
+            word-break: break-all;
+            color: #555;
+            line-height: 24px;
+        }
+        .user_clrfix {
+            word-spacing: -1px;
+            color: #666;
+            font-size: 14px;
+            line-height: 20px;
+            font-family: Montserrat,-apple-system,NotoSansCJKkr,AppleSDGothicNeo,Roboto,dotum,'돋움',sans-serif;
+            letter-spacing: -.04em;
+            -webkit-font-smoothing: antialiased;
+            list-style: none;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            position: relative;
+        }
     </style>
     <link rel="stylesheet" href="/css/item.css" type="text/css">
-<div id="wrap" class="container-fluid " style="width: 1200px; margin-right: auto; margin-left: auto;">
+    <div id="wrap" class="container-fluid " style="width: 1200px; margin-right: auto; margin-left: auto;">
 
-    <div id="container" style="margin-left:0%;margin-right:10%">
-        <div class="location"><a href="/main">Home</a> &gt; <a href="#" th:text="${category}"></a> &gt;<span class="txt_w">상품 조회</span></div>
-        <div class="contents">
-            <div class="repImgDiv">
-                <img th:src="${itemImgDto[0].imgUrl}" class = "img-fluid rounded repImg" >
-            </div>
+        <div id="container" style="margin-left:0%;margin-right:10%">
+            <div class="contents">
+                <div class="repImgDiv">
+                    <img th:src="${itemImgDto[0].imgUrl}" class="img-fluid rounded repImg">
+                </div>
 
-            <div class="wd50">
-                <form action="/pay" id="frm">
-                    <input type="hidden" id="itemId" name="orderItemDtoList[0].itemId" th:value="${itemFormDto.itemId}">
+                <div class="wd50">
+                    <form action="/pay" id="frm">
+                        <input type="hidden" id="itemId" name="orderItemDtoList[0].itemId"
+                               th:value="${itemFormDto.itemId}">
 
-                    <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
+                        <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SELL}"
+                              class="badge badge-primary mgb-15">
                     판매중
                 </span>
-                    <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).LACK}" class="badge badge-danger mgb-15">
+                        <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).LACK}"
+                              class="badge badge-danger mgb-15">
                     품절 임박
                 </span>
-                <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="badge btn-danger mgb-15" >
+                        <span th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}"
+                              class="badge btn-danger mgb-15">
                     품절
                 </span>
-                <div id="itemName" class="h4" th:text="${itemFormDto.name}"></div>
-                <hr class="my-4">
+                        <div id="itemName" class="h4" th:text="${itemFormDto.name}"></div>
+                        <hr class="my-4">
 
-                <div class="text-right">
-                    <div class="h4 text-left">
-                        <span id="itemPrice" th:text="${itemFormDto.price}">10000</span>원
-                    </div>
-                    <div class="delivery_info"><strong>배송비 3,000원</strong><span class="text_info">(50,000원 이상 무료)</span></div>
-                    <div class="input-group w-50">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">수량</span>
+                        <div class="text-right">
+                            <div class="h4 text-left">
+                                <span id="itemPrice" th:text="${itemFormDto.price}">10000</span>원
+                            </div>
+                            <div class="delivery_info"><strong>배송비 3,000원</strong><span class="text_info">(50,000원 이상 무료)</span>
+                            </div>
+                            <div class="input-group w-50">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">수량</span>
+                                </div>
+                                <input type="number" name="orderItemDtoList[0].count" id="count" class="form-control"
+                                       value="1" min="1">
+                            </div>
                         </div>
-                        <input type="number" name="orderItemDtoList[0].count" id="count" class="form-control" value="1" min="1">
-                    </div>
+                        <hr class="my-4">
+                        <div id="rate" class="rating" data-size="lg"> 평점: 5.0</div>
+                        <hr class="my-4">
+                        <div id="options">
+                            option<br>
+                            <select id="itemOptionId" name="orderItemDtoList[0].itemOptionId" style="width:180px;">
+                                <option>Select option</option>
+                                <option th:each="option:${itemFormDto.options}" th:if="${option?.quantity>0}"
+                                        th:value="${option?.itemOptionId}"
+                                        th:utext="${option?.optionName}"></option>
+                            </select>
+                        </div>
+                        <hr class="my-4">
+                        <div th:if="${itemFormDto.status != T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}"
+                             class="text-right">
+                            <button type="button" class="btn btn-primary btn-lg" id="scrap_btn"
+                                    onclick="$scrap.addScrap()">찜하기
+                            </button>
+                            <button type="button" class="btn btn-light border border-primary btn-lg" onclick="cart()">
+                                장바구니 담기
+                            </button>
+                            <button type="button" class="btn btn-primary btn-lg" id="order_btn">주문하기</button>
+                        </div>
+                        <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}"
+                             class="text-right">
+                            <button type="button" class="btn btn-danger btn-lg">품절</button>
+                        </div>
+                    </form>
                 </div>
-                <hr class="my-4">
-                <div id="rate" class="rating" data-size="lg"  > 평점: 5.0 </div>
-                <hr class="my-4">
-                <div id="options">
-                    option<br>
-                    <select id="itemOptionId" name="orderItemDtoList[0].itemOptionId" style="width:180px;">
-                        <option>Select option</option>
-                        <option th:each="option:${itemFormDto.options}" th:if="${option?.quantity>0}"
-                                    th:value="${option?.itemOptionId}"
-                                    th:utext="${option?.optionName}"></option>
-                    </select>
-                </div>
-                <hr class="my-4">
-                <div th:if="${itemFormDto.status != T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
-                    <button type="button" class="btn btn-primary btn-lg"  id="scrap_btn"onclick="$scrap.addScrap()">찜하기</button>
-                    <button type="button" class="btn btn-light border border-primary btn-lg" onclick="cart()">장바구니 담기</button>
-                    <button type="button" class="btn btn-primary btn-lg"  id="order_btn">주문하기</button>
-                </div>
-                <div th:if="${itemFormDto.status == T(com.merit.meritShop.item.domain.ItemSellStatus).SOLD_OUT}" class="text-right">
-                    <button type="button" class="btn btn-danger btn-lg">품절</button>
-                </div>
-                </form>
+
             </div>
+            <div class="tabList">
+                <ul class="prd_detail_tab" id="tabList">
+                    <li class="on" id="productInfo">
+                        <a href="#tab1" class="goods" data-tap="tab-1">상품설명
+                        </a>
+                    </li>
+                    <li id="reviewInfo">
+                        <a href="#tab2" class="goods" data-tap="tab-2">리뷰
+                            <span th:text="${result['rtnObj']['count']}">(843)</span>
+                        </a>
+                    </li>
+                    <li id="qnaInfo">
+                        <a href="#tab3" class="goods" data-tap="tab-3">Q&amp;A
+                            <span th:text="${qnaResult['rtnObj']['count']}">(19)</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="prd_detail_cont" id="tabContent">
+                    <div>
+                        <div class="jumbotron jumbotron-fluid mgt-30">
+                            <div class="Description">
+                                <h4 class="display-5">상품 상세 설명</h4>
+                                <p class="lead" th:text="${itemFormDto.description}"></p>
+                            </div>
 
-        </div>
-        <div class="tabList">
-            <ul class="prd_detail_tab" id="tabList">
-                <li class="on" id="productInfo">
-                    <a href="#tab1" class="goods" data-tap="tab-1">상품설명
-                    </a>
-                </li>
-                <li id="reviewInfo">
-                    <a href="#tab2" class="goods" data-tap="tab-2">리뷰
-                        <span th:text="${result['rtnObj']['count']}">(843)</span>
-                    </a>
-                </li>
-                <li id="qnaInfo">
-                    <a href="#tab3" class="goods" data-tap="tab-3">Q&amp;A
-                        <span th:text="${qnaResult['rtnObj']['count']}">(19)</span>
-                    </a>
-                </li>
-            </ul>
-            <div class="prd_detail_cont" id="tabContent">
-                <div>
-                    <div class="jumbotron jumbotron-fluid mgt-30">
-                        <div class="Description">
-                            <h4 class="display-5">상품 상세 설명</h4>
-                            <p class="lead" th:text="${itemFormDto.description}"></p>
                         </div>
+                        <div th:each="itemImg : ${itemImgDto}" class="text-center">
+                            <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}"
+                                 class="rounded mgb-15" width="800">
 
+                        </div>
                     </div>
-                    <div th:each="itemImg : ${itemImgDto}" class="text-center">
-                        <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="800">
+                    <div style="display: none" >
+                        <div class="info">
+                            <div th:each="reviews:${result['rtnObj']['reviews']}">
+                                <div class="user_clrfix">
+                                    <p class="info_user" th:text=" ${reviews['userName']}"></p>
+                                    <div class="badge"></div>
+                                </div>
 
+                                <div class="review_cont" style="width: 550px">
+                                    <div class="score_area">
+                                        <span class="date"
+                                              th:text=" ${#temporals.format(reviews['reviewDate'],'yyyy-MM-dd')}"></span>
+                                    </div>
+                                    <div class="txt_inner" th:text=" ${reviews['content']}" ></div>
+                                </div>
+                             </div>
+                        </div>
                     </div>
-                </div>
-                <div style="display: none">
 
-                    <ul class="prd_qna_list" id="prd_qna_list" th:each="reviews:${result['rtnObj']['reviews']}">
-                        <li>
-                            <span th:text=" ${#temporals.format(reviews['reviewDate'],'yyyy-MM-dd')}+'  '+${reviews['userName']}">리뷰 작성 날짜</span>
-                        </li>
-                        <li>
-                            <span th:text=" ${reviews['content']}">리뷰 내용</span>
-                        </li>
-                    </ul>
+                        <div style="display: none">
+                            <div class="prd_qna_tit" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
+                                <button class="btn btn-light border border-primary btn-lg"
+                                        th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
+                                    <a th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">상품문의</a>
+                                </button>
+                            </div>
+                            <ul class="prd_qna_list" id="prd_qna_list" th:each="qna:${qnaResult['rtnObj']['qnas']}">
+                                <li>
+                                    <span th:text="'작성자: '+ ${qna['userName']} ">이름</br></span></br>
+                                    <span th:text="'제목: '+${qna['title']}">제목</span>
 
-                </div>
-                <div style="display: none">
-                    <div class="prd_qna_tit" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
-                        <button class="btn btn-light border border-primary btn-lg" th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">
-                            <a th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">상품문의</a>
-                        </button>
-                    </div>
-                    <ul class="prd_qna_list" id="prd_qna_list" th:each="qna:${qnaResult['rtnObj']['qnas']}">
-                        <li>
-                           <span th:text="'작성자: '+ ${qna['userName']} ">이름</br></span></br>
-                            <span th:text="'제목: '+${qna['title']}">제목</span>
-
-                        </li>
-                       <li>
-                           <span th:text="${qna['content']}">문의사항 내용</span>
-                       </li>
-                        <span th:if="${qna['replied']} == true">
+                                </li>
+                                <li>
+                                    <span th:text="${qna['content']}">문의사항 내용</span>
+                                </li>
+                                <span th:if="${qna['replied']} == true">
                                 <li>
                                     <span th:text="'re:'+${qna['reply']}"></span>
                                 </li>
                             </span>
-                        </li>
+                                </li>
 
-                    </ul>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-</div>
-</div>
-<script>
-    window.onload = function() {
-        document.getElementById('order_btn').onclick = function() {
-            var itemOptionId = document.getElementById("itemOptionId").value;
-            if(itemOptionId=="Select option"){
-                alert("옵션을 선택 해주세요!");
-                return false;
+        <script>
+            window.onload = function () {
+                document.getElementById('order_btn').onclick = function () {
+                    var itemOptionId = document.getElementById("itemOptionId").value;
+                    if (itemOptionId == "Select option") {
+                        alert("옵션을 선택 해주세요!");
+                        return false;
+                    }
+
+                    document.getElementById('frm').submit();
+                    return false;
+                };
+            };
+
+            function changeModalContent(e) {
+                $(".modal-body").text(e.previousSibling.value);
             }
 
-            document.getElementById('frm').submit();
-            return false;
-        };
-    };
+            const getCookieValue = (key) => {
+                let cookieKey = key + "=";
+                let result = "";
+                const cookieArr = document.cookie.split(";");
 
-    function changeModalContent(e){
-        $(".modal-body").text(e.previousSibling.value);
-    }
+                for (let i = 0; i < cookieArr.length; i++) {
+                    if (cookieArr[i][0] === " ") {
+                        cookieArr[i] = cookieArr[i].substring(1);
+                    }
 
-    const getCookieValue = (key) => {
-        let cookieKey = key + "=";
-        let result = "";
-        const cookieArr = document.cookie.split(";");
-
-        for(let i = 0; i < cookieArr.length; i++) {
-            if(cookieArr[i][0] === " ") {
-                cookieArr[i] = cookieArr[i].substring(1);
-            }
-
-            if(cookieArr[i].indexOf(cookieKey) === 0) {
-                result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
+                    if (cookieArr[i].indexOf(cookieKey) === 0) {
+                        result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
+                        return result;
+                    }
+                }
                 return result;
             }
-        }
-        return result;
-    }
-    function cart(){
-        var url = "/cart";
-        var paramData = {
-            itemId : $("#itemId").val(),
-            itemOptionId : $("#itemOptionId").val(),
-            count : $("#count").val()
 
-        };
-        console.log(paramData)
-        var param = JSON.stringify(paramData);
+            function cart() {
+                var url = "/cart";
+                var paramData = {
+                    itemId: $("#itemId").val(),
+                    itemOptionId: $("#itemOptionId").val(),
+                    count: $("#count").val()
 
-        $.ajax({
-            url      : url,
-            type     : "POST",
-            contentType : "application/json",
-            data     : param,
-            dataType : "json",
-            cache   : false,
+                };
+                console.log(paramData)
+                var param = JSON.stringify(paramData);
 
-            success  : function(result, status){
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: param,
+                    dataType: "json",
+                    cache: false,
 
-                console.log(result);
-                alert("장바구니 추가!!");
-                location.href='/cart';
-            },
-            error : function(jqXHR, status, error){
+                    success: function (result, status) {
 
-                if(jqXHR.status == '401'){
-                    alert('로그인 후 이용해주세요');
-                    location.href='/user/login';
-                } else{
-                    //alert(jqXHR.responseText);
-                    console.log("현재는 이것만 뜬다네 ㅎㅎ");
-                }
+                        console.log(result);
+                        alert("장바구니 추가!!");
+                        location.href = '/cart';
+                    },
+                    error: function (jqXHR, status, error) {
 
+                        if (jqXHR.status == '401') {
+                            alert('로그인 후 이용해주세요');
+                            location.href = '/user/login';
+                        } else {
+                            //alert(jqXHR.responseText);
+                            console.log("현재는 이것만 뜬다네 ㅎㅎ");
+                        }
+
+                    }
+                });
             }
-        });
-    }
 
-</script>
-<script>
-    const tabMenu = document.querySelectorAll('#tabList>li');
+        </script>
+        <script>
+            const tabMenu = document.querySelectorAll('#tabList>li');
 
-    const tabContent = document.querySelectorAll('#tabContent>div');
+            const tabContent = document.querySelectorAll('#tabContent>div');
 
-    tabMenu.forEach(function (item, idx) {
-        item.addEventListener('click', function (e) {
-            e.preventDefault();
-            showContent(idx);
-            for(var i=0; i<3; i++) {
-                tabMenu[i].classList.remove("on");
-            }
-            tabMenu[idx].classList.add("on");
-        });
+            tabMenu.forEach(function (item, idx) {
+                item.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    showContent(idx);
+                    for (var i = 0; i < 3; i++) {
+                        tabMenu[i].classList.remove("on");
+                    }
+                    tabMenu[idx].classList.add("on");
+                });
 
-    });
-    function showContent(num) {
-        tabContent.forEach(function (item) {
-            item.style.display = 'none';
+            });
 
-        });
-        tabContent[num].style = 'block';
+            function showContent(num) {
+                tabContent.forEach(function (item) {
+                    item.style.display = 'none';
 
-    };
+                });
+                tabContent[num].style = 'block';
+
+            };
 
 
-</script>
-
-    <div class="container">
-
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Some text in the modal.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        </script>
     </div>
-
-</div>
