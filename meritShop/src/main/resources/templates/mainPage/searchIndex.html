@@ -21,13 +21,13 @@
             <div class="text-center mb-4">
             </div>
             <div class="row px-xl-5 pb-3" >
-                <div class="col-lg-3 col-md-6 col-sm-12 pb-1" th:each=" item:${items}" th:onclick=" 'location.href='+'\''+@{'/item/'+${item.itemId}}+'\''" >
+                <div class="col-lg-3 col-md-6 col-sm-12 pb-1" th:each=" item:${items}"  >
                     <div class="card product-item border-0 mb-4">
-                        <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0" th:onclick=" 'location.href='+'\''+@{'/item/'+${item.itemId}}+'\''">
                             <!--/*@thymesVar id="itemUrl" type=""*/-->
                             <img height="600" class="" th:src="${item.imgUrl}" alt="">
                         </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3" th:onclick=" 'location.href='+'\''+@{'/item/'+${item.itemId}}+'\''">
                             <h6 class="text-truncate mb-3" th:text="${item.itemName}"></h6>
                             <div class="d-flex justify-content-center">
                                 <h6 th:text="|${#numbers.formatInteger(item.price, 0, 'COMMA')}원|"></h6></h6>
@@ -79,8 +79,17 @@
             </ul>
         </nav>
     </div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+        var userId = $.cookie('userId');
         document.querySelectorAll(".itemId").forEach(n=>n.addEventListener("click",function (){
+            if(typeof userId == "undefined") {
+                swal('장바구니 실패', "로그인 후 이용해주세요",'error')
+                    .then(function(){
+                        location.href='/user/login';
+                    })
+            }
             var url = "/cart";
             var paramData = {
                 itemId : n.getElementsByClassName("item_id")[0].value,
@@ -120,46 +129,6 @@
 
         }));
 
-        function cart(){
-
-            var url = "/cart";
-            alert(itemid);
-            var paramData = {
-                itemId : itemid.v,
-                itemOptionId : $("#itemOptionId").val(),
-                count : $("#count").val()
-
-            };
-            console.log(paramData)
-            var param = JSON.stringify(paramData);
-
-            $.ajax({
-                url      : url,
-                type     : "POST",
-                contentType : "application/json",
-                data     : param,
-                dataType : "json",
-                cache   : false,
-
-                success  : function(result, status){
-
-                    console.log(result);
-                    alert("장바구니 추가!!");
-                    location.href='/cart';
-                },
-                error : function(jqXHR, status, error){
-
-                    if(jqXHR.status == '401'){
-                        alert('로그인 후 이용해주세요');
-                        location.href='/user/login';
-                    } else{
-                        //alert(jqXHR.responseText);
-                        console.log("현재는 이것만 뜬다네 ㅎㅎ");
-                    }
-
-                }
-            });
-        }
     </script>
 
 </th:block>

@@ -1,6 +1,7 @@
 package com.merit.meritShop.common.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,9 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter   {
                 .authorizeRequests()
             //    .antMatchers( "/user/login").anonymous()
                 .antMatchers( "/user/logout").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-//                .antMatchers(HttpMethod.GET,"/api/posts/**").anonymous()
+               // .antMatchers(HttpMethod.GET,"/api/posts/**").anonymous()
+                .antMatchers(HttpMethod.POST,"/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/myPage/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                .antMatchers("/cart/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
 /*                .and()					//추가
                 .formLogin()				// form기반의 로그인인 경우
