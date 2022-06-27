@@ -22,7 +22,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
             ServletException {
         response.setContentType("text/html; charset=UTF-8");
         request.setAttribute("msg", "로그인이 필요한 서비스입니다. 로그인 해주세요");
-        request.setAttribute("nextPage", "/c");
+        //request.setAttribute("nextPage", "/c");
         request.getRequestDispatcher("/err/denied-page").forward(request, response);
 //        PrintWriter out = response.getWriter();
 //        out.println("<script>alert('로그인이 필요한 서비스입니다. 로그인 해주세요'); " +
