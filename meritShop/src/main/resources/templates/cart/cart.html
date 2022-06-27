@@ -84,7 +84,7 @@
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control form-control-sm bg-secondary text-center" th:name="'orderItemDtoList['+${cartStat.index}+'].count'" th:value="${cart.count}" readonly>
+                            <input type="text" class="form-control form-control-sm bg-secondary text-center cartCount" th:name="'orderItemDtoList['+${cartStat.index}+'].count'" th:value="${cart.count}" readonly>
                             <div class="input-group-btn plz" th:value="plz">
                                 <button class="btn btn-sm btn-primary btn-plus" th:value="${cartStat.index}" th:data-id="${cart.cartId}" onclick="plusCartCount(this)">
                                     <i class="fa fa-plus"></i>
@@ -206,7 +206,13 @@
         var cartItemId = obj.dataset.id
         var index = obj.value;
         var url = "/cart/minus/" + cartItemId;
-
+        var count = document.getElementsByClassName("cartCount")[index].value;
+        if (count == 1) {
+            swal('수량 초과 제거', "이미 최소의 개수입니다.", 'error')
+                .then(function () {
+                    location.href = '/cart';
+                })
+        }
         $.ajax({
             url: url,
             type: "PUT",
