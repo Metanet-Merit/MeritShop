@@ -7,14 +7,18 @@
   <title>DEMO</title>
 </head>
 <body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script th:inline="javascript">
   window.onload = function(){
     /*<![CDATA[*/
     var nextPage = [[@{__${nextPage}__}]], msg = [[${msg}]];
     if(nextPage) {
-      alert(msg);
-      location.href = [[@{/main}]];
-    } else {
+      swal('권한 오류',msg,'error')
+      .then(function(){
+        location.href = [[@{/main}]];
+        })
+    }
+    else {
       location.href = [[@{/user/login}]];
     }
       /*]]>*/

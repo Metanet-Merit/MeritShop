@@ -34,6 +34,7 @@
       box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
     }
   </style>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script>
     function findAddr(){
       new daum.Postcode({
@@ -59,12 +60,14 @@
     }
     function IdCkeck() {
       var id = document.getElementById("email").value;
+      var regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+
       if (!id) {
-        alert("아이디를 입력하세요.");
+        swal('회원가입 오류',"아이디를 입력하세요.", 'error');
         return false;
       }
-      else if (id.indexOf('@') == -1) {
-        alert("올바른 이메일 형식이 아닙니다. ex)apple@email.com");
+      else if (regEmail.test(id) === false) {
+        swal('회원가입 오류',"올바른 이메일 형식이 아닙니다. ex)apple@email.com", 'error');
         return false;
       }
       $.ajax({
@@ -175,10 +178,18 @@
   </div>
   <script>
     window.addEventListener('load', () => {
+
       const forms = document.getElementsByClassName('validation-form');
 
       Array.prototype.filter.call(forms, (form) => {
+        var phone = document.getElementById('phoneNumber').value;
+        var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
         form.addEventListener('submit', function (event) {
+          if (regPhone.test(phone) === false) {
+            swal('회원가입 오류',"올바른 핸드폰 형식이 아닙니다.", 'error');
+            event.preventDefault();
+            event.stopPropagation();
+          }
           if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();

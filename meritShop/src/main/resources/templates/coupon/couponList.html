@@ -65,7 +65,7 @@
             </div>
 
             <!-- search -->
-            <form th:action="@{/admin/item/search}"  class="input-group" method="get">
+            <form th:action="@{/admin/coupon/search}"  class="input-group" method="get">
                 <input type="text" name="keyword" class="form-control col-md-6 mb-3 bg-white border-0 small" placeholder="찾고자 하는 상품 이름 입력" aria-label="Search" aria-describedby="basic-addon2">
                 <div class="input-group-append mb-3">
                     <button class="btn btn-primary" type="submit">
@@ -111,33 +111,33 @@
     </div>
     <nav style="text-align: center;">
         <ul class="pagination pagination justify-content-center"
-            th:with="start=${T(java.lang.Math).floor(items.number/5)*5 + 1},
-                    last=(${start + 4 < items.totalPages ? start + 4 : items.totalPages})">
+            th:with="start=${T(java.lang.Math).floor(couponList.number/5)*5 + 1},
+                    last=(${start + 4 < couponList.totalPages ? start + 4 : couponList.totalPages})">
             <li class="page-item">
-                <a class="page-link" th:href="@{/admin/itemList(page=1)}" aria-label="First">
+                <a class="page-link" th:href="@{/admin/couponList(page=1)}" aria-label="First">
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only" aria-hidden="true">First</span>
                 </a>
             </li>
 
-            <li th:class="${items.first} ? 'disabled'" class="page-item">
-                <a class="page-link" th:href="${items.first} ? '#' :@{/admin/itemList(page=${items.number})}" aria-label="Previous">
+            <li th:class="${couponList.first} ? 'disabled'" class="page-item">
+                <a class="page-link" th:href="${couponList.first} ? '#' :@{/admin/couponList(page=${couponList.number})}" aria-label="Previous">
                     <span aria-hidden="true">&lt;</span>
                 </a>
             </li>
 
-            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == items.number + 1} ? 'active'" class="page-item">
-                <a class="page-link" th:text="${page}" th:href="@{/admin/itemList(page=${page})}"></a>
+            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == couponList.number + 1} ? 'active'" class="page-item">
+                <a class="page-link" th:text="${page}" th:href="@{/admin/couponList(page=${page})}"></a>
             </li>
 
-            <li th:class="${items.last} ? 'disabled'" class="page-item">
-                <a class="page-link" th:href="${items.last} ? '#' : @{/admin/itemList(page=${items.number + 2})}" aria-label="Next">
+            <li th:class="${couponList.last} ? 'disabled'" class="page-item">
+                <a class="page-link" th:href="${couponList.last} ? '#' : @{/admin/couponList(page=${couponList.number + 2})}" aria-label="Next">
                     <span aria-hidden="true">&gt;</span>
                 </a>
             </li>
 
             <li>
-                <a class="page-link" th:href="@{/admin/itemList(page=${items.totalPages})}" aria-label="Last">
+                <a class="page-link" th:href="@{/admin/couponList(page=${couponList.totalPages})}" aria-label="Last">
                     <span aria-hidden="true">&raquo;</span>
                     <span class="sr-only" aria-hidden="true">Last</span>
                 </a>

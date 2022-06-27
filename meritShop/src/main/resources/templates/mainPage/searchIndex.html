@@ -111,8 +111,10 @@
                 success  : function(result, status){
 
                     console.log(result);
-                    alert("장바구니 추가!!");
-                    location.href='/cart';
+                    swal('장바구니 성공', "장바구니 페이지로 이동합니다.",'success')
+                        .then(function(){
+                            location.href='/cart';
+                        })
                 },
                 error : function(jqXHR, status, error){
 
