@@ -14,7 +14,29 @@ $review = {
         $ajax.get(url, param, $review.getReviewPagesCallBack, $review.getReviewPagesErrCallback);
 
     },
+    deleteReview: function (reviewId) {
+        var url = '/myPage/deleteReview';
+        var param = {
+            reviewId: reviewId
+        }
 
+        $ajax.get(url, param, $review.deleteReviewCallBack, $review.deleteReviewErrCallback);
+    },
+    deleteReviewCallBack: function (response) {
+        var result = JSON.parse(response);
+        if (result.rtnCd != 0) {
+            alert(result.rtnMsg);
+
+        } else {
+            (function (x) {
+                $review.getReviews();
+            })();
+        }
+
+    },
+    deleteReviewErrCallback: function () {
+        alert("잠시후 다시 시도해 주세요");
+    },
     getReviewPagesErrCallback: function (response) {
         alert("잠시후 다시 시도해 주세요");
     },
@@ -238,14 +260,16 @@ $review = {
                 var order_date = review.orderDate;
                 const category = review.category;
                 const url = review.uuidName;
-                const button = '<input type="hidden" value="' + review_content + '"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="$review.changeModalContent(this)">리뷰보기</button><br></td></tr>'
+                const reviewId = review.reviewId;
+                const button = '<input type="hidden" value="' + review_content + '"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="$review.changeModalContent(this)">리뷰보기</button><br>'
+                const deleteButton = '<input type="hidden" value="' + review_content + '"><button type="button" class="btn-review--small" onclick="$review.deleteReview(' + reviewId + ')">리뷰삭제</button><br></td></tr>'
                 const img =
                     '<img style="width: 25px; height: 25px" src=' + url + ' alt="아이템이미지" >\n';
-                order_date=order_date.substr(0,9);
-                review_date=review_date.substr(0, 9);
+                order_date = order_date.substr(0, 9);
+                review_date = review_date.substr(0, 9);
                 content += middle + img + middle2 + '<dt>' + order_date + '</dt>' + html_categoryNitem + '<span class="tit">' + category + '</span>' +
                     '   <span class="txt oneline">' + orderItemName + '</span>' + html_review_date +
-                    '<dd>' + review_date + '</dd>' + btn + button;
+                    '<dd>' + review_date + '</dd>' + btn + button + deleteButton;
 
             });
 

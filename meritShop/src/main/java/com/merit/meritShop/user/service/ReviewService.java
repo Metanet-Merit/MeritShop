@@ -1,5 +1,6 @@
 package com.merit.meritShop.user.service;
 
+import com.merit.meritShop.board.domain.Qna;
 import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.common.domain.ResultCode;
 import com.merit.meritShop.item.domain.Item;
@@ -79,7 +80,7 @@ public class ReviewService {
 
     }
 
-    public  Result<Page<ReviewFormDTO>> getReviews(Long userId,Pageable pageable) {
+    public Result<Page<ReviewFormDTO>> getReviews(Long userId, Pageable pageable) {
 
         try {
 
@@ -99,6 +100,7 @@ public class ReviewService {
                     .userName(user.getUserName())
                     .uuidName(review.getOrderItem().getItem().getImgUrl())
                     .category(review.getOrderItem().getItem().getCategory())
+                    .reviewId(review.getReviewId())
                     .build());
 
             return ResultCode.Success.result(map);
@@ -201,6 +203,25 @@ public class ReviewService {
         String storeFileName = uuid + "." + ext;
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
         return storeFileName;
+    }
+
+    public Result<Review> deleteReview(Long reviewId) {
+
+        try {
+            Optional<Review> optionalReview = reviewRepository.findById(reviewId);
+            if (optionalReview.isPresent()) {
+                Review review = optionalReview.get();
+                reviewRepository.delete(review);
+
+                return ResultCode.Success.result();
+            } else {
+                return ResultCode.REVIEW_NOT_EXISTS.result();
+            }
+        } catch (Exception e) {
+            return ResultCode.DB_ERROR.result();
+        }
+
+
     }
 
 

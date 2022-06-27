@@ -64,5 +64,7 @@ public class reviewController {
         return reviewService.getItemReviews(itemId);
     }
 
-
+    @ResponseBody
+    @GetMapping("/deleteReview")
+    public Result deleteReview(@RequestParam Long reviewId){return reviewService.deleteReview(reviewId);}
 }
