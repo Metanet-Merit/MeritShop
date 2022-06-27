@@ -41,7 +41,7 @@ public class ScrapService {
 
                 Item item = scrap.getItem();
 
-                ItemOption itemOption = itemOptionRepository.findItemOptionByItem(item).get();
+                ItemOption itemOption =scrap.getItemOption();
                 ScrapDTO scrapDTO = ScrapDTO.builder()
                         .itemName(item.getItemName())
                         .itemId(item.getItemId())
@@ -59,22 +59,24 @@ public class ScrapService {
             map.put("scraps", scrapDTOList);
             return ResultCode.Success.result(map);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResultCode.DB_ERROR.result();
         }
 
     }
 
     public Result<Scrap> addScrap(ScrapDTO scrapDTO) {
-        return addScrap(scrapDTO.getUserId(), scrapDTO.getItemId());
+        return addScrap(scrapDTO.getUserId(), scrapDTO.getItemId(), scrapDTO.getItemOptionId());
     }
 
-    public Result<Scrap> addScrap(Long userId, Long itemId) {
+    public Result<Scrap> addScrap(Long userId, Long itemId, Long itemOptionId) {
 
         try {
             if (userId == null) return ResultCode.NOT_LOGIN.result();
 
             User user = userRepository.findById(userId).get();
             Item item = itemRepository.findById(itemId).get();
+            ItemOption itemOption = itemOptionRepository.findById(itemOptionId).get();
             List<Scrap> scrapList = scrapRepository.findScrapByUser(user);
 
             for (Scrap scrap : scrapList) {
@@ -85,6 +87,7 @@ public class ScrapService {
             Scrap scrap = Scrap.builder()
                     .user(user)
                     .item(item)
+                    .itemOption(itemOption)
                     .build();
 
             scrapRepository.save(scrap);
