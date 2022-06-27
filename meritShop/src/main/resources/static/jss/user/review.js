@@ -234,14 +234,15 @@ $review = {
                 const orderItemName = review.orderItemName;
                 const review_content = review.content;
                 const rate = review.rate;
-                const review_date = review.reviewDate;
-                const order_date = review.orderDate;
+                var review_date = review.reviewDate;
+                var order_date = review.orderDate;
                 const category = review.category;
                 const url = review.uuidName;
                 const button = '<input type="hidden" value="' + review_content + '"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="$review.changeModalContent(this)">리뷰보기</button><br></td></tr>'
                 const img =
                     '<img style="width: 25px; height: 25px" src=' + url + ' alt="아이템이미지" >\n';
-
+                order_date=order_date.substr(0,9);
+                review_date=review_date.substr(0, 9);
                 content += middle + img + middle2 + '<dt>' + order_date + '</dt>' + html_categoryNitem + '<span class="tit">' + category + '</span>' +
                     '   <span class="txt oneline">' + orderItemName + '</span>' + html_review_date +
                     '<dd>' + review_date + '</dd>' + btn + button;

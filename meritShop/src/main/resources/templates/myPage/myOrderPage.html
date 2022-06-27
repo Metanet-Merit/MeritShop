@@ -106,7 +106,7 @@
                                         <div class="textus" style="width:90%;">
                                             <dl class="data review-data">
                                                 <dt>구매일자</dt>
-                                                <dd th:text="${orderItems['orderDate']}">리뷰 작성 일자 넣으세요</dd>
+                                                <dd th:text="${#temporals.format(orderItems['orderDate'],'yyyy-MM-dd')}">구매일자</dd>
                                             </dl>
                                             <div class="rating">
 
