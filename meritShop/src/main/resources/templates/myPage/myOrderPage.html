@@ -83,7 +83,7 @@
                             <tr>
                                 <td class="subject">
                                     <div class="area">
-                                        <div class="area">
+                                        <div class="area"style="text-align: center">
                                             <a class="thum" th:href="@{/item/{itemId}(itemId = ${orderItems['itemId']})}">
                                                 <img style="width: 15px; height: 15px" th:src="${orderItems['url']}"
                                                      alt="아이템이미지">
@@ -104,7 +104,7 @@
                                 <td class="subject">
                                     <div class="area">
                                         <div class="textus" style="width:90%;">
-                                            <dl class="data review-data">
+                                            <dl class="data review-data" style="text-align: center">
                                                 <dt>구매일자</dt>
                                                 <dd th:text="${#temporals.format(orderItems['orderDate'],'yyyy-MM-dd')}">구매일자</dd>
                                             </dl>

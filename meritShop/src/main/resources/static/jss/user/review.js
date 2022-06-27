@@ -14,6 +14,12 @@ $review = {
         $ajax.get(url, param, $review.getReviewPagesCallBack, $review.getReviewPagesErrCallback);
 
     },
+    modifyReview:function (orderItemId){
+
+        location.href = '/reviewForm/'+orderItemId;
+
+    },
+
     deleteReview: function (reviewId) {
         var url = '/myPage/deleteReview';
         var param = {
@@ -165,6 +171,9 @@ $review = {
 
         $(".modal-body").text(e.previousSibling.value);
 
+        $(".modal-body").src(e.previousSibling.previousSibling.value);
+        console.log(e.previousSibling.previousSibling.value);
+       // '<img style="width: 25px; height: 25px" src=' + url + ' alt="아이템이미지" >\n';
     },
 
 
@@ -196,9 +205,9 @@ $review = {
             '        </tr>\n' +
             '        </thead>';
         const middle =
-            ' <tbody id="reviews" style="align-content: center">\n' +
+            ' <tbody id="reviews" style="text-align: center">\n' +
             '        <tr>\n' +
-            '            <td class="subject">\n' +
+            '            <td class="subject"style="text-align: center">\n' +
             '                <div class="area">\n' +
             '                    <div class="area">\n' +
             '                        <a class="thum" href="#" data-attr="리뷰^리뷰상품^상품클릭">\n';
@@ -224,7 +233,7 @@ $review = {
             '            <td class="subject">\n' +
             '                <div class="area">\n' +
             '                    <div class="textus" style="width:90%;">\n' +
-            '                        <dl class="data review-data">\n' +
+            '                        <dl class="data review-data" style="text-align: center">\n' +
             '                            <dt>작성일자</dt>\n' +
             '                            <dd></dd>';
 
@@ -254,6 +263,7 @@ $review = {
 
             reviews.forEach(function (review) {
                 const orderItemName = review.orderItemName;
+                const orderItemId=review.orderItemId;
                 const review_content = review.content;
                 const rate = review.rate;
                 var review_date = review.reviewDate;
@@ -261,15 +271,17 @@ $review = {
                 const category = review.category;
                 const url = review.uuidName;
                 const reviewId = review.reviewId;
-                const button = '<input type="hidden" value="' + review_content + '"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="$review.changeModalContent(this)">리뷰보기</button><br>'
+                const review_uuidName=review.review_uuidName;
+                const button ='<input type="hidden" id="uuid" value="'+review_uuidName+'"> <input type="hidden" value="' + review_content + '"><button type="button" class="btn-review--small" data-toggle="modal" data-target="#myModal" onclick="$review.changeModalContent(this)">리뷰보기</button><br>'
                 const deleteButton = '<input type="hidden" value="' + review_content + '"><button type="button" class="btn-review--small" onclick="$review.deleteReview(' + reviewId + ')">리뷰삭제</button><br></td></tr>'
+                const modifyButton='<input type="hidden" value="' + review_content + '"><button type="button" class="btn-review--small" onclick="$review.modifyReview('+orderItemId+')">리뷰수정</button><br>'
                 const img =
                     '<img style="width: 25px; height: 25px" src=' + url + ' alt="아이템이미지" >\n';
                 order_date = order_date.substr(0, 9);
                 review_date = review_date.substr(0, 9);
                 content += middle + img + middle2 + '<dt>' + order_date + '</dt>' + html_categoryNitem + '<span class="tit">' + category + '</span>' +
                     '   <span class="txt oneline">' + orderItemName + '</span>' + html_review_date +
-                    '<dd>' + review_date + '</dd>' + btn + button + deleteButton;
+                    '<dd>' + review_date + '</dd>' + btn + button+ deleteButton;
 
             });
 

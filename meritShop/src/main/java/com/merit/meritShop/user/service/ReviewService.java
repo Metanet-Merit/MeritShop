@@ -99,8 +99,10 @@ public class ReviewService {
                     .orderItemName(review.getOrderItem().getItem().getItemName())
                     .userName(user.getUserName())
                     .uuidName(review.getOrderItem().getItem().getImgUrl())
+                    .review_uuidName(review.getUuidName())
                     .category(review.getOrderItem().getItem().getCategory())
                     .reviewId(review.getReviewId())
+                    .orderItemId(review.getOrderItem().getOrderItemId())
                     .build());
 
             return ResultCode.Success.result(map);

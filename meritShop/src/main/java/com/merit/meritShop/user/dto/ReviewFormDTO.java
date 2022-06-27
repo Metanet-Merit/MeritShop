@@ -19,6 +19,7 @@ public class ReviewFormDTO {
     private String content;
     private double rate;
     private String uuidName;
+    private String review_uuidName;
     private MultipartFile img;
     private String category;
     private LocalDateTime reviewDate;
