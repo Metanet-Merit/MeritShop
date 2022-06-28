@@ -24,10 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -44,10 +41,17 @@ public class OrderController {
     public ResponseEntity getOrderPage( HttpServletRequest request,@RequestBody PayFormDto dto ){
 
            // System.out.println(dto);
-        User user = userRepository.findById(getIdFromCookies(request.getCookies())).get();
+        Long userId =getIdFromCookies(request.getCookies());
+        Long code;
+        if(userId==null){
 
-           Long code= orderService.order(user,dto);
+            code = orderService.order(null, dto);
+        }else {
+            User user = userRepository.findById(userId).get();
 
+            code = orderService.order(user, dto);
+
+        }
 
         return new ResponseEntity<Long>(code, HttpStatus.OK);
     }

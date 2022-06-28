@@ -15,6 +15,7 @@ import com.merit.meritShop.order.repository.OrderItemRepository;
 import com.merit.meritShop.order.repository.OrderRepository;
 import com.merit.meritShop.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
@@ -88,7 +90,7 @@ public class OrderService {
                 if(totalStocks == dto.getCount()){
                     item.setStatus(ItemSellStatus.SOLD_OUT);
                 }else{
-                item.setStatus(ItemSellStatus.LACK);}
+                    item.setStatus(ItemSellStatus.LACK);}
             }
             itemOptionRepository.updateOptionQuantity(option.getItemOptionId(), remain);
 
@@ -113,15 +115,39 @@ public class OrderService {
         orders.setTotalPrice(orders.getTotalPrice()-discountP);
 
         orders.setOrderDate(LocalDateTime.now());
-        orders.setUser(user);
+        if(user!=null){
+            orders.setUser(user);
+
+        }
         orders.setCouponCaseId(formDto.getCouponCaseId());
         orders =orderRepository.save(orders);
+        log.info("[order] "+orders.getTotalPrice());
+
 
         return code=200L;
 
     }
 
-    public void orderCancle(){
+    @Transactional
+    public void orderCancel(Long userId,Long orderId){
         //아직 구현 안했음
+        Orders order  =  orderRepository.findById(orderId).get();
+
+        for(OrderItem item: order.getOrderItemList()){
+
+            Long itemOptionId = item.getItemOptionId();
+            int count = item.getCount();
+            ItemOption option = itemOptionRepository.findById(itemOptionId).get();
+            option.setQuantity(option.getQuantity()+count);
+
+        }
+        if(order.getCouponCaseId()!=null) {
+            CouponCase coupon = couponCaseRepository.findById(order.getCouponCaseId()).get();
+            coupon.setUsed(false);
+            order.setTotalPrice(order.getTotalPrice() + coupon.getCoupon().getDiscountPrice());
+        }
+        /*환불로직*/
+        orderRepository.delete(order);
+
     }
 }
