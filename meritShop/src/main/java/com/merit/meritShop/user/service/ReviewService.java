@@ -112,6 +112,45 @@ public class ReviewService {
 
     }
 
+    public Result<Map<String, Object>> getItemReviews(Long itemId, Pageable pageable) {
+
+        try {
+            Map<String, Object> map = new HashMap<>();
+            Item item = itemRepository.findById(itemId).get();
+            List<OrderItem> orderItemList = orderItemRepository.findOrderItemByItem(item);
+            List<ReviewFormDTO> reviewFormDTOList = new ArrayList<>();
+
+            for (OrderItem orderItem : orderItemList) {
+                List<Review> reviewList = reviewRepository.findReviewByOrderItem(orderItem);
+                for (Review review : reviewList) {
+                    if (review != null) {
+
+                        ReviewFormDTO reviewFormDTO = ReviewFormDTO.builder()
+                                .content(review.getContent())
+                                .rate(review.getRate())
+                                .reviewDate(review.getCreatedDate())
+                                .orderDate(orderItem.getOrders().getOrderDate())
+                                .orderItemName(item.getItemName())
+                                .userName(review.getUser().getUserName())
+                                .category(item.getCategory())
+                                .uuidName(item.getImgUrl())
+                                .build();
+
+                        reviewFormDTOList.add(reviewFormDTO);
+                    }
+                }
+            }
+
+            map.put("reviews", reviewFormDTOList);
+            map.put("count", reviewFormDTOList.size());
+
+            return ResultCode.Success.result(map);
+        } catch (Exception e) {
+            return ResultCode.DB_ERROR.result();
+        }
+
+    }
+
     public Result<Map<String, Object>> getItemReviews(Long itemId) {
 
         try {
@@ -186,7 +225,7 @@ public class ReviewService {
         }
     }
 
-    @Value("${uploadReviewPath}")
+    @Value("${reviewPath}")
     private String fileDir;
 
     public String getFullPath(String filename) {
