@@ -2,19 +2,18 @@ package com.merit.meritShop.user.service;
 
 import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.common.domain.ResultCode;
-import com.merit.meritShop.item.domain.Item;
 import com.merit.meritShop.item.domain.ItemOption;
 import com.merit.meritShop.item.repository.ItemOptionRepository;
 import com.merit.meritShop.order.domain.OrderItem;
+import com.merit.meritShop.order.domain.Orders;
 import com.merit.meritShop.order.repository.OrderItemRepository;
 import com.merit.meritShop.order.repository.OrderRepository;
-import com.merit.meritShop.user.dto.OrderDTO;
-import com.merit.meritShop.order.domain.Orders;
 import com.merit.meritShop.user.domain.User;
+import com.merit.meritShop.user.dto.OrderDTO;
 import com.merit.meritShop.user.dto.OrderItemsDTO;
 import com.merit.meritShop.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -93,50 +92,55 @@ public class OrderListService {
         }
     */
 
-    public Result<Map<String, Object>> getOderItems(Long userId) {
-
+    public Result<Map<String, Object>> getOderItems(Long userId, Pageable pageable) {
         try {
             Optional<User> optionalUser = userRepository.findById(userId);
+            if (optionalUser.isEmpty()) {
+                return ResultCode.USER_NOT_EXISTS.result();
+            } else {
+                int page = pageable.getPageNumber();
+                int size = pageable.getPageSize();
+                int start = page * size;
+                int end = (page + 1) * size;
+                List<OrderItem> orderItemList2 = orderItemRepository.findOrderItemsByUserId(userId);
+                end = Math.min(end, orderItemList2.size());
+                List<OrderItemsDTO> orderItemsDTOS = new ArrayList<>();
+                for (OrderItem orderItem : orderItemList2.subList(start, end)) {
+                    ItemOption itemOption = itemOptionRepository.findById(orderItem.getItemOptionId()).get();
+                    orderItemsDTOS.add(
+                            OrderItemsDTO.builder()
+                                    .count(orderItem.getCount())
+                                    .orderItemName(orderItem.getItem().getItemName())
+                                    .reviewed(orderItem.isReviewed())
+                                    .orderDate(orderItem.getOrders().getOrderDate())
+                                    .url(orderItem.getItem().getImgUrl())
+                                    .orderItemId(orderItem.getOrderItemId())
+                                    .orderId(orderItem.getOrders().getOrderId())
+                                    .itemId(orderItem.getItem().getItemId())
+                                    .category(orderItem.getItem().getCategory())
+                                    .orderItemOptionName(itemOption.getOptName())
+                                    .build());
+                }
 
-            if (optionalUser.isEmpty()) return ResultCode.USER_NOT_EXISTS.result();
-
-            else {
+                int totalPage = getTotalPage(orderItemList2.size(), size);
+                int endPage = Math.min(totalPage, page + 4);
+                int startPage = Math.max(1, page - 4);
 
                 Map<String, Object> map = new HashMap<>();
-                User user = optionalUser.get();
-                List<Orders> orderList = orderRepository.findOrderByUser(user);
-                List<OrderItemsDTO> orderItemsDTOS = new ArrayList<>();
-                for (Orders order : orderList) {
-                    List<OrderItem> orderItemList = orderItemRepository.findOrderItemByOrders(order);
-                    for (OrderItem orderItem : orderItemList) {
-                        ItemOption itemOption = itemOptionRepository.findById(orderItem.getItemOptionId()).get();
-                        Item item = orderItem.getItem();
-                        Orders orders = orderItem.getOrders();
-
-                        OrderItemsDTO orderItemsDTO = OrderItemsDTO.builder()
-                                .count(orderItem.getCount())
-                                .orderItemName(item.getItemName())
-                                .reviewed(orderItem.isReviewed())
-                                .orderDate(orders.getOrderDate())
-                                .url(item.getImgUrl())
-                                .orderItemId(orderItem.getOrderItemId())
-                                .orderId(orders.getOrderId())
-                                .itemId(item.getItemId())
-                                .category(item.getCategory())
-                                .orderItemOptionName(itemOption.getOptName())
-                                .build();
-
-                        orderItemsDTOS.add(orderItemsDTO);
-                    }
-
-                }
                 map.put("orderItems", orderItemsDTOS);
+                map.put("currentPage",page);
+                map.put("start", startPage);
+                map.put("end", endPage);
+                map.put("totalPage", totalPage);
                 return ResultCode.Success.result(map);
             }
-
         } catch (Exception e) {
             return ResultCode.DB_ERROR.result();
         }
+    }
+
+    private int getTotalPage(int totalRowSize, int size) {
+        return totalRowSize % size == 0 ? totalRowSize / size : totalRowSize / size + 1;
     }
 
 
