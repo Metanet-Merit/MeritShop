@@ -186,7 +186,7 @@ public class ReviewService {
         }
     }
 
-    @Value("${uploadReviewPath}")
+    @Value("${reviewPath}")
     private String fileDir;
 
     public String getFullPath(String filename) {
