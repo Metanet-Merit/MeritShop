@@ -295,23 +295,26 @@
                                     <a th:href="'/user/qnaWrite/'+${itemFormDto.itemId}">상품문의</a>
                                 </button>
                             </div>
-                            <ul class="prd_qna_list" id="prd_qna_list" th:each="qna:${qnaResult['rtnObj']['qnas']}">
-                                <li>
-                                    <span th:text="'작성자: '+ ${qna['userName']} ">이름</br></span></br>
-                                    <span th:text="'제목: '+${qna['title']}">제목</span>
+                            <div class="info">
+                                <div th:each="qna:${qnaResult['rtnObj']['qnas']}">
+                                    <div class="user_clrfix">
+                                        <p class="info_user" th:text=" ${qna['userName']} "></p>
+                                        <div class="badge"></div>
+                                    </div>
 
-                                </li>
-                                <li>
-                                    <span th:text="${qna['content']}">문의사항 내용</span>
-                                </li>
-                                <span th:if="${qna['replied']} == true">
-                                <li>
-                                    <span th:text="'re:'+${qna['reply']}"></span>
-                                </li>
-                            </span>
-                                </li>
-
-                            </ul>
+                                    <div class="review_cont" style="width: 550px">
+                                        <div class="score_area">
+                                        <span class="date"
+                                              th:text=" ${qna['title']}"></span>
+                                        </div>
+                                        <div class="txt_inner" th:text="${qna['content']}">
+                                            <span th:if="${qna['replied']} == true">
+                                                <span th:text="'re:'+${qna['reply']}"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
