@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReviewFormDTO {
+    private Long reviewId;
     private Long userId;
     private Long orderItemId;
     private String orderItemName;
@@ -18,6 +19,7 @@ public class ReviewFormDTO {
     private String content;
     private double rate;
     private String uuidName;
+    private String review_uuidName;
     private MultipartFile img;
     private String category;
     private LocalDateTime reviewDate;

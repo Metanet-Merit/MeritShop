@@ -32,11 +32,8 @@ public class LoginController extends LoginCommon {
 
     @PostMapping("/login")
     public void login(UserSignInDto userSignInDto, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("@@");
         userSignInDto.setLoginType("local");
-        System.out.println("??");
         JwtResponseDto jwt = loginService.login(userSignInDto);
-        System.out.println("!!");
         setCookieAndRedirectMain(jwt, request, response);
     }
 

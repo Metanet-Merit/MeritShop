@@ -15,6 +15,9 @@ public enum ResultCode {
     //
     SCRAP_ALREADY_EXISTS(400,"이미 찜한 상품입니다."),
     SCRAP_ALREADY_DELETE(401,"이미 삭제된 찜입니다."),
+
+    //리뷰 관련 오류
+    REVIEW_NOT_EXISTS(500,"이미 삭제된 리뷰입니다."),
     //기타 에러
     DB_ERROR(9998, "DB 오류입니다."),
     ETC_ERROR(9999, "시스템 오류입니다.");

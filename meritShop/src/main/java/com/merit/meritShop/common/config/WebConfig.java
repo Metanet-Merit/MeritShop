@@ -10,7 +10,8 @@ public class WebConfig implements WebMvcConfigurer {
 
    @Value("${uploadPath}/")
     String uploadPath;
-
+    @Value("${uploadReviewPath}/")
+    String uploadReviewPath;
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")
@@ -18,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
 
                 //  .addResourceLocations("classpath:/static/images")
                 .setCachePeriod(60);
-
+        registry.addResourceHandler("/review/**").addResourceLocations(uploadReviewPath);
         registry.addResourceHandler("/lib/**")
                 .addResourceLocations("classpath:/static/lib");
         registry.addResourceHandler("/js/**")

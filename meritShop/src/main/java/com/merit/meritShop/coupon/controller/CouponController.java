@@ -6,8 +6,14 @@ import com.merit.meritShop.coupon.domain.CouponFormDto;
 import com.merit.meritShop.coupon.repository.CouponCaseRepository;
 import com.merit.meritShop.coupon.repository.CouponRepository;
 import com.merit.meritShop.coupon.service.CouponService;
+import com.merit.meritShop.user.dto.UserViewDto;
 import com.merit.meritShop.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,11 +65,20 @@ public class CouponController {
     }
 
     @GetMapping("/admin/couponList")
-    public String getCouponList(Model model){
-
-        List<Coupon> couponList = couponRepository.findAll();
+    public String getCouponList(Model model, @PageableDefault Pageable pageable){
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 5);
+        Page<Coupon> couponList = couponRepository.findAll(pageable);
         model.addAttribute("couponList",couponList);
 
+        return "coupon/couponList";
+    }
+    @GetMapping("/admin/coupon/search")
+    public String search(String keyword, Model model, @PageableDefault(direction = Sort.Direction.DESC) Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 5);
+        Page<Coupon> searchList = couponRepository.findByCouponNameContaining(keyword, pageable);
+        model.addAttribute("couponList", searchList);
         return "coupon/couponList";
     }
 

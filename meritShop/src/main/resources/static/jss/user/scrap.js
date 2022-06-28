@@ -1,5 +1,4 @@
 $scrap = {
-
     deleteScrap:function (){
         var scrapId=document.getElementById("scrapId").value;
         userId = $Cookie.getCookie();
@@ -30,12 +29,19 @@ $scrap = {
         location.href = "/myPage/myScraps";
     },
     addScrap: function () {
+        if(typeof userId == "undefined") {
+            swal('찜 실패', "로그인 후 이용해주세요",'error')
+                .then(function(){
+                    location.href='/user/login';
+                })
+        }
         var itemId_=document.getElementById("itemId").value;
+        var itemOptionId = document.getElementById("itemOptionId").value;
         userId = $Cookie.getCookie();
         url = '/myPage/scrap';
         param = {
             itemId: itemId_,
-            //itemId:1,
+            itemOptionId: itemOptionId,
             userId: userId
         }
 
@@ -70,19 +76,17 @@ $scrap = {
         var rtnCd = JSON.parse(response).rtnCd;
 
         if (rtnCd == 0) {
-
-            alert("찜하기가 완료되었습니다");
+            swal('찜 성공', "찜하기가 완료되었습니다.",'success');
 
         } else {
             var msg = JSON.parse(response).rtnMsg;
-            alert(msg);
-
+            swal('찜 실패', msg, 'error');
         }
 
     },
     addScrapErrCallback: function (response) {
         console.log(response);//에러화면 띄우기
-        alert("잠시 후 다시 시도해 주세요");
+        swal('찜하기 실패', "옵션을 선택 해주세요!",'error');
         return;
     },
 
