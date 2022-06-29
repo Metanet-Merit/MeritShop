@@ -124,7 +124,6 @@ $review = {
             var orderItemName = review.orderItemName;
             var rate = review.rate;
 
-
             innerHtml += html
                 .replace('{uuidName}', uuidName)
                 .replace('{orderDate}', orderDate)
@@ -286,8 +285,8 @@ $review = {
                 const modifyButton = '<input type="hidden" value="' + review_content + '"><button type="button" class="btn-review--small" onclick="$review.modifyReview(' + orderItemId + ')">리뷰수정</button><br>'
                 const img =
                     '<img style="width: 25px; height: 25px" src=' + url + ' alt="아이템이미지" >\n';
-                order_date = order_date.substr(0, 9);
-                review_date = review_date.substr(0, 9);
+                order_date = order_date.substr(0, 10);
+                review_date = review_date.substr(0, 10);
                 content += middle + img + middle2 + '<dt>' + order_date + '</dt>' + html_categoryNitem + '<span class="tit">' + category + '</span>' +
                     '   <span class="txt oneline">' + orderItemName + '</span>' + html_review_date +
                     '<dd>' + review_date + '</dd>' + btn + button + deleteButton;

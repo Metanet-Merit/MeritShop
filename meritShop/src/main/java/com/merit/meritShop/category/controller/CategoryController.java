@@ -25,8 +25,9 @@ public class CategoryController {
 
     @GetMapping("/items/{category}")
     public String getIndex(@PathVariable("category") String category, Model model
-            , @PageableDefault(size = 5) Pageable pageable) {
-
+            , @PageableDefault Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 8);
         Page<Item> itemList = categoryService.getItemByCategory(category, pageable);
         model.addAttribute("category",category);
         model.addAttribute("items", itemList);
