@@ -1,16 +1,17 @@
 package com.merit.meritShop.user.controller;
 
-import com.merit.meritShop.board.domain.Qna;
 import com.merit.meritShop.common.controller.AbstractController;
 import com.merit.meritShop.common.domain.Result;
 import com.merit.meritShop.user.service.OrderListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("myPage/")
@@ -26,8 +27,9 @@ public class OrderListController extends AbstractController {
     }
 
     @GetMapping("/MyOrderItems")
-    public String getMyOrderItems(@CookieValue("userId") Long userId, Model model) {
-        Result result = orderListService.getOderItems(userId);
+    public String getMyOrderItems(@CookieValue("userId") Long userId, Model model
+            , @PageableDefault(size = 5) Pageable pageable) {
+        Result result = orderListService.getOderItems(userId, pageable);
         if (result.getResultCode().getCode() != 0) {
             return "redirect:/myPage";
         }

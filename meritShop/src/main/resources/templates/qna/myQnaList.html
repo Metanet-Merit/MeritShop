@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="/css/myPage.css"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,700" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="/css/board.css" type="text/css">
+
 <head>
     <script type="application/javascript" src="/jss/user/review.js?version='3'"></script>
     <script type="application/javascript" src="/jss/common/Cookie.js?version='1'"></script>
@@ -23,21 +22,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <meta charset="UTF-8">
+
     <title>내 문의사항 페이지</title>
     <style>
-        a {
-            width: 100px;
-        }
-
         table {
             margin-left: 10px;
         }
     </style>
 </head>
 <body>
-<div th:replace="~{template/fragment/myPageHeader::header}"></div>
 
+<div th:replace="~{template/fragment/myPageHeader::header}"></div>
 <div class="listContainer">
     <div class="mainContentBox">
         <a type="button" th:href="@{/myPage/user}" class="item">
@@ -58,17 +53,15 @@
         <a type="button" th:href="@{/myPage/myCoupon}" class="item">
             <div class="text">쿠폰</div>
         </a>
-        <a type="button" th:href="@{/myPage/myScraps}" class="item">
+        <a type="button" th:href="@{/myPage/myScraps}"class="item">
             <div class="text">내 찜 내역</div>
         </a>
     </div>
-<div class="mainContent" id="content">
+    <div class="mainContent" id="content" style="margin-left: 150px">
         <div style="text-align: center" class="mypage-conts">
             <div class="title-area linezero">
-                <h2 class="tit">문의사항</h2>
             </div>
             <table class="board-list-2s mgT20 new">
-                <caption></caption>
                 <colgroup>
                     <col style="width:49%;">
                     <col style="width:39%;">
@@ -119,8 +112,9 @@
                     </div>
                 </div>
             </div>
-
-            <br>
+        </div>
+    </div>
+</div>
 
 <div class="container">
 
@@ -151,10 +145,7 @@
 
 </div>
 
-</div>
-        <div th:replace="~{template/fragment/myPageFooter::footer}"></div>
-    </div>
-</div>
 
+<div th:replace="~{template/fragment/myPageFooter::footer}"></div>
 </body>
 </html>

@@ -62,6 +62,6 @@ public class LoginCommon {
         response.addCookie(jwtToken);
         response.addCookie(userId);
         response.addCookie(intra);
-        response.sendRedirect("http://localhost:8080/main");
+        response.sendRedirect("http://20.214.189.138:80/main");
     }
 }
