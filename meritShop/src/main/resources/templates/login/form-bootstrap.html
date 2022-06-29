@@ -185,11 +185,6 @@
         var phone = document.getElementById('phoneNumber').value;
         var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
         form.addEventListener('submit', function (event) {
-          if (regPhone.test(phone) === false) {
-            swal('회원가입 오류',"올바른 핸드폰 형식이 아닙니다.", 'error');
-            event.preventDefault();
-            event.stopPropagation();
-          }
           if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();

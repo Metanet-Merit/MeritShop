@@ -36,7 +36,6 @@
           var roadAddr = data.roadAddress; // 도로명 주소 변수
           var jibunAddr = data.jibunAddress; // 지번 주소 변수
           // 우편번호와 주소 정보를 해당 필드에 넣는다.
-          document.getElementById('zipcode').value = data.zonecode;
           if(roadAddr !== ''){
             document.getElementById("addr1").value = roadAddr;
           }
@@ -50,7 +49,6 @@
   <script>
     window.addEventListener('load', () => {
       const forms = document.getElementsByClassName('validation-form');
-
       Array.prototype.filter.call(forms, (form) => {
         form.addEventListener('submit', function (event) {
           if (form.checkValidity() === false) {
@@ -109,7 +107,7 @@
     <a type="button" th:href="@{/myPage/user}" class="item">
       <div class="text">내 정보 조회</div>
     </a>
-    <a type="button" onclick="$exam.exam()" class="item">
+    <a type="button" th:href="@{/myPage/user/modify}" class="item">
       <div class="text">내 정보 수정</div>
     </a>
     <a type="button" th:href="@{/myPage/MyOrderItems}" class="item">
@@ -163,7 +161,7 @@
             </div>
             <div class="col-md-6">
               <label for="addr1" class="form-label">주소</label>
-              <input name="addr1" type="text" th:field="*{addr1}" class="form-control" id="addr1" onclick="findAddr()" required />
+              <input name="addr1" type="text" th:field="*{addr1}" class="form-control addr1" id="addr1" onclick="findAddr()" required />
             </div>
             <div class="col-md-6">
             </div>
